@@ -1,6 +1,7 @@
 """
 EasyTrip Production Core API Backend
 FastAPI service configured for production deployment on Render.
+Dynamically generates itineraries for ANY destination worldwide (e.g. Vizag, Paris, Tokyo, etc.).
 """
 
 import os
@@ -10,6 +11,7 @@ import random
 import string
 from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Any
+import urllib.parse
 
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,7 +21,7 @@ import requests
 app = FastAPI(
     title="EasyTrip AI Core API",
     description="Travel smarter. Travel safer. Full backend service powering EasyTrip.",
-    version="2.0.0"
+    version="2.1.0"
 )
 
 # Enable CORS for frontend deployment (e.g. Vercel, Netlify, Render, Localhost)
@@ -43,14 +45,17 @@ def load_json_data(filename: str) -> Any:
     for p in DATA_PATHS:
         file_path = os.path.join(p, filename)
         if os.path.exists(file_path):
-            with open(file_path, "r", encoding="utf-8") as f:
-                return json.load(f)
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception as e:
+                print(f"Error loading {file_path}: {e}")
     return []
 
 DESTINATIONS_DATA = load_json_data("destinations.json")
 BOOKINGS_DATA = load_json_data("bookings.json") or {"hotels": [], "transport": [], "experiences": []}
 
-# Destination coordinates & default image palettes
+# Destination coordinates & default image palettes for popular hubs
 CITY_COORDS = {
     "goa": {"lat": 15.2993, "lng": 74.1240},
     "jaipur": {"lat": 26.9124, "lng": 75.7873},
@@ -62,10 +67,169 @@ CITY_COORDS = {
     "bali": {"lat": -8.4095, "lng": 115.1889},
 }
 
+# Dedicated curated knowledge for well-known popular custom Indian & global cities
+CUSTOM_KNOWN_DESTINATIONS = {
+    "vizag": {
+        "name": "Vizag (Visakhapatnam)",
+        "country": "India",
+        "tagline": "The Jewel of the East Coast, pristine beaches & coastal hills",
+        "coordinates": {"lat": 17.6868, "lng": 83.2185},
+        "highlights": [
+            "RK Beach & INS Kursura Submarine Museum",
+            "Kailasagiri Hilltop Panoramic Park",
+            "Rushikonda Beach & Coastal Water Sports",
+            "Yarada Beach & Dolphin's Nose Lighthouse",
+            "Simhachalam Historic Temple",
+            "Borra Caves & Araku Valley Day Excursion"
+        ],
+        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
+    },
+    "visakhapatnam": {
+        "name": "Visakhapatnam",
+        "country": "India",
+        "tagline": "The Jewel of the East Coast, pristine beaches & coastal hills",
+        "coordinates": {"lat": 17.6868, "lng": 83.2185},
+        "highlights": [
+            "RK Beach & INS Kursura Submarine Museum",
+            "Kailasagiri Hilltop Panoramic Park",
+            "Rushikonda Beach & Coastal Water Sports",
+            "Yarada Beach & Dolphin's Nose Lighthouse",
+            "Simhachalam Historic Temple",
+            "Borra Caves & Araku Valley Day Excursion"
+        ],
+        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
+    },
+    "hyderabad": {
+        "name": "Hyderabad",
+        "country": "India",
+        "tagline": "City of Pearls, majestic Charminar & royal Nizami gastronomy",
+        "coordinates": {"lat": 17.3850, "lng": 78.4867},
+        "highlights": ["Charminar & Laad Bazaar", "Golconda Fort & Sound Show", "Hussain Sagar Lake & Buddha Statue", "Chowmahalla Palace", "Ramoji Film City"],
+        "image": "https://images.unsplash.com/photo-1603204077673-f11c750b3297?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1600&q=80"
+    },
+    "delhi": {
+        "name": "Delhi",
+        "country": "India",
+        "tagline": "Heart of India, historic monuments & bustling Chandni Chowk bazaars",
+        "coordinates": {"lat": 28.6139, "lng": 77.2090},
+        "highlights": ["India Gate & Kartavya Path", "Qutub Minar Complex", "Humayun's Tomb", "Red Fort & Chandni Chowk", "Lotus Temple"],
+        "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1600&q=80"
+    },
+    "bengaluru": {
+        "name": "Bengaluru",
+        "country": "India",
+        "tagline": "The Garden City, vibrant microbreweries & tech energy",
+        "coordinates": {"lat": 12.9716, "lng": 77.5946},
+        "highlights": ["Lalbagh Botanical Gardens", "Bangalore Palace", "Cubbon Park", "Indiranagar Craft Cafes", "Bannerghatta National Park"],
+        "image": "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1600&q=80"
+    },
+    "ooty": {
+        "name": "Ooty",
+        "country": "India",
+        "tagline": "Queen of Nilgiri Hill Stations, rolling tea gardens & misty peaks",
+        "coordinates": {"lat": 11.4102, "lng": 76.6950},
+        "highlights": ["Ooty Botanical Gardens", "Nilgiri Mountain Toy Train", "Doddabetta Peak", "Pykara Waterfalls & Lake", "Emerald Lake"],
+        "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1579619564365-0442e27ab9e2?auto=format&fit=crop&w=1600&q=80"
+    }
+}
+
+def resolve_destination(raw_input: str) -> Dict[str, Any]:
+    """
+    Dynamically resolves any destination entered by the user.
+    Never defaults to Goa unless explicitly requested.
+    """
+    clean_input = raw_input.strip() if raw_input else "Vizag"
+    dest_lower = clean_input.lower()
+
+    # 1. Check curated pre-seeded catalog
+    for d in DESTINATIONS_DATA:
+        d_id = d.get("id", "").lower()
+        d_name = d.get("name", "").lower()
+        if dest_lower == d_id or dest_lower == d_name or (len(dest_lower) > 3 and (dest_lower in d_name or d_id in dest_lower)):
+            return {
+                "id": d.get("id"),
+                "name": d.get("name"),
+                "country": d.get("country", "Global"),
+                "tagline": d.get("tagline"),
+                "coordinates": d.get("coordinates", CITY_COORDS.get(d.get("id"), {"lat": 15.2993, "lng": 74.1240})),
+                "image": d.get("image"),
+                "bannerImage": d.get("bannerImage", d.get("image")),
+                "highlights": d.get("highlights", []),
+                "currency": d.get("currency", "$")
+            }
+
+    # 2. Check known custom dictionary (e.g. vizag, visakhapatnam, hyderabad, etc.)
+    for key, info in CUSTOM_KNOWN_DESTINATIONS.items():
+        if key in dest_lower or dest_lower in key:
+            return {
+                "id": key,
+                "name": info["name"],
+                "country": info["country"],
+                "tagline": info["tagline"],
+                "coordinates": info["coordinates"],
+                "image": info["image"],
+                "bannerImage": info["bannerImage"],
+                "highlights": info["highlights"],
+                "currency": "$"
+            }
+
+    # 3. Dynamic Photon Geocoding for any unknown global city
+    dest_title = clean_input.title()
+    country = "Global"
+    coords = {"lat": 17.6868, "lng": 83.2185} # Default to sensible geographic fallback
+
+    try:
+        encoded_query = urllib.parse.quote(clean_input)
+        photon_url = f"https://photon.komoot.io/api/?q={encoded_query}&limit=1"
+        resp = requests.get(photon_url, headers={"User-Agent": "EasyTripApp/2.0"}, timeout=2.5)
+        if resp.status_code == 200:
+            p_data = resp.json()
+            features = p_data.get("features", [])
+            if features:
+                f0 = features[0]
+                geometry = f0.get("geometry", {}).get("coordinates", [])
+                if len(geometry) >= 2:
+                    coords = {"lat": geometry[1], "lng": geometry[0]}
+                props = f0.get("properties", {})
+                country = props.get("country", "Global")
+                if props.get("name"):
+                    dest_title = props.get("name")
+    except Exception as err:
+        print(f"Geocoding lookup error for '{clean_input}': {err}")
+
+    # Synthesize rich location-specific highlights
+    dynamic_highlights = [
+        f"{dest_title} Scenic Promenade & Waterfront Walk",
+        f"{dest_title} Historic Quarter & Heritage Trail",
+        f"{dest_title} Panoramic Hilltop Vista & Sunset Point",
+        f"{dest_title} Cultural Sanctuary & Sacred Landmark",
+        f"{dest_title} Central Artisan Bazaars & Culinary Alley",
+        f"{dest_title} Botanical Gardens & Nature Escape",
+        f"{dest_title} Evening Twilight Lounge & Skyline"
+    ]
+
+    return {
+        "id": dest_lower.replace(" ", "-"),
+        "name": dest_title,
+        "country": country,
+        "tagline": f"Scenic wonders, vibrant local culture & memorable escapes in {dest_title}",
+        "coordinates": coords,
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=80",
+        "highlights": dynamic_highlights,
+        "currency": "$"
+    }
+
 # --- Pydantic Models ---
 class PlanTripRequest(BaseModel):
-    destination: str = "Goa"
-    origin: str = "Mumbai"
+    destination: str
+    origin: Optional[str] = "Current Location"
     days: int = 3
     startDate: Optional[str] = None
     endDate: Optional[str] = None
@@ -85,14 +249,14 @@ class CheckoutRequest(BaseModel):
     paymentMethod: Optional[str] = "credit-card"
     tripId: Optional[str] = None
 
-# --- Routes ---
+# --- API Endpoints ---
 
 @app.get("/")
 def root():
     return {
         "service": "EasyTrip API Engine",
         "status": "online",
-        "version": "2.0.0",
+        "version": "2.1.0",
         "docs": "/docs"
     }
 
@@ -110,44 +274,39 @@ def get_destinations():
 
 @app.get("/api/destinations/{dest_id}")
 def get_destination(dest_id: str):
-    for d in DESTINATIONS_DATA:
-        if d.get("id") == dest_id.lower() or d.get("name", "").lower() == dest_id.lower():
-            return {"success": True, "data": d}
-    raise HTTPException(status_code=404, detail="Destination not found")
+    dest_info = resolve_destination(dest_id)
+    return {"success": True, "data": dest_info}
 
 @app.post("/api/plan-trip")
 def plan_trip(req: PlanTripRequest):
     num_days = max(1, min(req.days, 7))
-    dest_lower = req.destination.lower()
     
-    # Find matching destination or fallback
-    dest_info = next(
-        (d for d in DESTINATIONS_DATA if dest_lower in d.get("id", "") or dest_lower in d.get("name", "").lower()),
-        DESTINATIONS_DATA[0] if DESTINATIONS_DATA else {}
-    )
-
-    dest_id = dest_info.get("id", "goa")
-    coords = CITY_COORDS.get(dest_id, dest_info.get("coordinates", {"lat": 15.2993, "lng": 74.1240}))
+    # Resolve the EXACT destination submitted by the user
+    dest_info = resolve_destination(req.destination)
+    
+    dest_name = dest_info["name"]
+    country = dest_info["country"]
+    coords = dest_info["coordinates"]
+    highlights = dest_info["highlights"]
     cost_multiplier = 2.5 if req.budget == "luxury" else 0.7 if req.budget == "budget" else 1.2
 
     themes = [
-        {"title": "Arrival & Iconic First Impressions", "theme": "Grand Welcomes & Scenic Sunset"},
-        {"title": "Hidden Gems & Cultural Immersion", "theme": "Heritage, Art & Architectural Wonders"},
-        {"title": "Outdoor Escapes & Local Flavors", "theme": "Nature, Coastal Vistas & Gastronomy"},
-        {"title": "Artisan Markets & Leisure Moments", "theme": "Vibrant Bazaars & Sunset Indulgence"},
-        {"title": "Farewell Vistas & Scenic Memories", "theme": "Morning Panoramas & Easy Departure"},
-        {"title": "Deep Exploration & Serene Retreat", "theme": "Off-beat Paths & Restful Splendor"},
-        {"title": "The Grand Finale Experience", "theme": "Exclusive Dining & Celebratory Farewell"}
+        {"title": "Arrival & Iconic First Impressions", "theme": f"Grand Welcomes & {dest_name} Sunset"},
+        {"title": "Hidden Gems & Cultural Immersion", "theme": f"Heritage, Art & {dest_name} Landmarks"},
+        {"title": "Outdoor Escapes & Local Flavors", "theme": f"Nature, Coastal/Mountain Vistas & Gastronomy"},
+        {"title": "Artisan Markets & Leisure Moments", "theme": f"Vibrant Bazaars & Twilight Indulgence"},
+        {"title": "Farewell Vistas & Scenic Memories", "theme": f"Morning Panoramas & Scenic Departure"},
+        {"title": "Deep Exploration & Serene Retreat", "theme": f"Off-beat Trails & Restful Splendor"},
+        {"title": "The Grand Finale Experience", "theme": f"Celebratory Farewell & Fine Dining"}
     ]
 
     start_date = datetime.strptime(req.startDate, "%Y-%m-%d") if req.startDate else datetime.utcnow()
     itinerary_days = []
-    highlights = dest_info.get("highlights", [req.destination])
 
     for i in range(num_days):
         day_date = start_date + timedelta(days=i)
         theme = themes[i % len(themes)]
-        day_hl = highlights[i % len(highlights)] if highlights else req.destination
+        day_hl = highlights[i % len(highlights)] if highlights else f"{dest_name} Landmark"
 
         morning_coord = {
             "lat": coords["lat"] + (math.sin(i * 1.5) * 0.015),
@@ -168,12 +327,12 @@ def plan_trip(req: PlanTripRequest):
                 "period": "Morning",
                 "time": "09:00 AM - 12:30 PM",
                 "title": f"Arrival & Check-in near {day_hl}" if i == 0 else f"Explore {day_hl} & Surroundings",
-                "location": f"{day_hl}, {dest_info.get('name', req.destination)}",
-                "description": "Kick off the day taking in the fresh atmosphere. Enjoy early access before crowds arrive, with scenic photo spots and leisurely strolls.",
+                "location": f"{day_hl}, {dest_name}",
+                "description": f"Kick off the day taking in the atmosphere of {dest_name}. Enjoy scenic photo spots and leisurely exploration.",
                 "category": "Sightseeing",
                 "cost": round(15 * cost_multiplier),
                 "duration": "3.5 hrs",
-                "image": dest_info.get("image", "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80"),
+                "image": dest_info.get("image"),
                 "coordinates": morning_coord,
                 "tips": "Bring comfortable walking footwear and keep camera ready for natural morning lighting."
             },
@@ -181,9 +340,9 @@ def plan_trip(req: PlanTripRequest):
                 "id": f"day-{i+1}-afternoon",
                 "period": "Afternoon",
                 "time": "01:00 PM - 04:30 PM",
-                "title": f"Curated Lunch & {req.interests[0] if req.interests else 'Local'} Discovery",
-                "location": f"Historic Central Quarter, {dest_info.get('name', req.destination)}",
-                "description": f"Delight your palate with authentic regional delicacies. Followed by a relaxing cultural walkthrough or scenic boat/safari ride tailored for {req.travelStyle.lower()} travelers.",
+                "title": f"Curated Lunch & {req.interests[0] if req.interests else 'Regional'} Discovery",
+                "location": f"Historic Central Quarter, {dest_name}",
+                "description": f"Delight your palate with authentic regional delicacies. Followed by a relaxing cultural walkthrough tailored for {req.travelStyle.lower()} travelers.",
                 "category": "Dining & Leisure",
                 "cost": round(28 * cost_multiplier),
                 "duration": "3.5 hrs",
@@ -195,9 +354,9 @@ def plan_trip(req: PlanTripRequest):
                 "id": f"day-{i+1}-evening",
                 "period": "Evening",
                 "time": "05:30 PM - 09:30 PM",
-                "title": "Golden Hour Sunset & Evening Vibrance",
-                "location": f"Scenic Promenade / Rooftop, {dest_info.get('name', req.destination)}",
-                "description": "Experience the breathtaking sunset glow across the horizon. As night descends, enjoy handcrafted cocktails, lively music, and illuminated architecture.",
+                "title": f"Golden Hour Sunset & Evening Vibrance in {dest_name}",
+                "location": f"Scenic Promenade / Rooftop, {dest_name}",
+                "description": f"Experience the breathtaking sunset glow across {dest_name}. As night descends, enjoy handcrafted cocktails, lively music, and illuminated architecture.",
                 "category": "Entertainment",
                 "cost": round(35 * cost_multiplier),
                 "duration": "4 hrs",
@@ -226,9 +385,9 @@ def plan_trip(req: PlanTripRequest):
         "success": True,
         "data": {
             "id": f"trip-{int(datetime.utcnow().timestamp() * 1000)}",
-            "destination": dest_info.get("name", req.destination),
-            "country": dest_info.get("country", "Global"),
-            "origin": req.origin,
+            "destination": dest_name,
+            "country": country,
+            "origin": req.origin or "Current Location",
             "days": num_days,
             "startDate": req.startDate or start_date.strftime("%Y-%m-%d"),
             "endDate": req.endDate or (start_date + timedelta(days=num_days)).strftime("%Y-%m-%d"),
@@ -241,7 +400,8 @@ def plan_trip(req: PlanTripRequest):
             "currency": "$",
             "itineraryDays": itinerary_days,
             "aiNotes": [
-                f"Itinerary customized for {req.travelStyle} travel with focus on {', '.join(req.interests)}.",
+                f"Itinerary exclusively customized for {dest_name} ({country}) for {req.travelStyle} travel.",
+                f"Focus areas integrated: {', '.join(req.interests)}.",
                 "Smart route balancing ensures minimal transit time between consecutive stops.",
                 "Weather-aware activity scheduling with afternoon indoor/shaded slots."
             ]
@@ -250,13 +410,83 @@ def plan_trip(req: PlanTripRequest):
 
 @app.get("/api/bookings/options")
 def get_booking_options(destination: str = ""):
-    dest_lower = destination.lower()
+    dest_cleaned = destination.strip()
+    dest_lower = dest_cleaned.lower()
+    
+    dest_info = resolve_destination(dest_cleaned) if dest_cleaned else None
+    dest_display = dest_info["name"] if dest_info else "Your Destination"
+    dest_id = dest_info["id"] if dest_info else ""
+
     hotels = BOOKINGS_DATA.get("hotels", [])
     transport = BOOKINGS_DATA.get("transport", [])
     experiences = BOOKINGS_DATA.get("experiences", [])
 
-    matching_hotels = [h for h in hotels if dest_lower in h.get("destinationId", "") or dest_lower == ""]
-    matching_exp = [e for e in experiences if dest_lower in e.get("destinationId", "") or dest_lower == ""]
+    # Filter catalog hotels if matching
+    matching_hotels = [h for h in hotels if dest_lower and dest_lower in h.get("destinationId", "").lower()]
+    matching_exp = [e for e in experiences if dest_lower and dest_lower in e.get("destinationId", "").lower()]
+
+    # If custom destination not in static catalog, synthesize luxury bookings for it!
+    if not matching_hotels and dest_cleaned:
+        matching_hotels = [
+            {
+                "id": f"h-{dest_id}-1",
+                "destinationId": dest_id,
+                "name": f"The Grand {dest_display} Palace & Resort",
+                "type": "Luxury 5-Star Waterfront Resort",
+                "rating": 4.9,
+                "reviews": 1180,
+                "pricePerNight": 210,
+                "currency": "$",
+                "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+                "amenities": ["Infinity Bay Pool", "Fine Dining", "Concierge Chauffeur", "Wellness Spa", "Ocean Views"],
+                "location": f"Prime Bay District, {dest_display}",
+                "badge": "EasyTrip Luxury Pick"
+            },
+            {
+                "id": f"h-{dest_id}-2",
+                "destinationId": dest_id,
+                "name": f"{dest_display} Heritage Boutique Haven",
+                "type": "Boutique Coastal Retreat",
+                "rating": 4.8,
+                "reviews": 840,
+                "pricePerNight": 145,
+                "currency": "$",
+                "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
+                "amenities": ["Sunset Terrace", "Organic Breakfast", "Artisan Lounge", "Bicycle Rentals"],
+                "location": f"Heritage Quarter, {dest_display}",
+                "badge": "Charming Escape"
+            }
+        ]
+
+    if not matching_exp and dest_cleaned:
+        matching_exp = [
+            {
+                "id": f"exp-{dest_id}-1",
+                "destinationId": dest_id,
+                "title": f"Exclusive Private Guided Tour & Highlights of {dest_display}",
+                "category": "Culture & Sightseeing",
+                "rating": 4.9,
+                "reviews": 320,
+                "duration": "4 Hours",
+                "price": 65,
+                "currency": "$",
+                "image": "https://images.unsplash.com/photo-1540946485038-a0c24cb4d271?auto=format&fit=crop&w=800&q=80",
+                "badge": "Top Rated"
+            },
+            {
+                "id": f"exp-{dest_id}-2",
+                "destinationId": dest_id,
+                "title": f"Sunset Coastal Cruise & Culinary Walk in {dest_display}",
+                "category": "Leisure & Dining",
+                "rating": 4.9,
+                "reviews": 460,
+                "duration": "3 Hours",
+                "price": 85,
+                "currency": "$",
+                "image": "https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?auto=format&fit=crop&w=800&q=80",
+                "badge": "Must Do"
+            }
+        ]
 
     return {
         "success": True,
@@ -360,7 +590,8 @@ def place_photo(query: str = "travel"):
         "fort": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80",
         "mountain": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80",
         "paris": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80",
-        "tokyo": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80"
+        "tokyo": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80",
+        "vizag": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80"
     }
     key = next((k for k in photo_map if k in query.lower()), "beach")
     return {"success": True, "url": photo_map[key]}

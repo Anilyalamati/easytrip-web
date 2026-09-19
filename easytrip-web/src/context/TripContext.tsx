@@ -15,6 +15,7 @@ interface TripContextType {
   isSosOpen: boolean;
   isCheckoutOpen: boolean;
   prefillDestination: string | null;
+  prefillDays: number | null;
   latestConfirmation: ReservationConfirmation | null;
   setActiveView: (view: 'dashboard' | 'itinerary' | 'booking' | 'map') => void;
   setIsPlannerOpen: (open: boolean) => void;
@@ -29,7 +30,7 @@ interface TripContextType {
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
-  openPlannerWithDestination: (destName: string) => void;
+  openPlannerWithDestination: (destName?: string, daysCount?: number) => void;
 }
 
 const TripContext = createContext<TripContextType | undefined>(undefined);
@@ -46,6 +47,7 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isSosOpen, setIsSosOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [prefillDestination, setPrefillDestination] = useState<string | null>(null);
+  const [prefillDays, setPrefillDays] = useState<number | null>(null);
   const [latestConfirmation, setLatestConfirmation] = useState<ReservationConfirmation | null>(null);
 
   useEffect(() => {
@@ -66,6 +68,7 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const planTrip = async (params: any): Promise<TripItinerary> => {
     setIsGenerating(true);
     try {
+      console.log('[EasyTrip API] Submitting plan-trip payload:', params);
       const response = await fetch(apiUrl('/api/plan-trip'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,9 +81,12 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       const generatedTrip: TripItinerary = result.data;
+      console.log('[EasyTrip API] Received generated trip:', generatedTrip.destination);
       setCurrentTrip(generatedTrip);
       setActiveView('itinerary');
       setIsPlannerOpen(false);
+      setPrefillDestination(null);
+      setPrefillDays(null);
       return generatedTrip;
     } finally {
       setIsGenerating(false);
@@ -135,8 +141,15 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
     saveCartItems([]);
   };
 
-  const openPlannerWithDestination = (destName: string) => {
-    setPrefillDestination(destName);
+  const openPlannerWithDestination = (destName?: string, daysCount?: number) => {
+    if (destName) {
+      setPrefillDestination(destName.trim());
+    } else {
+      setPrefillDestination(null);
+    }
+    if (daysCount) {
+      setPrefillDays(daysCount);
+    }
     setIsPlannerOpen(true);
   };
 
@@ -154,6 +167,7 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isSosOpen,
         isCheckoutOpen,
         prefillDestination,
+        prefillDays,
         latestConfirmation,
         setActiveView,
         setIsPlannerOpen,

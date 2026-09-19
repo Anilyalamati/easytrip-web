@@ -9,11 +9,9 @@ export const QuickPlannerBar: React.FC = () => {
 
   const handleQuickPlan = (e: React.FormEvent) => {
     e.preventDefault();
-    if (destination.trim()) {
-      openPlannerWithDestination(destination.trim());
-    } else {
-      openPlannerWithDestination('Goa');
-    }
+    const dest = destination.trim();
+    const duration = parseInt(days) || 3;
+    openPlannerWithDestination(dest || undefined, duration);
   };
 
   return (

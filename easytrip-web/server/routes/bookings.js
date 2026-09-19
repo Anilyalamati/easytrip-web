@@ -21,16 +21,84 @@ const confirmedReservations = [];
 
 router.get('/options', (req, res) => {
   const { destination = '' } = req.query;
-  const destLower = destination.toLowerCase();
+  const destCleaned = destination.trim();
+  const destLower = destCleaned.toLowerCase();
 
   // Filter or return relevant options
-  const matchingHotels = bookingsData.hotels.filter(h => 
-    destLower.includes(h.destinationId) || destLower === ''
+  let matchingHotels = bookingsData.hotels.filter(h => 
+    destLower && (destLower.includes(h.destinationId.toLowerCase()) || h.destinationId.toLowerCase().includes(destLower))
   );
 
-  const matchingExperiences = bookingsData.experiences.filter(e => 
-    destLower.includes(e.destinationId) || destLower === ''
+  let matchingExperiences = bookingsData.experiences.filter(e => 
+    destLower && (destLower.includes(e.destinationId.toLowerCase()) || e.destinationId.toLowerCase().includes(destLower))
   );
+
+  const destDisplay = destCleaned ? destCleaned.charAt(0).toUpperCase() + destCleaned.slice(1) : 'Your Destination';
+  const destId = destLower.replace(/\s+/g, '-');
+
+  if (destCleaned && matchingHotels.length === 0) {
+    matchingHotels = [
+      {
+        id: `h-${destId}-1`,
+        destinationId: destId,
+        name: `The Grand ${destDisplay} Palace & Resort`,
+        type: 'Luxury 5-Star Waterfront Resort',
+        rating: 4.9,
+        reviews: 1180,
+        pricePerNight: 210,
+        currency: '$',
+        image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+        amenities: ['Infinity Bay Pool', 'Fine Dining', 'Concierge Chauffeur', 'Wellness Spa', 'Ocean Views'],
+        location: `Prime Bay District, ${destDisplay}`,
+        badge: 'EasyTrip Luxury Pick'
+      },
+      {
+        id: `h-${destId}-2`,
+        destinationId: destId,
+        name: `${destDisplay} Heritage Boutique Haven`,
+        type: 'Boutique Coastal Retreat',
+        rating: 4.8,
+        reviews: 840,
+        pricePerNight: 145,
+        currency: '$',
+        image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80',
+        amenities: ['Sunset Terrace', 'Organic Breakfast', 'Artisan Lounge', 'Bicycle Rentals'],
+        location: `Heritage Quarter, ${destDisplay}`,
+        badge: 'Charming Escape'
+      }
+    ];
+  }
+
+  if (destCleaned && matchingExperiences.length === 0) {
+    matchingExperiences = [
+      {
+        id: `exp-${destId}-1`,
+        destinationId: destId,
+        title: `Exclusive Private Guided Tour & Highlights of ${destDisplay}`,
+        category: 'Culture & Sightseeing',
+        rating: 4.9,
+        reviews: 320,
+        duration: '4 Hours',
+        price: 65,
+        currency: '$',
+        image: 'https://images.unsplash.com/photo-1540946485038-a0c24cb4d271?auto=format&fit=crop&w=800&q=80',
+        badge: 'Top Rated'
+      },
+      {
+        id: `exp-${destId}-2`,
+        destinationId: destId,
+        title: `Sunset Coastal Cruise & Culinary Walk in ${destDisplay}`,
+        category: 'Leisure & Dining',
+        rating: 4.9,
+        reviews: 460,
+        duration: '3 Hours',
+        price: 85,
+        currency: '$',
+        image: 'https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?auto=format&fit=crop&w=800&q=80',
+        badge: 'Must Do'
+      }
+    ];
+  }
 
   res.json({
     success: true,

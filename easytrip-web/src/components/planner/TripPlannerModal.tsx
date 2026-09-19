@@ -4,10 +4,10 @@ import { X, Sparkles, MapPin, Calendar, DollarSign, Users, Compass, Car, Plane, 
 import { GenerationOverlay } from './GenerationOverlay';
 
 export const TripPlannerModal: React.FC = () => {
-  const { isPlannerOpen, setIsPlannerOpen, planTrip, prefillDestination, destinations } = useTrip();
+  const { isPlannerOpen, setIsPlannerOpen, planTrip, prefillDestination, prefillDays, destinations } = useTrip();
 
-  const [destination, setDestination] = useState('Goa');
-  const [origin, setOrigin] = useState('Mumbai');
+  const [destination, setDestination] = useState('Vizag');
+  const [origin, setOrigin] = useState('Current Location');
   const [days, setDays] = useState(3);
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
   const [budget, setBudget] = useState<'budget' | 'moderate' | 'luxury'>('moderate');
@@ -22,6 +22,12 @@ export const TripPlannerModal: React.FC = () => {
     }
   }, [prefillDestination]);
 
+  useEffect(() => {
+    if (prefillDays) {
+      setDays(prefillDays);
+    }
+  }, [prefillDays]);
+
   if (!isPlannerOpen) return null;
 
   const toggleInterest = (tag: string) => {
@@ -32,11 +38,14 @@ export const TripPlannerModal: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const finalDest = destination.trim();
+    if (!finalDest) return;
+
     setIsSubmitting(true);
     try {
       await planTrip({
-        destination,
-        origin,
+        destination: finalDest,
+        origin: origin.trim() || 'Current Location',
         days,
         startDate,
         budget,
@@ -45,13 +54,13 @@ export const TripPlannerModal: React.FC = () => {
         transport
       });
     } catch (err) {
-      console.error(err);
+      console.error('Plan trip error:', err);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const quickCities = ['Goa', 'Jaipur', 'Manali', 'Mumbai', 'Paris', 'Tokyo'];
+  const quickCities = ['Vizag', 'Goa', 'Jaipur', 'Manali', 'Paris', 'Tokyo'];
 
   return (
     <>

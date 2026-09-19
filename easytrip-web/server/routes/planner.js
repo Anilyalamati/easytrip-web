@@ -17,39 +17,7 @@ try {
   console.error('Failed to load destinations:', e);
 }
 
-// Activity templates by category and city
-const activityPool = {
-  culture: [
-    { title: 'Heritage Fortress & Royal Chambers Tour', duration: '2.5 hrs', category: 'Culture', icon: 'Landmark', cost: 15 },
-    { title: 'Historic Old Quarter & Artisan Walk', duration: '2 hrs', category: 'Culture', icon: 'Compass', cost: 10 },
-    { title: 'Sacred Temples & Evening Candle Ceremony', duration: '1.5 hrs', category: 'Spiritual', icon: 'Sparkles', cost: 5 },
-    { title: 'Traditional Royal Folk Music & Dance Performance', duration: '2 hrs', category: 'Culture', icon: 'Music', cost: 25 },
-    { title: 'Centuries-Old Spice & Silk Bazaar Exploration', duration: '2 hrs', category: 'Shopping', icon: 'ShoppingBag', cost: 10 }
-  ],
-  adventure: [
-    { title: 'Scenic Mountain Valley Quad Biking / Trek', duration: '3 hrs', category: 'Adventure', icon: 'Mountain', cost: 35 },
-    { title: 'Sunrise Hot Air Balloon / Aerial Vista', duration: '3.5 hrs', category: 'Adventure', icon: 'Wind', cost: 90 },
-    { title: 'White Water River Rafting & Rapids Expedition', duration: '2.5 hrs', category: 'Water', icon: 'Waves', cost: 30 },
-    { title: 'Coastal Speedboat & Hidden Caves Excursion', duration: '2 hrs', category: 'Water', icon: 'Compass', cost: 45 },
-    { title: 'Sunset Paragliding over Valley Ridges', duration: '1.5 hrs', category: 'Adventure', icon: 'Send', cost: 50 }
-  ],
-  foodie: [
-    { title: 'Curated Artisan Food & Street Culinary Trail', duration: '2 hrs', category: 'Dining', icon: 'Utensils', cost: 20 },
-    { title: 'Rooftop Sunset Lounge & Fine Dining Experience', duration: '2.5 hrs', category: 'Dining', icon: 'Wine', cost: 45 },
-    { title: 'Traditional Cooking Masterclass with Master Chef', duration: '3 hrs', category: 'Workshop', icon: 'ChefHat', cost: 35 },
-    { title: 'Seaside Sunset Grill & Fresh Catch Dinner', duration: '2 hrs', category: 'Dining', icon: 'Fish', cost: 30 },
-    { title: 'Historic Tea Tasting & Plantation Walk', duration: '2 hrs', category: 'Food & Drink', icon: 'Coffee', cost: 15 }
-  ],
-  relaxation: [
-    { title: 'Luxury Ayurvedic Herbal Massage & Sauna', duration: '2 hrs', category: 'Wellness', icon: 'Heart', cost: 55 },
-    { title: 'Secluded Sandy Cove Sunbathing & Dip', duration: '3 hrs', category: 'Leisure', icon: 'Sun', cost: 0 },
-    { title: 'Sunset Catamaran Cruise with Chilled Drinks', duration: '2.5 hrs', category: 'Cruise', icon: 'Anchor', cost: 40 },
-    { title: 'Botanical Gardens & Serene Pond Walk', duration: '1.5 hrs', category: 'Nature', icon: 'Trees', cost: 8 },
-    { title: 'Private Villa Poolside Twilight Cocktails', duration: '2 hrs', category: 'Leisure', icon: 'GlassWater', cost: 25 }
-  ]
-};
-
-// Destination specific imagery and coordinate centers
+// Destination coordinates & default image palettes for popular hubs
 const cityDefaults = {
   goa: {
     lat: 15.2993, lng: 74.1240,
@@ -95,10 +63,153 @@ const cityDefaults = {
   }
 };
 
-function generateDynamicItinerary(reqBody) {
+const customKnownDestinations = {
+  vizag: {
+    name: 'Vizag (Visakhapatnam)',
+    country: 'India',
+    tagline: 'The Jewel of the East Coast, pristine beaches & coastal hills',
+    coordinates: { lat: 17.6868, lng: 83.2185 },
+    highlights: [
+      'RK Beach & INS Kursura Submarine Museum',
+      'Kailasagiri Hilltop Panoramic Park',
+      'Rushikonda Beach & Coastal Water Sports',
+      'Yarada Beach & Dolphin\'s Nose Lighthouse',
+      'Simhachalam Historic Temple',
+      'Borra Caves & Araku Valley Day Excursion'
+    ],
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80'
+  },
+  visakhapatnam: {
+    name: 'Visakhapatnam',
+    country: 'India',
+    tagline: 'The Jewel of the East Coast, pristine beaches & coastal hills',
+    coordinates: { lat: 17.6868, lng: 83.2185 },
+    highlights: [
+      'RK Beach & INS Kursura Submarine Museum',
+      'Kailasagiri Hilltop Panoramic Park',
+      'Rushikonda Beach & Coastal Water Sports',
+      'Yarada Beach & Dolphin\'s Nose Lighthouse',
+      'Simhachalam Historic Temple',
+      'Borra Caves & Araku Valley Day Excursion'
+    ],
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80'
+  },
+  hyderabad: {
+    name: 'Hyderabad',
+    country: 'India',
+    tagline: 'City of Pearls, majestic Charminar & royal Nizami gastronomy',
+    coordinates: { lat: 17.3850, lng: 78.4867 },
+    highlights: ['Charminar & Laad Bazaar', 'Golconda Fort & Sound Show', 'Hussain Sagar Lake & Buddha Statue', 'Chowmahalla Palace', 'Ramoji Film City'],
+    image: 'https://images.unsplash.com/photo-1603204077673-f11c750b3297?auto=format&fit=crop&w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1600&q=80'
+  },
+  delhi: {
+    name: 'Delhi',
+    country: 'India',
+    tagline: 'Heart of India, historic monuments & bustling Chandni Chowk bazaars',
+    coordinates: { lat: 28.6139, lng: 77.2090 },
+    highlights: ['India Gate & Kartavya Path', 'Qutub Minar Complex', 'Humayun\'s Tomb', 'Red Fort & Chandni Chowk', 'Lotus Temple'],
+    image: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1600&q=80'
+  }
+};
+
+async function resolveDestination(rawInput) {
+  const cleanInput = (rawInput || 'Vizag').trim();
+  const destLower = cleanInput.toLowerCase();
+
+  // 1. Check curated catalog
+  for (const d of destinationsData) {
+    const dId = (d.id || '').toLowerCase();
+    const dName = (d.name || '').toLowerCase();
+    if (destLower === dId || destLower === dName || (destLower.length > 3 && (destLower.includes(dName) || dId.includes(destLower)))) {
+      return {
+        id: d.id,
+        name: d.name,
+        country: d.country || 'Global',
+        tagline: d.tagline,
+        coordinates: d.coordinates || (cityDefaults[d.id] ? { lat: cityDefaults[d.id].lat, lng: cityDefaults[d.id].lng } : { lat: 15.2993, lng: 74.1240 }),
+        image: d.image,
+        bannerImage: d.bannerImage || d.image,
+        highlights: d.highlights || [],
+        currency: d.currency || '$'
+      };
+    }
+  }
+
+  // 2. Check custom known destinations
+  for (const [key, info] of Object.entries(customKnownDestinations)) {
+    if (key.includes(destLower) || destLower.includes(key)) {
+      return {
+        id: key,
+        name: info.name,
+        country: info.country,
+        tagline: info.tagline,
+        coordinates: info.coordinates,
+        image: info.image,
+        bannerImage: info.bannerImage,
+        highlights: info.highlights,
+        currency: '$'
+      };
+    }
+  }
+
+  // 3. Dynamic Photon Geocoding
+  let destTitle = cleanInput.charAt(0).toUpperCase() + cleanInput.slice(1);
+  let country = 'Global';
+  let coords = { lat: 17.6868, lng: 83.2185 };
+
+  try {
+    const photonUrl = `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanInput)}&limit=1`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500);
+    const resp = await fetch(photonUrl, { headers: { 'User-Agent': 'EasyTripApp/2.0' }, signal: controller.signal });
+    clearTimeout(timeout);
+    if (resp.ok) {
+      const pData = await resp.json();
+      if (pData.features && pData.features.length > 0) {
+        const f0 = pData.features[0];
+        const geom = f0.geometry?.coordinates || [];
+        if (geom.length >= 2) {
+          coords = { lat: geom[1], lng: geom[0] };
+        }
+        if (f0.properties?.country) country = f0.properties.country;
+        if (f0.properties?.name) destTitle = f0.properties.name;
+      }
+    }
+  } catch (err) {
+    // Graceful fallback
+  }
+
+  const dynamicHighlights = [
+    `${destTitle} Scenic Promenade & Waterfront Walk`,
+    `${destTitle} Historic Quarter & Heritage Trail`,
+    `${destTitle} Panoramic Hilltop Vista & Sunset Point`,
+    `${destTitle} Cultural Sanctuary & Sacred Landmark`,
+    `${destTitle} Central Artisan Bazaars & Culinary Alley`,
+    `${destTitle} Botanical Gardens & Nature Escape`,
+    `${destTitle} Evening Twilight Lounge & Skyline`
+  ];
+
+  return {
+    id: destLower.replace(/\s+/g, '-'),
+    name: destTitle,
+    country,
+    tagline: `Scenic wonders, vibrant local culture & memorable escapes in ${destTitle}`,
+    coordinates: coords,
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=80',
+    highlights: dynamicHighlights,
+    currency: '$'
+  };
+}
+
+async function generateDynamicItinerary(reqBody) {
   const {
-    destination = 'Goa',
-    origin = 'Mumbai',
+    destination = 'Vizag',
+    origin = 'Current Location',
     days = 3,
     budget = 'moderate',
     travelStyle = 'Couple',
@@ -106,27 +217,26 @@ function generateDynamicItinerary(reqBody) {
   } = reqBody;
 
   const numDays = Math.min(Math.max(parseInt(days) || 3, 1), 7);
-  const destLower = destination.toLowerCase();
   
-  // Find matching destination or default
-  const destInfo = destinationsData.find(d => 
-    destLower.includes(d.id) || destLower.includes(d.name.toLowerCase())
-  ) || destinationsData[0];
+  // Resolve EXACT destination
+  const destInfo = await resolveDestination(destination);
+  const destName = destInfo.name;
+  const country = destInfo.country;
+  const coords = destInfo.coordinates;
+  const highlights = destInfo.highlights;
 
-  const coords = cityDefaults[destInfo.id] || { lat: destInfo.coordinates.lat, lng: destInfo.coordinates.lng, images: [destInfo.image] };
   const costMultiplier = budget === 'luxury' ? 2.5 : budget === 'budget' ? 0.7 : 1.2;
-
   const itineraryDays = [];
   const today = new Date();
 
   const themes = [
-    { title: 'Arrival & Iconic First Impressions', theme: 'Grand Welcomes & Scenic Sunset' },
-    { title: 'Hidden Gems & Cultural Immersion', theme: 'Heritage, Art & Architectural Wonders' },
-    { title: 'Outdoor Escapes & Local Flavors', theme: 'Nature, Coastal Vistas & Gastronomy' },
-    { title: 'Artisan Markets & Leisure Moments', theme: 'Vibrant Bazaars & Sunset Indulgence' },
-    { title: 'Farewell Vistas & Scenic Memories', theme: 'Morning Panoramas & Easy Departure' },
-    { title: 'Deep Exploration & Serene Retreat', theme: 'Off-beat Paths & Restful Splendor' },
-    { title: 'The Grand Finale Experience', theme: 'Exclusive Dining & Celebratory Farewell' }
+    { title: 'Arrival & Iconic First Impressions', theme: `Grand Welcomes & ${destName} Sunset` },
+    { title: 'Hidden Gems & Cultural Immersion', theme: `Heritage, Art & ${destName} Landmarks` },
+    { title: 'Outdoor Escapes & Local Flavors', theme: `Nature, Coastal Vistas & Gastronomy` },
+    { title: 'Artisan Markets & Leisure Moments', theme: `Vibrant Bazaars & Sunset Indulgence` },
+    { title: 'Farewell Vistas & Scenic Memories', theme: `Morning Panoramas & Scenic Departure` },
+    { title: 'Deep Exploration & Serene Retreat', theme: `Off-beat Paths & Restful Splendor` },
+    { title: 'The Grand Finale Experience', theme: `Exclusive Dining & Celebratory Farewell` }
   ];
 
   for (let i = 0; i < numDays; i++) {
@@ -134,9 +244,8 @@ function generateDynamicItinerary(reqBody) {
     dayDate.setDate(today.getDate() + i);
 
     const theme = themes[i % themes.length];
-    const dayHighlights = destInfo.highlights ? destInfo.highlights[i % destInfo.highlights.length] : `${destination} Center`;
+    const dayHighlights = highlights.length > 0 ? highlights[i % highlights.length] : `${destName} Landmark`;
 
-    // Coordinates with slight offset for map markers
     const morningCoord = { lat: coords.lat + (Math.sin(i * 1.5) * 0.015), lng: coords.lng + (Math.cos(i * 1.5) * 0.015) };
     const afternoonCoord = { lat: coords.lat + (Math.cos(i * 1.8) * 0.02), lng: coords.lng + (Math.sin(i * 1.8) * 0.02) };
     const eveningCoord = { lat: coords.lat + (Math.sin(i * 2.2) * 0.018), lng: coords.lng + (Math.cos(i * 2.2) * 0.018) };
@@ -147,12 +256,12 @@ function generateDynamicItinerary(reqBody) {
         period: 'Morning',
         time: '09:00 AM - 12:30 PM',
         title: i === 0 ? `Arrival & Check-in near ${dayHighlights}` : `Explore ${dayHighlights} & Surroundings`,
-        location: `${dayHighlights}, ${destInfo.name}`,
-        description: `Kick off the day taking in the fresh atmosphere. Enjoy early access before crowds arrive, with scenic photo spots and leisurely strolls.`,
+        location: `${dayHighlights}, ${destName}`,
+        description: `Kick off the day taking in the atmosphere of ${destName}. Enjoy scenic photo spots and leisurely exploration.`,
         category: 'Sightseeing',
         cost: Math.round(15 * costMultiplier),
         duration: '3.5 hrs',
-        image: coords.images[i % coords.images.length] || destInfo.image,
+        image: destInfo.image,
         coordinates: morningCoord,
         tips: 'Bring comfortable walking footwear and keep camera ready for natural morning lighting.'
       },
@@ -160,13 +269,13 @@ function generateDynamicItinerary(reqBody) {
         id: `day-${i+1}-afternoon`,
         period: 'Afternoon',
         time: '01:00 PM - 04:30 PM',
-        title: `Curated Lunch & ${interests[0] || 'Local'} Discovery`,
-        location: `Historic Central Quarter, ${destInfo.name}`,
-        description: `Delight your palate with authentic regional delicacies. Followed by a relaxing cultural walkthrough or scenic boat/safari ride tailored for ${travelStyle.toLowerCase()} travelers.`,
+        title: `Curated Lunch & ${interests[0] || 'Regional'} Discovery`,
+        location: `Historic Central Quarter, ${destName}`,
+        description: `Delight your palate with authentic regional delicacies. Followed by a relaxing cultural walkthrough tailored for ${travelStyle.toLowerCase()} travelers.`,
         category: 'Dining & Leisure',
         cost: Math.round(28 * costMultiplier),
         duration: '3.5 hrs',
-        image: coords.images[(i + 1) % coords.images.length] || destInfo.bannerImage,
+        image: destInfo.bannerImage,
         coordinates: afternoonCoord,
         tips: 'Advance table reservations are pre-recommended; sample the house specialty dish.'
       },
@@ -174,13 +283,13 @@ function generateDynamicItinerary(reqBody) {
         id: `day-${i+1}-evening`,
         period: 'Evening',
         time: '05:30 PM - 09:30 PM',
-        title: `Golden Hour Sunset & Evening Vibrance`,
-        location: `Scenic Promenade / Rooftop, ${destInfo.name}`,
-        description: `Experience the breathtaking sunset glow across the horizon. As night descends, enjoy handcrafted cocktails, lively music, and illuminated architecture.`,
+        title: `Golden Hour Sunset & Evening Vibrance in ${destName}`,
+        location: `Scenic Promenade / Rooftop, ${destName}`,
+        description: `Experience the breathtaking sunset glow across ${destName}. As night descends, enjoy handcrafted cocktails, lively music, and illuminated architecture.`,
         category: 'Entertainment',
         cost: Math.round(35 * costMultiplier),
         duration: '4 hrs',
-        image: coords.images[(i + 2) % coords.images.length] || destInfo.image,
+        image: destInfo.image,
         coordinates: eveningCoord,
         tips: 'Arrive 30 minutes before golden hour to secure the best vantage point.'
       }
@@ -206,8 +315,8 @@ function generateDynamicItinerary(reqBody) {
 
   return {
     id: `trip-${Date.now()}`,
-    destination: destInfo.name,
-    country: destInfo.country,
+    destination: destName,
+    country,
     origin,
     days: numDays,
     startDate: reqBody.startDate || new Date().toISOString().split('T')[0],
@@ -221,7 +330,8 @@ function generateDynamicItinerary(reqBody) {
     currency: '$',
     itineraryDays,
     aiNotes: [
-      `Itinerary customized for ${travelStyle} travel with focus on ${interests.join(', ')}.`,
+      `Itinerary exclusively customized for ${destName} (${country}) for ${travelStyle} travel.`,
+      `Focus areas integrated: ${interests.join(', ')}.`,
       `Smart route balancing ensures minimal transit time between consecutive stops.`,
       `Weather-aware activity scheduling with afternoon indoor/shaded slots.`
     ]
@@ -229,9 +339,9 @@ function generateDynamicItinerary(reqBody) {
 }
 
 // POST /api/plan-trip
-router.post('/plan-trip', (req, res) => {
+router.post('/plan-trip', async (req, res) => {
   try {
-    const itinerary = generateDynamicItinerary(req.body);
+    const itinerary = await generateDynamicItinerary(req.body);
     res.json({
       success: true,
       data: itinerary
