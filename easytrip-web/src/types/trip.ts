@@ -36,6 +36,7 @@ export interface TripItinerary {
   destination: string;
   country: string;
   origin: string;
+  originCoordinates?: Coordinates;
   days: number;
   startDate: string;
   endDate: string;

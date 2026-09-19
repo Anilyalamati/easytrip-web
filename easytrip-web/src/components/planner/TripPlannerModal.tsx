@@ -17,6 +17,7 @@ export const TripPlannerModal: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
   const [locationStatus, setLocationStatus] = useState<string | null>(null);
+  const [originCoordinates, setOriginCoordinates] = useState<{ lat: number; lng: number } | null>(null);
 
   useEffect(() => {
     if (prefillDestination) {
@@ -77,6 +78,7 @@ export const TripPlannerModal: React.FC = () => {
             }
           }
 
+          setOriginCoordinates({ lat: latitude, lng: longitude });
           if (resolvedCity) {
             setOrigin(resolvedCity);
             setLocationStatus(`Located: ${resolvedCity}`);
@@ -116,6 +118,7 @@ export const TripPlannerModal: React.FC = () => {
       await planTrip({
         destination: finalDest,
         origin: origin.trim() || 'Current Location',
+        originCoordinates,
         days,
         startDate,
         budget,

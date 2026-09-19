@@ -258,6 +258,26 @@ KEYWORD_IMAGE_POOLS = {
     "lighthouse": [
         "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80",
         "https://images.unsplash.com/photo-1509233725247-49e657c54213?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "paris": [
+        "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1549144511-f099e773c147?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "tokyo": [
+        "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "waterfall": [
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "sushi": [
+        "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
     ]
 }
 
@@ -270,21 +290,25 @@ def resolve_activity_image(title: str, location: str, category: str, fallback_im
     
     keyword_map = [
         (["submarine", "kursura", "naval", "torpedo", "aircraft"], "submarine"),
+        (["eiffel", "paris", "louvre", "champ de mars", "seine", "montmartre", "versailles", "champs-elysees", "arc de triomphe", "orsay", "marais"], "paris"),
+        (["tokyo", "shibuya", "senso-ji", "asakusa", "akihabara", "meiji", "harajuku", "shinjuku", "tsukiji", "odaiba", "roppongi"], "tokyo"),
         (["rushikonda", "yarada", "beach", "coastal", "surf", "sand", "ocean", "sea"], "beach"),
-        (["simhachalam", "temple", "shrine", "sanctum", "aarti", "iskcon", "spiritual", "puja", "darshan"], "temple"),
+        (["simhachalam", "temple", "shrine", "sanctum", "aarti", "iskcon", "spiritual", "puja", "darshan", "hadimba"], "temple"),
         (["havelock", "bridge", "arch bridge", "viaduct"], "bridge"),
+        (["waterfall", "falls", "jogini", "jana", "sissu", "dudhsagar"], "waterfall"),
         (["godavari", "river", "ghat", "cruise", "papikondalu", "gorge", "boat", "ferry"], "river"),
         (["cotton", "barrage", "dowleswaram", "dam", "canal", "irrigation"], "barrage"),
         (["kadiyam", "nursery", "floral", "flower", "bonsai"], "nursery"),
         (["borra", "cave", "limestone", "stalactite", "karst", "cavern"], "cave"),
         (["araku", "coffee", "plantation", "tea garden", "orchard", "vineyard"], "coffee"),
-        (["pulasa", "seafood", "thali", "food", "lunch", "dinner", "culinary", "bistro", "tasting", "sweet", "pootharekulu", "dosa", "biryani", "dining"], "food"),
-        (["bazaar", "market", "shopping", "handicraft", "craft", "textile", "lepakshi", "souvenir"], "bazaar"),
-        (["museum", "gallery", "exhibition", "civilization", "antiquities", "artifact"], "museum"),
-        (["citadel", "fort", "castle", "palace", "rampart", "bastion", "monument"], "palace"),
-        (["kailasagiri", "ropeway", "cable car", "funicular", "ridge"], "ropeway"),
+        (["sushi", "wagyu", "izakaya", "ramen", "nigiri", "otoro"], "sushi"),
+        (["pulasa", "seafood", "thali", "food", "lunch", "dinner", "culinary", "bistro", "tasting", "sweet", "pootharekulu", "dosa", "biryani", "siddu", "dining"], "food"),
+        (["bazaar", "market", "shopping", "handicraft", "craft", "textile", "lepakshi", "souvenir", "mall road"], "bazaar"),
+        (["museum", "gallery", "exhibition", "civilization", "antiquities", "artifact", "teamlab"], "museum"),
+        (["citadel", "fort", "castle", "palace", "rampart", "bastion", "monument", "naggar"], "palace"),
+        (["kailasagiri", "ropeway", "cable car", "funicular", "ridge", "solang"], "ropeway"),
         (["dolphin's nose", "lighthouse", "harbor", "port", "pier", "promontory"], "lighthouse"),
-        (["mountain", "snow", "trek", "hike", "peak", "valley", "alpine"], "mountain"),
+        (["mountain", "snow", "trek", "hike", "peak", "valley", "alpine", "rohtang", "atal", "himalayan", "manali"], "mountain"),
         (["sunset", "golden hour", "lounge", "rooftop", "nightlife", "evening", "twilight", "cocktail"], "sunset"),
         (["park", "botanical", "arboretum", "promenade", "walk", "garden", "esplanade"], "park"),
     ]
@@ -535,6 +559,363 @@ CURATED_DESTINATION_PLANS = {
                     "base_cost": 12,
                     "duration": "3 hrs",
                     "tips": "Purchase vacuum-sealed dry fruit pootharekulu boxes to take home as authentic regional treats."
+                }
+            ]
+        }
+    ],
+    "paris": [
+        {
+            "title": "Eiffel Tower Summit, Louvre Masterpieces & Seine Sunset Cruise",
+            "theme": "Wrought-Iron Icons, Renaissance Treasures & Golden Hour Riverbanks",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "09:00 AM - 12:30 PM",
+                    "title": "Eiffel Tower Summit Ascent & Champ de Mars Stroll",
+                    "location": "Champ de Mars, 7th Arrondissement, Paris",
+                    "description": "Ascend the iconic wrought-iron lattice monument for sweeping 360-degree panoramas of the City of Light, followed by a leisurely stroll across the Champ de Mars gardens.",
+                    "category": "Iconic Landmark & Panorama",
+                    "base_cost": 32,
+                    "duration": "3.5 hrs",
+                    "tips": "Pre-book summit elevator tickets to bypass lengthy admission queues."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Louvre Museum Classical Masterpieces & Tuileries Gardens",
+                    "location": "Palais du Louvre, 1st Arrondissement, Paris",
+                    "description": "Explore the world's largest art museum, admiring the Mona Lisa, Venus de Milo, and Winged Victory before relaxing near the fountains of the Tuileries.",
+                    "category": "World Heritage Art & Gardens",
+                    "base_cost": 24,
+                    "duration": "3.5 hrs",
+                    "tips": "Enter via the Carrousel du Louvre underground mall entrance to avoid glass pyramid lines."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 09:00 PM",
+                    "title": "Seine River Twilight Cruise & Notre-Dame Cathedral Panorama",
+                    "location": "Port de la Bourdonnais, Paris",
+                    "description": "Glide past illuminated historic bridges, Musée d'Orsay, and the gothic towers of Notre-Dame as golden hour transitions into twilight.",
+                    "category": "River Cruise & Twilight",
+                    "base_cost": 20,
+                    "duration": "3.5 hrs",
+                    "tips": "Board 45 minutes before dusk to watch the Eiffel Tower's sparkling beacon light up on the hour."
+                }
+            ]
+        },
+        {
+            "title": "Montmartre Bohemian Artists, Sacré-Cœur & Arc de Triomphe",
+            "theme": "Historic Hilltop Sanctuaries, Haute Couture & Jazz Heritage",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "09:00 AM - 12:30 PM",
+                    "title": "Montmartre Bohemian Artists Square & Sacré-Cœur Basilica",
+                    "location": "Place du Tertre & Montmartre Hill, Paris",
+                    "description": "Climb the cobblestone heights of Montmartre to the gleaming white Romano-Byzantine dome of Sacré-Cœur, exploring vintage painters' ateliers and windmill alleys.",
+                    "category": "Historic Quarter & Sacred Basilica",
+                    "base_cost": 15,
+                    "duration": "3.5 hrs",
+                    "tips": "Take the Montmartre funicular with standard metro tickets if you prefer not to climb the stairs."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Arc de Triomphe Observation Deck & Avenue des Champs-Élysées",
+                    "location": "Place Charles de Gaulle, Paris",
+                    "description": "Ascend to the rooftop terrace of Napoleon's triumphal arch overlooking the 12 radiating avenues, followed by boutique browsing on the Champs-Élysées.",
+                    "category": "Historic Monument & Boulevard",
+                    "base_cost": 18,
+                    "duration": "3.5 hrs",
+                    "tips": "Use the pedestrian underpass at the top of the avenue; never try to cross the roundabout traffic."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 09:00 PM",
+                    "title": "Saint-Germain-des-Prés Bistro Tasting & Historic Jazz Cellar",
+                    "location": "Latin Quarter & Saint-Germain, Paris",
+                    "description": "Indulge in French culinary classics including duck confit, warm baguette with artisan brie, and tarte tatin, followed by live jazz at Caveau de la Huchette.",
+                    "category": "French Gastronomy & Jazz",
+                    "base_cost": 38,
+                    "duration": "3.5 hrs",
+                    "tips": "Request a table on the heated terrace for quintessential Parisian street-watching."
+                }
+            ]
+        },
+        {
+            "title": "Palace of Versailles Hall of Mirrors & Musée d'Orsay Treasures",
+            "theme": "Royal Grandeur, Impressionist Masterpieces & Le Marais Bakeries",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:30 AM - 12:30 PM",
+                    "title": "Palace of Versailles Royal Grand Apartments & Hall of Mirrors",
+                    "location": "Place d'Armes, Versailles",
+                    "description": "Journey to the grand seat of the Sun King Louis XIV, exploring the resplendent Hall of Mirrors, royal bedchambers, and expansive geometric fountain gardens.",
+                    "category": "Royal Palace & UNESCO Heritage",
+                    "base_cost": 30,
+                    "duration": "4 hrs",
+                    "tips": "Take the RER C train from central Paris; rent a bicycle to navigate the immense gardens."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:30 PM - 04:30 PM",
+                    "title": "Musée d'Orsay Impressionist Treasures in a Beaux-Arts Station",
+                    "location": "Esplanade Valéry Giscard d'Estaing, Paris",
+                    "description": "Marvel at celebrated masterpieces by Monet, Van Gogh, Renoir, and Degas housed beneath the soaring vaulted iron-and-glass ceilings of a 1900 railway terminal.",
+                    "category": "Impressionist Art & Architecture",
+                    "base_cost": 22,
+                    "duration": "3 hrs",
+                    "tips": "Visit the 5th-floor giant clock face cafe for a unique framed view across the Seine to the Louvre."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 09:00 PM",
+                    "title": "Le Marais Artisan Boutiques & Place des Vosges Twilight Walk",
+                    "location": "Le Marais, 4th Arrondissement, Paris",
+                    "description": "Wander 17th-century aristocratic courtyards, sample fresh falafel on Rue des Rosiers, and savor evening macarons in Paris's oldest planned square.",
+                    "category": "Artisan Quarter & French Patisserie",
+                    "base_cost": 25,
+                    "duration": "3.5 hrs",
+                    "tips": "Pick up hand-packaged macarons from Carette under the vaulted arcades of Place des Vosges."
+                }
+            ]
+        }
+    ],
+    "tokyo": [
+        {
+            "title": "Asakusa Senso-ji, Akihabara Tech & Shibuya Crossing Scramble",
+            "theme": "Edo Ancient Heritage, Electric Anime Plazas & Neon Crossing",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "09:00 AM - 12:30 PM",
+                    "title": "Senso-ji Ancient Temple & Asakusa Nakamise Dori Street",
+                    "location": "Asakusa, Taito City, Tokyo",
+                    "description": "Pass under the massive red Kaminarimon paper lantern into Tokyo's oldest 7th-century Buddhist temple, sampling piping hot Ningyo-yaki sweets along Nakamise Dori.",
+                    "category": "Historic Temple & Traditional Market",
+                    "base_cost": 10,
+                    "duration": "3.5 hrs",
+                    "tips": "Draw an omikuji (fortune slip) at the temple pavilion; tie unlucky fortunes to the metal racks."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Akihabara Electric Town & Futuristic Gaming Culture",
+                    "location": "Soto-Kanda, Chiyoda City, Tokyo",
+                    "description": "Dive into the kaleidoscopic heart of anime, manga, retro arcades, multi-floor tech plazas, and themed maid cafes in neon-draped Akihabara.",
+                    "category": "Tech & Pop Culture",
+                    "base_cost": 20,
+                    "duration": "3.5 hrs",
+                    "tips": "Check out Mandarake Complex for multi-story vintage collectible figurines and retro games."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 09:00 PM",
+                    "title": "Shibuya Crossing Scramble & Shibuya Sky Sunset Observatory",
+                    "location": "Shibuya Scramble Square, Tokyo",
+                    "description": "Experience the world's most famous pedestrian intersection, then ascend 229 meters to the open-air rooftop deck of Shibuya Sky for sunsets over Mount Fuji and neon Tokyo.",
+                    "category": "Iconic Skyline & Modern Metropolis",
+                    "base_cost": 25,
+                    "duration": "3.5 hrs",
+                    "tips": "Book Shibuya Sky sunset time slot 2 weeks in advance; lockers are mandatory for rooftop access."
+                }
+            ]
+        },
+        {
+            "title": "Meiji Jingu Forest, Harajuku Street Fashion & Shinjuku Izakayas",
+            "theme": "Shinto Sanctuaries, Avant-Garde Style & Post-War Lantern Alleys",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "09:00 AM - 12:30 PM",
+                    "title": "Meiji Jingu Shinto Shrine & Evergreen Forest Sanctuary",
+                    "location": "Yoyogikamizonocho, Shibuya City, Tokyo",
+                    "description": "Step beneath towering 1,500-year-old cedar Torii gates into a tranquil 170-acre sacred forest planted with 100,000 donated trees from across Japan.",
+                    "category": "Shinto Shrine & Forest Oasis",
+                    "base_cost": 8,
+                    "duration": "3.5 hrs",
+                    "tips": "Cleanse your hands and mouth at the temizuya water fountain before entering the main courtyard."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Harajuku Takeshita Street & Omotesando Design Boulevards",
+                    "location": "Jingumae, Shibuya City, Tokyo",
+                    "description": "Contrast Harajuku's whimsical street fashion with the tree-lined luxury architectural pavilions and designer cafes of Omotesando.",
+                    "category": "Street Fashion & Avant-Garde Design",
+                    "base_cost": 18,
+                    "duration": "3.5 hrs",
+                    "tips": "Try a freshly rolled Japanese dessert crepe filled with strawberries and custard."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 09:00 PM",
+                    "title": "Shinjuku Gyoen National Garden & Omoide Yokocho Izakaya Trail",
+                    "location": "Nishi-Shinjuku, Tokyo",
+                    "description": "Stroll formal Japanese landscape ponds, then dive into the nostalgic post-war lantern alleys of 'Memory Lane', savoring grilled yakitori skewers and draft beer.",
+                    "category": "Japanese Gardens & Izakaya Gastronomy",
+                    "base_cost": 32,
+                    "duration": "3.5 hrs",
+                    "tips": "Omoide Yokocho izakayas are intimate (4-8 seats per stall); carry Japanese Yen cash."
+                }
+            ]
+        },
+        {
+            "title": "Tsukiji Outer Market Sushi, TeamLab Planets & Tokyo Tower",
+            "theme": "Fresh Otoro Nigiri, Sensory Digital Art & Minato Skyline Vistas",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:00 AM - 12:00 PM",
+                    "title": "Tsukiji Outer Market Fresh Sushi & A5 Wagyu Street Tasting",
+                    "location": "Tsukiji, Chuo City, Tokyo",
+                    "description": "Sample melt-in-your-mouth bluefin otoro nigiri, grilled tamagoyaki sweet omelets, and flame-torched A5 Wagyu beef skewers directly from wholesale market stalls.",
+                    "category": "Seafood Market & Culinary Masterclass",
+                    "base_cost": 35,
+                    "duration": "4 hrs",
+                    "tips": "Arrive around 8:00-9:00 AM while daily fish catches and knife shops are bustling."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "TeamLab Planets Digital Immersive Art Museum in Odaiba",
+                    "location": "Toyosu / Odaiba Waterfront, Tokyo",
+                    "description": "Wade barefoot through knee-deep digital koi fish waters and walk across endless crystal mirror rooms in this groundbreaking sensory digital art museum.",
+                    "category": "Digital Art & Futuristic Experience",
+                    "base_cost": 30,
+                    "duration": "3.5 hrs",
+                    "tips": "Wear pants that can be rolled up to your knees as you will walk through shallow water exhibits."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 09:00 PM",
+                    "title": "Roppongi Hills Mori Tower & Tokyo Tower Illuminated Twilight",
+                    "location": "Roppongi, Minato City, Tokyo",
+                    "description": "Take in sweeping sunset vistas of the red-and-white Tokyo Tower glowing against the metropolis, followed by Michelin-caliber ramen or matcha dessert bars.",
+                    "category": "Skyline Panoramas & Evening Dining",
+                    "base_cost": 28,
+                    "duration": "3.5 hrs",
+                    "tips": "The Tokyo City View observation deck on the 52nd floor provides the best direct view of Tokyo Tower."
+                }
+            ]
+        }
+    ],
+    "manali": [
+        {
+            "title": "Hadimba Devi Cedar Temple, Old Manali & Jogini Waterfall",
+            "theme": "Ancient Deodar Groves, Bohemian Riverside Cafes & Alpine Trails",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:30 AM - 12:00 PM",
+                    "title": "Hadimba Devi Cedar Forest Historic Wooden Temple",
+                    "location": "Dhungri Forest, Manali",
+                    "description": "Wander through centuries-old giant deodar cedar pine groves to the unique 1553 pagoda-style wooden temple adorned with intricate timber animal relief carvings.",
+                    "category": "Sacred Forest Temple & Heritage",
+                    "base_cost": 8,
+                    "duration": "3.5 hrs",
+                    "tips": "Visit early morning when mist filters through the deodar canopy for magical alpine photos."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Old Manali Riverside Cafes & Fresh Himalayan Trout Tasting",
+                    "location": "Old Manali Village & Manalsu River",
+                    "description": "Cross the bridge into Old Manali's bohemian stone-and-wood village, savoring butter-garlic pan-fried Himalayan river trout and wood-fired sourdough pizzas.",
+                    "category": "Mountain Gastronomy & Riverside Vibe",
+                    "base_cost": 18,
+                    "duration": "3.5 hrs",
+                    "tips": "Request outdoor riverside seating overlooking the rushing glacial waters."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:00 PM - 08:30 PM",
+                    "title": "Jogini Waterfall Clifftop Hike & Beas Valley Sunset",
+                    "location": "Vashisht to Jogini Cliff Trail, Manali",
+                    "description": "Hike along apple orchards and mountain streams up to the cascading multi-tiered Jogini Waterfalls, watching the setting sun ignite the Pir Panjal mountain range.",
+                    "category": "Alpine Waterfall & Sunset Trek",
+                    "base_cost": 10,
+                    "duration": "3.5 hrs",
+                    "tips": "Wear hiking shoes with good tread; trail can be slightly slippery near the waterfall spray."
+                }
+            ]
+        },
+        {
+            "title": "Solang Valley Slopes, Atal Tunnel & Vashisht Sulphur Springs",
+            "theme": "Paragliding Heights, Trans-Himalayan Gateways & Thermal Waters",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:00 AM - 12:30 PM",
+                    "title": "Solang Valley Paragliding & Alpine Adventure Slopes",
+                    "location": "Solang Valley, Manali",
+                    "description": "Soar above snow-kissed alpine meadows and pine ridges on a tandem paragliding flight, or take the modern ropeway cable car up to 3,200 meters.",
+                    "category": "Adventure Aerial & Cable Car",
+                    "base_cost": 35,
+                    "duration": "4 hrs",
+                    "tips": "Paragliding operates strictly during clear morning wind windows; wear a windbreaker jacket."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 05:00 PM",
+                    "title": "Atal Tunnel Rohtang Highway & Sissu Lahaul Valley Gateway",
+                    "location": "Atal Tunnel Northern Portal, Lahaul & Spiti",
+                    "description": "Pass through the world's longest highway tunnel above 10,000 feet, emerging into the dramatic rain-shadow trans-Himalayan landscapes and waterfalls of Sissu.",
+                    "category": "Mountain Engineering & Glacial Valley",
+                    "base_cost": 25,
+                    "duration": "4 hrs",
+                    "tips": "Carry warm layers as temperatures at the north portal are significantly colder than Manali."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 08:30 PM",
+                    "title": "Vashisht Village Natural Hot Sulphur Springs & Relaxation",
+                    "location": "Vashisht Temple Village, Manali",
+                    "description": "Unwind after mountain excursions in the ancient natural mineral-rich thermal sulphur springs renowned for restorative therapeutic properties.",
+                    "category": "Thermal Springs & Mountain Wellness",
+                    "base_cost": 6,
+                    "duration": "3 hrs",
+                    "tips": "Separate enclosed bathing areas are provided for men and women; carry a change of clothes."
+                }
+            ]
+        },
+        {
+            "title": "Naggar Castle Citadel, Jana Waterfall Siddu & Mall Road",
+            "theme": "15th-Century Himalayan Architecture, Siddu Cuisine & Shawls",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:30 AM - 12:30 PM",
+                    "title": "Naggar Castle Heritage Himalayan Citadel & Roerich Gallery",
+                    "location": "Naggar Village, Kullu Valley",
+                    "description": "Explore the 15th-century wood-and-stone castle built by Raja Sidh Singh, overlooking the Beas River, and visit the historic mountain painting estate of Russian artist Nicholas Roerich.",
+                    "category": "Himalayan Citadel & Art Gallery",
+                    "base_cost": 14,
+                    "duration": "4 hrs",
+                    "tips": "Enjoy traditional Kullu walnut pie and masala chai on the castle terrace."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Jana Waterfall Mountain Village & Authentic Himachali Siddu Tasting",
+                    "location": "Jana Village, Kullu-Manali",
+                    "description": "Cross wooden bridges over natural glacial springs in Jana village, tasting authentic steamed wheat-and-poppyseed Siddu served with hot pure desi ghee and walnut chutney.",
+                    "category": "Traditional Himachali Cuisine & Countryside",
+                    "base_cost": 12,
+                    "duration": "3.5 hrs",
+                    "tips": "Siddu is freshly made to order; pair it with homemade red kidney bean (Rajma) curry."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 09:00 PM",
+                    "title": "Mall Road Evening Stroll & Tibetan Handloom Woolen Bazaars",
+                    "location": "Mall Road, Central Manali",
+                    "description": "Conclude your alpine voyage exploring pedestrian Mall Road, visiting the Tibetan Monastery, and picking up authentic GI-tagged Kullu shawls, wooden carvings, and pine honey.",
+                    "category": "Shopping & Tibetan Culture",
+                    "base_cost": 15,
+                    "duration": "3.5 hrs",
+                    "tips": "Look for government handloom mark certification on Pashmina and Kullu woolen shawls."
                 }
             ]
         }
@@ -854,6 +1235,7 @@ def resolve_destination(raw_input: str) -> Dict[str, Any]:
 class PlanTripRequest(BaseModel):
     destination: str
     origin: Optional[str] = "Current Location"
+    originCoordinates: Optional[Dict[str, float]] = None
     days: int = 3
     startDate: Optional[str] = None
     endDate: Optional[str] = None
@@ -1031,6 +1413,7 @@ def plan_trip(req: PlanTripRequest):
             "destination": dest_name,
             "country": country,
             "origin": req.origin or "Current Location",
+            "originCoordinates": req.originCoordinates,
             "days": num_days,
             "startDate": req.startDate or start_date.strftime("%Y-%m-%d"),
             "endDate": req.endDate or (start_date + timedelta(days=num_days)).strftime("%Y-%m-%d"),
