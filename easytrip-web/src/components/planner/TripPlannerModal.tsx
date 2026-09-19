@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTrip } from '../../context/TripContext';
-import { X, Sparkles, MapPin, Calendar, DollarSign, Users, Compass, Car, Plane, Train } from 'lucide-react';
+import { X, Sparkles, MapPin, Calendar, DollarSign, Users, Compass, Car, Plane, Train, Locate, Loader2, CheckCircle2 } from 'lucide-react';
 import { GenerationOverlay } from './GenerationOverlay';
 
 export const TripPlannerModal: React.FC = () => {
@@ -15,6 +15,8 @@ export const TripPlannerModal: React.FC = () => {
   const [interests, setInterests] = useState<string[]>(['Culture', 'Relaxation', 'Foodie']);
   const [transport, setTransport] = useState('flight');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationStatus, setLocationStatus] = useState<string | null>(null);
 
   useEffect(() => {
     if (prefillDestination) {
@@ -29,6 +31,74 @@ export const TripPlannerModal: React.FC = () => {
   }, [prefillDays]);
 
   if (!isPlannerOpen) return null;
+
+  const detectLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationStatus('Geolocation not supported by browser');
+      return;
+    }
+
+    setIsLocating(true);
+    setLocationStatus('Detecting GPS location...');
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          let resolvedCity = '';
+
+          // 1. Try BigDataCloud reverse geocode client (fast, CORS-friendly)
+          try {
+            const bdcRes = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+            );
+            if (bdcRes.ok) {
+              const data = await bdcRes.json();
+              resolvedCity = data.city || data.locality || data.principalSubdivision || '';
+            }
+          } catch (e) {
+            console.warn('BigDataCloud lookup failed, trying Nominatim fallback:', e);
+          }
+
+          // 2. Fallback to OpenStreetMap Nominatim
+          if (!resolvedCity) {
+            try {
+              const nomRes = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`,
+                { headers: { 'User-Agent': 'EasyTripWeb/2.0' } }
+              );
+              if (nomRes.ok) {
+                const data = await nomRes.json();
+                const addr = data.address || {};
+                resolvedCity = addr.city || addr.town || addr.village || addr.county || addr.state_district || addr.state || '';
+              }
+            } catch (e) {
+              console.warn('Nominatim reverse geocode error:', e);
+            }
+          }
+
+          if (resolvedCity) {
+            setOrigin(resolvedCity);
+            setLocationStatus(`Located: ${resolvedCity}`);
+          } else {
+            setOrigin('Current Location');
+            setLocationStatus('Could not resolve city');
+          }
+        } catch (err) {
+          console.error('Location resolution error:', err);
+          setLocationStatus('Lookup failed');
+        } finally {
+          setIsLocating(false);
+        }
+      },
+      (err) => {
+        console.warn('Geolocation permission error:', err);
+        setIsLocating(false);
+        setLocationStatus('Location permission denied');
+      },
+      { timeout: 10000, enableHighAccuracy: true }
+    );
+  };
 
   const toggleInterest = (tag: string) => {
     setInterests(prev => 
@@ -60,7 +130,7 @@ export const TripPlannerModal: React.FC = () => {
     }
   };
 
-  const quickCities = ['Vizag', 'Goa', 'Jaipur', 'Manali', 'Paris', 'Tokyo'];
+  const quickCities = ['Vizag', 'Rajahmundry', 'Goa', 'Jaipur', 'Manali', 'Paris', 'Tokyo'];
 
   return (
     <>
@@ -99,17 +169,67 @@ export const TripPlannerModal: React.FC = () => {
             {/* Origin & Destination */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-gold-400" /> Departure From
-                </label>
-                <input
-                  type="text"
-                  value={origin}
-                  onChange={e => setOrigin(e.target.value)}
-                  placeholder="e.g. Mumbai, New York, London"
-                  required
-                  className="w-full px-4 py-2.5 rounded-xl bg-navy-900 border border-navy-700 text-white placeholder-slate-500 focus:outline-none focus:border-gold-500/80 text-sm"
-                />
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                    <Compass className="w-3.5 h-3.5 text-gold-400" /> Departure From
+                  </label>
+                  <button
+                    type="button"
+                    onClick={detectLocation}
+                    disabled={isLocating}
+                    className="text-[11px] font-medium text-gold-400 hover:text-gold-300 transition-colors flex items-center gap-1 cursor-pointer bg-navy-800/80 px-2 py-0.5 rounded-md border border-navy-700 hover:border-gold-500/40"
+                    title="Detect city from current GPS coordinates"
+                  >
+                    {isLocating ? (
+                      <>
+                        <Loader2 className="w-3 h-3 animate-spin text-gold-400" />
+                        <span>Detecting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Locate className="w-3 h-3 text-gold-400" />
+                        <span>Auto-Detect GPS</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={origin}
+                    onChange={e => {
+                      setOrigin(e.target.value);
+                      if (locationStatus) setLocationStatus(null);
+                    }}
+                    onFocus={() => {
+                      if (origin === 'Current Location') {
+                        detectLocation();
+                      }
+                    }}
+                    placeholder="e.g. Mumbai, Visakhapatnam, London"
+                    required
+                    className="w-full px-4 py-2.5 pr-9 rounded-xl bg-navy-900 border border-navy-700 text-white placeholder-slate-500 focus:outline-none focus:border-gold-500/80 text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={detectLocation}
+                    disabled={isLocating}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-lg text-slate-400 hover:text-gold-400 hover:bg-navy-800 transition-all"
+                    title="Detect city from GPS location"
+                  >
+                    {isLocating ? (
+                      <Loader2 className="w-4 h-4 animate-spin text-gold-400" />
+                    ) : (
+                      <Locate className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+                {locationStatus && (
+                  <p className="text-[10px] text-gold-400/90 mt-1 flex items-center gap-1">
+                    <CheckCircle2 className="w-2.5 h-2.5 text-gold-400" />
+                    {locationStatus}
+                  </p>
+                )}
               </div>
 
               <div>

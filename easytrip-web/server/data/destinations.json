@@ -1,5 +1,51 @@
 [
   {
+    "id": "vizag",
+    "name": "Vizag (Visakhapatnam)",
+    "country": "India",
+    "tagline": "The Jewel of the East Coast, pristine beaches & coastal hills",
+    "category": "Beach & Coastal",
+    "badge": "Coastal Gem",
+    "rating": 4.9,
+    "reviewCount": 11420,
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80",
+    "bannerImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+    "coordinates": { "lat": 17.6868, "lng": 83.2185 },
+    "idealDays": "3 - 5 Days",
+    "avgCostPerDay": {
+      "budget": 25,
+      "moderate": 65,
+      "luxury": 200
+    },
+    "currency": "INR",
+    "bestSeason": "Oct - Mar",
+    "highlights": ["INS Kursura Submarine Museum", "Rushikonda Beach", "Kailasagiri Ropeway", "Simhachalam Temple", "Borra Caves & Araku"],
+    "tags": ["Submarine", "Beaches", "Ropeway", "Hills", "Caves"]
+  },
+  {
+    "id": "rajahmundry",
+    "name": "Rajahmundry",
+    "country": "India",
+    "tagline": "Cultural Capital of Andhra, sacred Godavari riverfront & historic bridges",
+    "category": "Heritage & Culture",
+    "badge": "Cultural Heart",
+    "rating": 4.8,
+    "reviewCount": 8940,
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
+    "bannerImage": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
+    "coordinates": { "lat": 17.0005, "lng": 81.8040 },
+    "idealDays": "2 - 4 Days",
+    "avgCostPerDay": {
+      "budget": 22,
+      "moderate": 55,
+      "luxury": 180
+    },
+    "currency": "INR",
+    "bestSeason": "Oct - Mar",
+    "highlights": ["Pushkar Ghat", "Havelock Bridge", "Sir Arthur Cotton Barrage", "Kadiyam Nurseries", "Papikondalu Cruise"],
+    "tags": ["Godavari", "Bridges", "River Cruise", "Nurseries", "Temples"]
+  },
+  {
     "id": "goa",
     "name": "Goa",
     "country": "India",
