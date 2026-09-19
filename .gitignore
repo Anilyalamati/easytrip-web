@@ -1,0 +1,62 @@
+# Node dependencies & builds
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Original mobile binary & APK files (57MB archive)
+EASY_TRIP/
+EASY_TRIP.zip
+
+# Editor & OS files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*

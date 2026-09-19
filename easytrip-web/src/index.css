@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0b0e19;
+    color: #e2e8f0;
+    overflow-x: hidden;
+  }
+}
+
+/* Luxury Glassmorphic Styles */
+.glass-card {
+  background: rgba(15, 19, 33, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(211, 170, 84, 0.18);
+  box-shadow: 0 10px 30px -10px rgba(5, 7, 13, 0.8);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(211, 170, 84, 0.45);
+  box-shadow: 0 15px 35px -5px rgba(211, 170, 84, 0.2);
+}
+
+.glass-pill {
+  background: rgba(22, 28, 47, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(211, 170, 84, 0.2);
+}
+
+/* Gold Gradient Effects */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #f2db9e 0%, #d3aa54 50%, #b98e3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #d3aa54 0%, #b98e3a 100%);
+}
+
+.gold-gradient-border {
+  border-image: linear-gradient(135deg, #f2db9e, #d3aa54, #8b6823) 1;
+}
+
+/* Leaflet Dark Map Overrides */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background-color: #0b0e19 !important;
+  font-family: inherit;
+  border-radius: 0.75rem;
+}
+
+.dark-tiles {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0e19;
+}
+::-webkit-scrollbar-thumb {
+  background: #252e49;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d3aa54;
+}
