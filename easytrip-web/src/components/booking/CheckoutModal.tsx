@@ -136,7 +136,7 @@ export const CheckoutModal: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px] uppercase font-bold">Total Paid</span>
-                  <span className="font-bold text-emerald-400">${latestConfirmation.pricing.total}</span>
+                  <span className="font-bold text-emerald-400">₹{latestConfirmation.pricing.total.toLocaleString('en-IN')}</span>
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px] uppercase font-bold">Status</span>
@@ -150,7 +150,7 @@ export const CheckoutModal: React.FC = () => {
                 {latestConfirmation.items.map((it, idx) => (
                   <div key={idx} className="flex justify-between text-slate-200 py-1 border-b border-navy-750">
                     <span>{it.title} <span className="text-slate-400">({it.subtitle})</span></span>
-                    <span className="font-semibold text-gold-300">${it.price * it.quantity}</span>
+                    <span className="font-semibold text-gold-300">₹{(it.price * it.quantity).toLocaleString('en-IN')}</span>
                   </div>
                 ))}
               </div>
@@ -211,7 +211,7 @@ export const CheckoutModal: React.FC = () => {
                         <div className="text-[11px] text-slate-400">{item.subtitle}</div>
                       </div>
                       <div className="font-bold text-gold-300">
-                        ${item.price} {item.quantity > 1 ? `x ${item.quantity}` : ''}
+                        ₹{item.price.toLocaleString('en-IN')} {item.quantity > 1 ? `x ${item.quantity}` : ''}
                       </div>
                       <button
                         type="button"
@@ -261,19 +261,19 @@ export const CheckoutModal: React.FC = () => {
                 <div className="p-4 rounded-2xl bg-navy-900 border border-navy-750 space-y-2 text-xs">
                   <div className="flex justify-between text-slate-400">
                     <span>Subtotal</span>
-                    <span className="font-semibold text-slate-200">${subtotal}</span>
+                    <span className="font-semibold text-slate-200">₹{subtotal.toLocaleString('en-IN')}</span>
                   </div>
                   <div className="flex justify-between text-slate-400">
                     <span>Taxes & Service Fees (12%)</span>
-                    <span className="font-semibold text-slate-200">${tax}</span>
+                    <span className="font-semibold text-slate-200">₹{tax.toLocaleString('en-IN')}</span>
                   </div>
                   <div className="flex justify-between text-emerald-400">
                     <span>EasyTrip Concierge Discount (5%)</span>
-                    <span className="font-semibold">-${discount}</span>
+                    <span className="font-semibold">-₹{discount.toLocaleString('en-IN')}</span>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-navy-750 text-sm font-bold text-white">
                     <span>Final Amount</span>
-                    <span className="text-base text-gold-300 font-black">${total}</span>
+                    <span className="text-base text-gold-300 font-black">₹{total.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
 
@@ -284,7 +284,7 @@ export const CheckoutModal: React.FC = () => {
                   className="w-full py-3.5 rounded-2xl gold-gradient-bg text-navy-950 font-extrabold text-sm tracking-wide shadow-gold-glow hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
-                  <span>{isProcessing ? 'Issuing Reservation Pass...' : `Confirm & Pay $${total}`}</span>
+                  <span>{isProcessing ? 'Issuing Reservation Pass...' : `Confirm & Pay ₹${total.toLocaleString('en-IN')}`}</span>
                 </button>
               </form>
             )}

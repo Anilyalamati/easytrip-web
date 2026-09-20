@@ -275,6 +275,11 @@ KEYWORD_IMAGE_POOLS = {
         "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80",
         "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80"
     ],
+    "ooty": [
+        "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80"
+    ],
     "sushi": [
         "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1000&q=80",
         "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
@@ -292,6 +297,7 @@ def resolve_activity_image(title: str, location: str, category: str, fallback_im
         (["submarine", "kursura", "naval", "torpedo", "aircraft"], "submarine"),
         (["eiffel", "paris", "louvre", "champ de mars", "seine", "montmartre", "versailles", "champs-elysees", "arc de triomphe", "orsay", "marais"], "paris"),
         (["tokyo", "shibuya", "senso-ji", "asakusa", "akihabara", "meiji", "harajuku", "shinjuku", "tsukiji", "odaiba", "roppongi"], "tokyo"),
+        (["ooty", "nilgiri", "doddabetta", "pykara", "avalanche lake", "toy train"], "ooty"),
         (["rushikonda", "yarada", "beach", "coastal", "surf", "sand", "ocean", "sea"], "beach"),
         (["simhachalam", "temple", "shrine", "sanctum", "aarti", "iskcon", "spiritual", "puja", "darshan", "hadimba"], "temple"),
         (["havelock", "bridge", "arch bridge", "viaduct"], "bridge"),
@@ -325,6 +331,125 @@ def resolve_activity_image(title: str, location: str, category: str, fallback_im
 
 # Real Curated Itineraries for Key Destinations
 CURATED_DESTINATION_PLANS = {
+    "ooty": [
+        {
+            "title": "UNESCO Heritage Toy Train, Rose Garden & Ooty Lake",
+            "theme": "Colonial Charm, Botanical Wonders & Tranquil Waters",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:30 AM - 12:00 PM",
+                    "title": "Nilgiri Mountain Railway Toy Train & Botanical Gardens",
+                    "location": "Udhagamandalam Railway Station & Charring Cross",
+                    "description": "Board the world-famous UNESCO Nilgiri Mountain Steam Train cruising past misty tea gardens, followed by a walk through the 1848 Government Botanical Gardens.",
+                    "category": "UNESCO Heritage & Gardens",
+                    "base_cost": 650,
+                    "duration": "3.5 Hours",
+                    "tips": "Book the First Class wooden coach in advance for panoramic Nilgiri views."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Government Rose Garden & Authentic Nahar Cafe Lunch",
+                    "location": "Elk Hill Slopes & Commercial Road",
+                    "description": "Explore over 20,000 varieties of exotic roses terraced on Elk Hill, followed by artisan woodfired pizzas and Nilgiri tea at Nahar's Sidewalk Cafe.",
+                    "category": "Botanical & Culinary",
+                    "base_cost": 550,
+                    "duration": "3 Hours",
+                    "tips": "Best floral fragrance and photography right around early afternoon light."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:00 PM - 08:30 PM",
+                    "title": "Ooty Lake Sunset Boating & King Star Fudge Tasting",
+                    "location": "North Lake Road & Commercial Street",
+                    "description": "Pedal boat ride across the calm reflective waters of Ooty Lake framed by eucalyptus trees, culminating in a tasting of legendary handmade chocolate fudge from King Star Bakery.",
+                    "category": "Leisure & Confectionery",
+                    "base_cost": 600,
+                    "duration": "3 Hours",
+                    "tips": "Evening lake mist adds magical drama; pick up assorted walnut and fig fudge."
+                }
+            ]
+        },
+        {
+            "title": "Doddabetta Peak, Tea Factory & Pykara Waterfalls",
+            "theme": "High Altitude Panoramas, Orthodox Tea Aromas & Gushing Falls",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:30 AM - 12:00 PM",
+                    "title": "Doddabetta Peak Summit & Nilgiri Tea Museum",
+                    "location": "Doddabetta Summit (2,637 m) & Kotagiri Road",
+                    "description": "Ascend to the highest peak in South India for a 360-degree panorama of the Nilgiri Biosphere, followed by an educational tour watching green tea processing and essential oil extraction.",
+                    "category": "Mountain Overlook & Tea",
+                    "base_cost": 450,
+                    "duration": "3.5 Hours",
+                    "tips": "Visit the summit telescope house on clear mornings to view the Coimbatore plains."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:00 PM - 04:30 PM",
+                    "title": "Pykara Waterfalls & Speedboating in Pykara Lake",
+                    "location": "Pykara Reserve, Ooty-Mysore Highway",
+                    "description": "Witness the sacred Pykara river drop over tiered granite rocks into the dam basin. Embark on a high-speed boat ride past pine groves and misty mountain shores.",
+                    "category": "Cascades & Speedboating",
+                    "base_cost": 750,
+                    "duration": "3.5 Hours",
+                    "tips": "Carry an umbrella or rain poncho near the lower falls viewing platform."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:30 PM - 08:30 PM",
+                    "title": "Shinkow's Heritage Dinner & Charring Cross Walk",
+                    "location": "Commissioner's Road, Ooty",
+                    "description": "Relish heritage Cantonese dining at Shinkow's, established in 1954 by Chinese settlers, known for authentic steamed momos, pork ribs, and hakka noodles.",
+                    "category": "Heritage Dining",
+                    "base_cost": 850,
+                    "duration": "2.5 Hours",
+                    "tips": "Arrive before 7:30 PM as tables fill quickly with local food enthusiasts."
+                }
+            ]
+        },
+        {
+            "title": "Avalanche Sanctuary & Wenlock Downs Meadows",
+            "theme": "Pristine Biosphere Safari & Cinematic Rolling Hills",
+            "slots": [
+                {
+                    "period": "Morning",
+                    "time": "08:00 AM - 12:30 PM",
+                    "title": "Avalanche Lake & Cloud Forest Eco-Safari",
+                    "location": "Avalanche Biosphere Reserve (28 km from Ooty)",
+                    "description": "Ride a government safari jeep through restricted shola cloud forests and trout streams to the pristine, untouched shoreline of Avalanche Lake.",
+                    "category": "Wilderness Sanctuary",
+                    "base_cost": 950,
+                    "duration": "4 Hours",
+                    "tips": "Strict forest department permits required; cameras and birding optics recommended."
+                },
+                {
+                    "period": "Afternoon",
+                    "time": "01:30 PM - 04:30 PM",
+                    "title": "Wenlock Downs 9th Mile Shooting Point & Toda Huts",
+                    "location": "Wenlock Downs & Toda Hamlet Overlook",
+                    "description": "Stroll the undulating emerald green pastures of 9th Mile shooting point, framed by distant pine woods, and see the unique barrel-vaulted huts of the indigenous Toda tribe.",
+                    "category": "Meadows & Indigenous Heritage",
+                    "base_cost": 400,
+                    "duration": "3 Hours",
+                    "tips": "Great spot for horseback rides across gentle mountain ridges."
+                },
+                {
+                    "period": "Evening",
+                    "time": "05:00 PM - 08:00 PM",
+                    "title": "Tea Roastery Tasting & Sunset over Upper Bhavani",
+                    "location": "Upper Bhavani Viewpoint & Doddabetta Tea Lounge",
+                    "description": "Conclude your Nilgiri retreat sipping single-estate orthodox silver needle tea while watching purple twilight settle over the mountain valleys.",
+                    "category": "Tea Tasting & Sunset",
+                    "base_cost": 500,
+                    "duration": "2.5 Hours",
+                    "tips": "Buy vacuum-packed Ooty chocolate fudge and white tea as authentic souvenirs."
+                }
+            ]
+        }
+    ],
     "vizag": [
         {
             "title": "RK Beach, Submarine Memorial & Kailasagiri Sunset",
@@ -337,7 +462,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "RK Beach, Visakhapatnam",
                     "description": "Step aboard the historic decommissioned Soviet-built Kalvari-class submarine stationed directly on the sands of RK Beach, exploring naval corridors, sonar rooms, and torpedo bays.",
                     "category": "Naval Museum & Heritage",
-                    "base_cost": 12,
+                    "base_cost": 780,
                     "duration": "3 hrs",
                     "tips": "Visit right at 09:00 AM to avoid midday queues and pair with the TU 142 Aircraft Museum across the road."
                 },
@@ -348,7 +473,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Rushikonda Beach, Vizag",
                     "description": "Indulge in authentic Andhra prawn fry, bamboo chicken, and fresh coastal curries, followed by thrilling jet-skiing and windsurfing along the pristine Blue Flag certified shoreline.",
                     "category": "Coastal Adventure & Dining",
-                    "base_cost": 24,
+                    "base_cost": 750,
                     "duration": "3.5 hrs",
                     "tips": "Rushikonda has certified lifeguards and regulated water sports operators; carry beach towels."
                 },
@@ -359,7 +484,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Kailasagiri Hilltop Park, Visakhapatnam",
                     "description": "Ascend 360 feet above sea level via the cable car ropeway, offering spectacular 360-degree vistas where forested Eastern Ghats meet the sweeping curve of the ocean.",
                     "category": "Scenic Overlook & Sunset",
-                    "base_cost": 15,
+                    "base_cost": 980,
                     "duration": "3.5 hrs",
                     "tips": "Ride the hilltop perimeter toy train just before golden hour for breathtaking coastal photography."
                 }
@@ -376,7 +501,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Simhachalam Hill, Visakhapatnam",
                     "description": "Marvel at the extraordinary 11th-century Kalinga-style stone architecture, ornate elephant carvings, and sacred sanctum perched amidst lush forest hills.",
                     "category": "Sacred Architecture & Heritage",
-                    "base_cost": 10,
+                    "base_cost": 650,
                     "duration": "3.5 hrs",
                     "tips": "Traditional dress code applies. Early morning darshan ensures a serene atmosphere."
                 },
@@ -387,7 +512,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Gangavaram Port Road, Vizag",
                     "description": "Climb up to the historic clifftop lighthouse atop the dramatic 358-meter high natural promontory, observing expansive ship traffic and inner harbor port docks.",
                     "category": "Maritime Landmark & Ocean Vista",
-                    "base_cost": 14,
+                    "base_cost": 910,
                     "duration": "3.5 hrs",
                     "tips": "The lighthouse observation gallery opens to visitors at 3:00 PM; bring your camera."
                 },
@@ -398,7 +523,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Beach Road, Jodugullapalem, Vizag",
                     "description": "Walk along picturesque stone coastal paths overlooking the stranded vessel MV Maa, enjoying the sunset surf, sea breezes, and fresh spiced roasted corn.",
                     "category": "Coastal Promenade & Twilight",
-                    "base_cost": 10,
+                    "base_cost": 650,
                     "duration": "3.5 hrs",
                     "tips": "Stone steps lead directly down to the tide pools for close-up views of the dramatic coastline."
                 }
@@ -415,7 +540,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Ananthagiri Hills, Araku Valley Region",
                     "description": "Venture into deep natural caves sculpted by the Gosthani River, beholding colossal calcium stalactite pillars illuminated by dynamic LED lighting.",
                     "category": "Geological Wonder & Nature",
-                    "base_cost": 20,
+                    "base_cost": 1300,
                     "duration": "4 hrs",
                     "tips": "Wear shoes with traction since interior pathways can be damp and rocky."
                 },
@@ -426,7 +551,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Araku Highlands",
                     "description": "Tour world-renowned shade-grown organic Arabica coffee groves, learn about indigenous Dhimsa cultural heritage, and sample freshly roasted espresso.",
                     "category": "Plantation Tour & Tribal Culture",
-                    "base_cost": 18,
+                    "base_cost": 1170,
                     "duration": "3.5 hrs",
                     "tips": "Purchase GI-tagged Araku roasted beans directly from the tribal cooperative outlet."
                 },
@@ -437,7 +562,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Siripuram, Visakhapatnam",
                     "description": "Conclude with an evening stroll through state emporiums featuring Etikoppaka lacquer wooden toys, Uppada silk sarees, and sizzling hot Andhra street food.",
                     "category": "Shopping & Local Gastronomy",
-                    "base_cost": 16,
+                    "base_cost": 1200,
                     "duration": "3.5 hrs",
                     "tips": "Etikoppaka toys made with natural vegetable dyes make delightful authentic souvenirs."
                 }
@@ -456,7 +581,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Pushkar Ghat, Rajahmundry",
                     "description": "Greet the dawn along the serene steps of Pushkar Ghat, taking in spiritual morning hymns, riverboat journeys, and cool breezes flowing across the mighty Godavari.",
                     "category": "Sacred Riverfront & Heritage",
-                    "base_cost": 8,
+                    "base_cost": 520,
                     "duration": "3 hrs",
                     "tips": "Early morning between 6:30 and 8:00 AM provides tranquil reflections and stunning photography."
                 },
@@ -467,7 +592,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Main Road & Kotilingala Ghat, Rajahmundry",
                     "description": "Taste East Godavari's legendary culinary heritage including Gongura spiced curries, freshwater fish preparations, and pure ghee steamed rice, topped off with iconic local Rose Milk.",
                     "category": "Gastronomy & Traditional Flavors",
-                    "base_cost": 18,
+                    "base_cost": 1170,
                     "duration": "3.5 hrs",
                     "tips": "Don't miss the original 1950s Rose Milk Centre near Kotagummam for a historic sweet delight."
                 },
@@ -478,7 +603,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Godavari Riverfront Promenade, Rajahmundry",
                     "description": "Walk along the pedestrian walkway of the historic 1897 Havelock Bridge, admiring the 2.7 km span of the Godavari Arch Bridge as twilight illuminates the waters.",
                     "category": "Historic Bridge & Scenic Vista",
-                    "base_cost": 10,
+                    "base_cost": 650,
                     "duration": "3.5 hrs",
                     "tips": "Arrive at 5:15 PM to witness express trains crossing the arch bridge set against the golden sunset."
                 }
@@ -495,7 +620,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Dowleswaram, Rajahmundry",
                     "description": "Examine the massive historic barrage that converted the Godavari basin into the lush rice granary of India, touring archival irrigation models and peaceful river parkways.",
                     "category": "Historic Engineering & Park",
-                    "base_cost": 10,
+                    "base_cost": 650,
                     "duration": "3.5 hrs",
                     "tips": "Walk the scenic canal-side pathway towards the memorial gardens for great bridge photos."
                 },
@@ -506,7 +631,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Kadiyam, Rajahmundry Outer Belt",
                     "description": "Roam across thousands of acres of flourishing ornamental plant nurseries, exotic bonsai courtyards, fragrant flowering gardens, and sprawling tropical greenhouses.",
                     "category": "Botanical Haven & Nature Tour",
-                    "base_cost": 14,
+                    "base_cost": 910,
                     "duration": "3.5 hrs",
                     "tips": "Hire an auto-rickshaw or local cab to visit the top 4 flagship nursery estates."
                 },
@@ -517,7 +642,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Gautami Ghat, Rajahmundry",
                     "description": "Experience serene evening spiritual vibes at the grand 2-acre riverside ISKCON complex, with harmonic chants echoing over the tranquil waters of the Godavari at dusk.",
                     "category": "Spiritual Sanctum & Twilight Peace",
-                    "base_cost": 8,
+                    "base_cost": 520,
                     "duration": "3.5 hrs",
                     "tips": "Sample the freshly prepared sanctified vegetarian prasadam delicacies at the counter."
                 }
@@ -534,7 +659,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Purushothapatnam / Polavaram Launch Point",
                     "description": "Embark on an exhilarating motorized boat voyage through the scenic gorge where the Godavari river slices through emerald-cloaked hills of the Eastern Ghats.",
                     "category": "River Cruise & Mountain Gorge",
-                    "base_cost": 32,
+                    "base_cost": 1200,
                     "duration": "4 hrs",
                     "tips": "Pre-book upstream boat pass; the open observation deck offers unobstructed 360-degree panoramas."
                 },
@@ -545,7 +670,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Papikondalu Hills, Godavari Gorge",
                     "description": "Stop at the quiet riverside tribal settlement nestled beneath dramatic cliffs, discovering eco-friendly bamboo handicraft traditions and the serene Sri Veereswara Swamy shrine.",
                     "category": "Eco-Heritage & Tribal Discovery",
-                    "base_cost": 15,
+                    "base_cost": 980,
                     "duration": "3.5 hrs",
                     "tips": "Support indigenous tribal artisans by picking up handmade bamboo crafts and water flasks."
                 },
@@ -556,7 +681,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Syriac Church Road & Kotagummam, Rajahmundry",
                     "description": "Discover the art of paper-thin Atreyapuram Pootharekulu (ghee-infused rice starch rolls stuffed with jaggery and roasted dry fruits) followed by piping hot Mirchi Bajji.",
                     "category": "Culinary Heritage & Night Trail",
-                    "base_cost": 12,
+                    "base_cost": 780,
                     "duration": "3 hrs",
                     "tips": "Purchase vacuum-sealed dry fruit pootharekulu boxes to take home as authentic regional treats."
                 }
@@ -575,7 +700,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Champ de Mars, 7th Arrondissement, Paris",
                     "description": "Ascend the iconic wrought-iron lattice monument for sweeping 360-degree panoramas of the City of Light, followed by a leisurely stroll across the Champ de Mars gardens.",
                     "category": "Iconic Landmark & Panorama",
-                    "base_cost": 32,
+                    "base_cost": 1200,
                     "duration": "3.5 hrs",
                     "tips": "Pre-book summit elevator tickets to bypass lengthy admission queues."
                 },
@@ -586,7 +711,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Palais du Louvre, 1st Arrondissement, Paris",
                     "description": "Explore the world's largest art museum, admiring the Mona Lisa, Venus de Milo, and Winged Victory before relaxing near the fountains of the Tuileries.",
                     "category": "World Heritage Art & Gardens",
-                    "base_cost": 24,
+                    "base_cost": 750,
                     "duration": "3.5 hrs",
                     "tips": "Enter via the Carrousel du Louvre underground mall entrance to avoid glass pyramid lines."
                 },
@@ -597,7 +722,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Port de la Bourdonnais, Paris",
                     "description": "Glide past illuminated historic bridges, Musée d'Orsay, and the gothic towers of Notre-Dame as golden hour transitions into twilight.",
                     "category": "River Cruise & Twilight",
-                    "base_cost": 20,
+                    "base_cost": 1300,
                     "duration": "3.5 hrs",
                     "tips": "Board 45 minutes before dusk to watch the Eiffel Tower's sparkling beacon light up on the hour."
                 }
@@ -614,7 +739,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Place du Tertre & Montmartre Hill, Paris",
                     "description": "Climb the cobblestone heights of Montmartre to the gleaming white Romano-Byzantine dome of Sacré-Cœur, exploring vintage painters' ateliers and windmill alleys.",
                     "category": "Historic Quarter & Sacred Basilica",
-                    "base_cost": 15,
+                    "base_cost": 980,
                     "duration": "3.5 hrs",
                     "tips": "Take the Montmartre funicular with standard metro tickets if you prefer not to climb the stairs."
                 },
@@ -625,7 +750,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Place Charles de Gaulle, Paris",
                     "description": "Ascend to the rooftop terrace of Napoleon's triumphal arch overlooking the 12 radiating avenues, followed by boutique browsing on the Champs-Élysées.",
                     "category": "Historic Monument & Boulevard",
-                    "base_cost": 18,
+                    "base_cost": 1170,
                     "duration": "3.5 hrs",
                     "tips": "Use the pedestrian underpass at the top of the avenue; never try to cross the roundabout traffic."
                 },
@@ -636,7 +761,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Latin Quarter & Saint-Germain, Paris",
                     "description": "Indulge in French culinary classics including duck confit, warm baguette with artisan brie, and tarte tatin, followed by live jazz at Caveau de la Huchette.",
                     "category": "French Gastronomy & Jazz",
-                    "base_cost": 38,
+                    "base_cost": 2470,
                     "duration": "3.5 hrs",
                     "tips": "Request a table on the heated terrace for quintessential Parisian street-watching."
                 }
@@ -653,7 +778,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Place d'Armes, Versailles",
                     "description": "Journey to the grand seat of the Sun King Louis XIV, exploring the resplendent Hall of Mirrors, royal bedchambers, and expansive geometric fountain gardens.",
                     "category": "Royal Palace & UNESCO Heritage",
-                    "base_cost": 30,
+                    "base_cost": 1950,
                     "duration": "4 hrs",
                     "tips": "Take the RER C train from central Paris; rent a bicycle to navigate the immense gardens."
                 },
@@ -664,7 +789,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Esplanade Valéry Giscard d'Estaing, Paris",
                     "description": "Marvel at celebrated masterpieces by Monet, Van Gogh, Renoir, and Degas housed beneath the soaring vaulted iron-and-glass ceilings of a 1900 railway terminal.",
                     "category": "Impressionist Art & Architecture",
-                    "base_cost": 22,
+                    "base_cost": 1430,
                     "duration": "3 hrs",
                     "tips": "Visit the 5th-floor giant clock face cafe for a unique framed view across the Seine to the Louvre."
                 },
@@ -675,7 +800,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Le Marais, 4th Arrondissement, Paris",
                     "description": "Wander 17th-century aristocratic courtyards, sample fresh falafel on Rue des Rosiers, and savor evening macarons in Paris's oldest planned square.",
                     "category": "Artisan Quarter & French Patisserie",
-                    "base_cost": 25,
+                    "base_cost": 1620,
                     "duration": "3.5 hrs",
                     "tips": "Pick up hand-packaged macarons from Carette under the vaulted arcades of Place des Vosges."
                 }
@@ -694,7 +819,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Asakusa, Taito City, Tokyo",
                     "description": "Pass under the massive red Kaminarimon paper lantern into Tokyo's oldest 7th-century Buddhist temple, sampling piping hot Ningyo-yaki sweets along Nakamise Dori.",
                     "category": "Historic Temple & Traditional Market",
-                    "base_cost": 10,
+                    "base_cost": 650,
                     "duration": "3.5 hrs",
                     "tips": "Draw an omikuji (fortune slip) at the temple pavilion; tie unlucky fortunes to the metal racks."
                 },
@@ -705,7 +830,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Soto-Kanda, Chiyoda City, Tokyo",
                     "description": "Dive into the kaleidoscopic heart of anime, manga, retro arcades, multi-floor tech plazas, and themed maid cafes in neon-draped Akihabara.",
                     "category": "Tech & Pop Culture",
-                    "base_cost": 20,
+                    "base_cost": 1300,
                     "duration": "3.5 hrs",
                     "tips": "Check out Mandarake Complex for multi-story vintage collectible figurines and retro games."
                 },
@@ -716,7 +841,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Shibuya Scramble Square, Tokyo",
                     "description": "Experience the world's most famous pedestrian intersection, then ascend 229 meters to the open-air rooftop deck of Shibuya Sky for sunsets over Mount Fuji and neon Tokyo.",
                     "category": "Iconic Skyline & Modern Metropolis",
-                    "base_cost": 25,
+                    "base_cost": 1620,
                     "duration": "3.5 hrs",
                     "tips": "Book Shibuya Sky sunset time slot 2 weeks in advance; lockers are mandatory for rooftop access."
                 }
@@ -733,7 +858,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Yoyogikamizonocho, Shibuya City, Tokyo",
                     "description": "Step beneath towering 1,500-year-old cedar Torii gates into a tranquil 170-acre sacred forest planted with 100,000 donated trees from across Japan.",
                     "category": "Shinto Shrine & Forest Oasis",
-                    "base_cost": 8,
+                    "base_cost": 520,
                     "duration": "3.5 hrs",
                     "tips": "Cleanse your hands and mouth at the temizuya water fountain before entering the main courtyard."
                 },
@@ -744,7 +869,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Jingumae, Shibuya City, Tokyo",
                     "description": "Contrast Harajuku's whimsical street fashion with the tree-lined luxury architectural pavilions and designer cafes of Omotesando.",
                     "category": "Street Fashion & Avant-Garde Design",
-                    "base_cost": 18,
+                    "base_cost": 1170,
                     "duration": "3.5 hrs",
                     "tips": "Try a freshly rolled Japanese dessert crepe filled with strawberries and custard."
                 },
@@ -755,7 +880,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Nishi-Shinjuku, Tokyo",
                     "description": "Stroll formal Japanese landscape ponds, then dive into the nostalgic post-war lantern alleys of 'Memory Lane', savoring grilled yakitori skewers and draft beer.",
                     "category": "Japanese Gardens & Izakaya Gastronomy",
-                    "base_cost": 32,
+                    "base_cost": 1200,
                     "duration": "3.5 hrs",
                     "tips": "Omoide Yokocho izakayas are intimate (4-8 seats per stall); carry Japanese Yen cash."
                 }
@@ -772,7 +897,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Tsukiji, Chuo City, Tokyo",
                     "description": "Sample melt-in-your-mouth bluefin otoro nigiri, grilled tamagoyaki sweet omelets, and flame-torched A5 Wagyu beef skewers directly from wholesale market stalls.",
                     "category": "Seafood Market & Culinary Masterclass",
-                    "base_cost": 35,
+                    "base_cost": 1200,
                     "duration": "4 hrs",
                     "tips": "Arrive around 8:00-9:00 AM while daily fish catches and knife shops are bustling."
                 },
@@ -783,7 +908,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Toyosu / Odaiba Waterfront, Tokyo",
                     "description": "Wade barefoot through knee-deep digital koi fish waters and walk across endless crystal mirror rooms in this groundbreaking sensory digital art museum.",
                     "category": "Digital Art & Futuristic Experience",
-                    "base_cost": 30,
+                    "base_cost": 1950,
                     "duration": "3.5 hrs",
                     "tips": "Wear pants that can be rolled up to your knees as you will walk through shallow water exhibits."
                 },
@@ -794,7 +919,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Roppongi, Minato City, Tokyo",
                     "description": "Take in sweeping sunset vistas of the red-and-white Tokyo Tower glowing against the metropolis, followed by Michelin-caliber ramen or matcha dessert bars.",
                     "category": "Skyline Panoramas & Evening Dining",
-                    "base_cost": 28,
+                    "base_cost": 1200,
                     "duration": "3.5 hrs",
                     "tips": "The Tokyo City View observation deck on the 52nd floor provides the best direct view of Tokyo Tower."
                 }
@@ -813,7 +938,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Dhungri Forest, Manali",
                     "description": "Wander through centuries-old giant deodar cedar pine groves to the unique 1553 pagoda-style wooden temple adorned with intricate timber animal relief carvings.",
                     "category": "Sacred Forest Temple & Heritage",
-                    "base_cost": 8,
+                    "base_cost": 520,
                     "duration": "3.5 hrs",
                     "tips": "Visit early morning when mist filters through the deodar canopy for magical alpine photos."
                 },
@@ -824,7 +949,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Old Manali Village & Manalsu River",
                     "description": "Cross the bridge into Old Manali's bohemian stone-and-wood village, savoring butter-garlic pan-fried Himalayan river trout and wood-fired sourdough pizzas.",
                     "category": "Mountain Gastronomy & Riverside Vibe",
-                    "base_cost": 18,
+                    "base_cost": 1170,
                     "duration": "3.5 hrs",
                     "tips": "Request outdoor riverside seating overlooking the rushing glacial waters."
                 },
@@ -835,7 +960,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Vashisht to Jogini Cliff Trail, Manali",
                     "description": "Hike along apple orchards and mountain streams up to the cascading multi-tiered Jogini Waterfalls, watching the setting sun ignite the Pir Panjal mountain range.",
                     "category": "Alpine Waterfall & Sunset Trek",
-                    "base_cost": 10,
+                    "base_cost": 650,
                     "duration": "3.5 hrs",
                     "tips": "Wear hiking shoes with good tread; trail can be slightly slippery near the waterfall spray."
                 }
@@ -852,7 +977,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Solang Valley, Manali",
                     "description": "Soar above snow-kissed alpine meadows and pine ridges on a tandem paragliding flight, or take the modern ropeway cable car up to 3,200 meters.",
                     "category": "Adventure Aerial & Cable Car",
-                    "base_cost": 35,
+                    "base_cost": 1200,
                     "duration": "4 hrs",
                     "tips": "Paragliding operates strictly during clear morning wind windows; wear a windbreaker jacket."
                 },
@@ -863,7 +988,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Atal Tunnel Northern Portal, Lahaul & Spiti",
                     "description": "Pass through the world's longest highway tunnel above 10,000 feet, emerging into the dramatic rain-shadow trans-Himalayan landscapes and waterfalls of Sissu.",
                     "category": "Mountain Engineering & Glacial Valley",
-                    "base_cost": 25,
+                    "base_cost": 1620,
                     "duration": "4 hrs",
                     "tips": "Carry warm layers as temperatures at the north portal are significantly colder than Manali."
                 },
@@ -874,7 +999,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Vashisht Temple Village, Manali",
                     "description": "Unwind after mountain excursions in the ancient natural mineral-rich thermal sulphur springs renowned for restorative therapeutic properties.",
                     "category": "Thermal Springs & Mountain Wellness",
-                    "base_cost": 6,
+                    "base_cost": 400,
                     "duration": "3 hrs",
                     "tips": "Separate enclosed bathing areas are provided for men and women; carry a change of clothes."
                 }
@@ -891,7 +1016,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Naggar Village, Kullu Valley",
                     "description": "Explore the 15th-century wood-and-stone castle built by Raja Sidh Singh, overlooking the Beas River, and visit the historic mountain painting estate of Russian artist Nicholas Roerich.",
                     "category": "Himalayan Citadel & Art Gallery",
-                    "base_cost": 14,
+                    "base_cost": 910,
                     "duration": "4 hrs",
                     "tips": "Enjoy traditional Kullu walnut pie and masala chai on the castle terrace."
                 },
@@ -902,7 +1027,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Jana Village, Kullu-Manali",
                     "description": "Cross wooden bridges over natural glacial springs in Jana village, tasting authentic steamed wheat-and-poppyseed Siddu served with hot pure desi ghee and walnut chutney.",
                     "category": "Traditional Himachali Cuisine & Countryside",
-                    "base_cost": 12,
+                    "base_cost": 780,
                     "duration": "3.5 hrs",
                     "tips": "Siddu is freshly made to order; pair it with homemade red kidney bean (Rajma) curry."
                 },
@@ -913,7 +1038,7 @@ CURATED_DESTINATION_PLANS = {
                     "location": "Mall Road, Central Manali",
                     "description": "Conclude your alpine voyage exploring pedestrian Mall Road, visiting the Tibetan Monastery, and picking up authentic GI-tagged Kullu shawls, wooden carvings, and pine honey.",
                     "category": "Shopping & Tibetan Culture",
-                    "base_cost": 15,
+                    "base_cost": 980,
                     "duration": "3.5 hrs",
                     "tips": "Look for government handloom mark certification on Pashmina and Kullu woolen shawls."
                 }
@@ -933,7 +1058,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Old Town Citadel Hill, {city}",
             "description": "Ascend ancient fortress walls and stone battlements guarding {city}, enjoying commanding hilltop vistas across the historic quarter and surrounding landscapes.",
             "duration": "3.5 hrs",
-            "base_cost": 15,
+            "base_cost": 980,
             "tips": "Wear comfortable walking shoes with good grip for historic stone inclines."
         },
         "afternoon": {
@@ -942,7 +1067,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Grand Central Market, {city}",
             "description": "Immerse yourself in authentic {city} delicacies, sampling chef-curated small plates, farm cheeses, regional pastries, and time-honored family recipes.",
             "duration": "3 hrs",
-            "base_cost": 25,
+            "base_cost": 1620,
             "tips": "Sample the signature house specialty and pair it with a fresh locally pressed fruit cooler."
         },
         "evening": {
@@ -951,7 +1076,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Skyline Panorama Terrace, {city}",
             "description": "Watch vibrant golden hour colors descend across {city} from a premier high-altitude terrace, accompanied by craft refreshments and relaxing twilight breezes.",
             "duration": "3.5 hrs",
-            "base_cost": 30,
+            "base_cost": 1950,
             "tips": "Arrive 30 minutes before sunset to claim prime window seating overlooking the horizon."
         }
     },
@@ -964,7 +1089,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Royal Botanical Gardens, {city}",
             "description": "Stroll along tree-lined pathways, fragrant flower gardens, and heritage glasshouse conservatories showcasing native flora and tranquil reflective ponds.",
             "duration": "3 hrs",
-            "base_cost": 12,
+            "base_cost": 780,
             "tips": "Early morning is the ideal time to enjoy the cool breeze and photograph exotic flora."
         },
         "afternoon": {
@@ -973,7 +1098,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Museum Mile, {city}",
             "description": "Explore curated exhibitions spanning classical antiquities, royal regalia, and interactive cultural showcases illuminating {city}'s storied heritage.",
             "duration": "3.5 hrs",
-            "base_cost": 20,
+            "base_cost": 1300,
             "tips": "Borrow the interactive museum audio guide for deep backstories on centerpiece masterworks."
         },
         "evening": {
@@ -982,7 +1107,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Grand Harbor Esplanade, {city}",
             "description": "Stroll along the atmospheric illuminated waterfront of {city}, enjoying live street acoustic performances, illuminated fountains, and refreshing night breezes.",
             "duration": "3.5 hrs",
-            "base_cost": 18,
+            "base_cost": 1170,
             "tips": "Stop by the gelato and dessert carts along the esplanade for an evening sweet treat."
         }
     },
@@ -995,7 +1120,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Sanctuary Square, {city}",
             "description": "Admire soaring arches, stained glass masterpieces, and centuries of preserved spiritual artwork in {city}'s most celebrated sanctuary.",
             "duration": "3 hrs",
-            "base_cost": 10,
+            "base_cost": 650,
             "tips": "Maintain respectful silence inside; photography is permitted without flash."
         },
         "afternoon": {
@@ -1004,7 +1129,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Artisans Quarter, {city}",
             "description": "Watch master craftsmen sculpt ceramics, weave heritage fabrics, and craft delicate jewelry unique to {city}'s guild traditions.",
             "duration": "3.5 hrs",
-            "base_cost": 18,
+            "base_cost": 1170,
             "tips": "Support local families by picking up handcrafted ceramic or textile souvenirs."
         },
         "evening": {
@@ -1013,7 +1138,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Bazaar Square, {city}",
             "description": "Delight in the sizzling energy of {city}'s evening bazaar, savoring aromatic skewered bites, freshly baked flatbreads, and sweet delicacies.",
             "duration": "3.5 hrs",
-            "base_cost": 22,
+            "base_cost": 1430,
             "tips": "Look for stalls with long local queues—a reliable sign of peak freshness and legendary flavor."
         }
     },
@@ -1026,7 +1151,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Panoramic Ridge Station, {city}",
             "description": "Ride the historic cable railway ascending to {city}'s high observation ridge for breathtaking 360-degree panoramas of the surrounding landscape.",
             "duration": "3.5 hrs",
-            "base_cost": 16,
+            "base_cost": 1200,
             "tips": "Step onto the glass observation deck for stunning valley and city aerial photography."
         },
         "afternoon": {
@@ -1035,7 +1160,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Central Marina Pier, {city}",
             "description": "Board a leisurely cruise along {city}'s waterways, gliding past historic waterfront bridges, maritime warehouses, and peaceful embankments.",
             "duration": "3 hrs",
-            "base_cost": 28,
+            "base_cost": 1200,
             "tips": "The open-air top deck offers the clearest unobstructed views of bridges and skyline."
         },
         "evening": {
@@ -1044,7 +1169,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Cultural Pavilion, {city}",
             "description": "Experience an enchanting live showcase of regional folk music, classical dance, or theatrical drama celebrating {city}'s artistic soul.",
             "duration": "3.5 hrs",
-            "base_cost": 25,
+            "base_cost": 1620,
             "tips": "Check the evening showtimes; evening breeze can be cool, so carry a light jacket."
         }
     },
@@ -1057,7 +1182,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Valley Nature Reserve, {city}",
             "description": "Venture into dramatic limestone gorge formations and shaded forest streams just beyond {city}'s urban core.",
             "duration": "3.5 hrs",
-            "base_cost": 12,
+            "base_cost": 780,
             "tips": "Carry a light hydration pack and binoculars for local birdwatching."
         },
         "afternoon": {
@@ -1066,7 +1191,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Valley Agro-Estate, {city}",
             "description": "Tour scenic hillside vines or fruit orchards followed by a leisurely farm-to-table lunch crafted with fresh ingredients harvested that morning.",
             "duration": "3 hrs",
-            "base_cost": 32,
+            "base_cost": 1200,
             "tips": "Try the seasonal dessert paired with estate-pressed juices or regional vintage."
         },
         "evening": {
@@ -1075,7 +1200,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Marina Boardwalk, {city}",
             "description": "Dine at a candlelit waterside bistro listening to gentle water lapping against the docks, enjoying fresh regional delicacies.",
             "duration": "3.5 hrs",
-            "base_cost": 40,
+            "base_cost": 2600,
             "tips": "Reserve an outdoor dockside table ahead of time for romantic views of harbor lanterns."
         }
     },
@@ -1088,7 +1213,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Eastern Ridge Vista, {city}",
             "description": "Catch the breathtaking morning sunrise over {city} followed by freshly roasted regional coffee and artisanal pastries.",
             "duration": "3 hrs",
-            "base_cost": 10,
+            "base_cost": 650,
             "tips": "Arrive 20 minutes before dawn to witness the horizon illuminate with golden hues."
         },
         "afternoon": {
@@ -1097,7 +1222,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Old Books & Curiosities Lane, {city}",
             "description": "Browse cozy vintage bookstalls, brass curiosities, old cartography maps, and vintage postcards hidden in the back alleys of {city}.",
             "duration": "3 hrs",
-            "base_cost": 15,
+            "base_cost": 980,
             "tips": "Vintage brass bookmarks and illustrated city maps make wonderful keepsakes."
         },
         "evening": {
@@ -1106,7 +1231,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Historic Cellar Quarter, {city}",
             "description": "Step into a subterranean stone cellar to enjoy sultry live jazz acoustic sessions, vintage mocktails/cocktails, and a cozy retro atmosphere.",
             "duration": "3.5 hrs",
-            "base_cost": 28,
+            "base_cost": 1200,
             "tips": "Check if the venue requires table reservations or has an intimate acoustic cover fee."
         }
     },
@@ -1119,7 +1244,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Central Promenade, {city}",
             "description": "Revisit {city}'s iconic waterfront and grand boulevards in the gentle morning light, taking memorable final photographs.",
             "duration": "3 hrs",
-            "base_cost": 10,
+            "base_cost": 650,
             "tips": "Great time to take portrait photos without bustling afternoon crowds."
         },
         "afternoon": {
@@ -1128,7 +1253,7 @@ PROCEDURAL_DAY_BLUEPRINTS = [
             "location": "Grand Boulevard Shops, {city}",
             "description": "Pick up signature artisanal chocolates, packaged spices, and premium local teas to take home the essence of {city}.",
             "duration": "3 hrs",
-            "base_cost": 25,
+            "base_cost": 1620,
             "tips": "Ask merchants for vacuum-sealed travel packs to keep edible gifts fresh during transit."
         },
         "evening": {
@@ -1143,6 +1268,344 @@ PROCEDURAL_DAY_BLUEPRINTS = [
     }
 ]
 
+
+
+# --- Authentic Daily Dining Recommendations ---
+DESTINATION_DINING_RECOMMENDATIONS = {
+    "vizag": [
+        [
+            {"name": "Sea Inn (Kabab House)", "cuisine": "Coastal Andhra Seafood", "specialty": "Spicy Prawn Fry & Royyala Biryani", "location": "Rushikonda / Lawson's Bay", "priceRange": "₹450 - ₹900", "timing": "Lunch & Dinner", "rating": 4.8},
+            {"name": "The Park Bamboo Bay", "cuisine": "Beachfront Barbecue & Grill", "specialty": "Tandoori Crab & Bamboo Chicken", "location": "Beach Road", "priceRange": "₹1,200 - ₹2,200", "timing": "Dinner & Cocktails", "rating": 4.9}
+        ],
+        [
+            {"name": "Daspalla Executive Court", "cuisine": "Authentic Andhra Royal Thali", "specialty": "Gongura Mutton & Avakaya Annam", "location": "Waltair Uplands", "priceRange": "₹400 - ₹800", "timing": "Lunch", "rating": 4.8},
+            {"name": "Flying Spaghetti Monster", "cuisine": "Artisan Italian Trattoria", "specialty": "Woodfired Truffle Pizza & Tiramisu", "location": "Siripuram", "priceRange": "₹700 - ₹1,400", "timing": "Dinner", "rating": 4.7}
+        ],
+        [
+            {"name": "Araku Haritha Bamboo Kitchen", "cuisine": "Tribal Highland Cuisine", "specialty": "Bamboo Chicken & Bongu Biryani", "location": "Araku Valley", "priceRange": "₹350 - ₹700", "timing": "Lunch", "rating": 4.7},
+            {"name": "Laddu Gopal & Sweet India", "cuisine": "Traditional Confectionery & Street Food", "specialty": "Kaju Sweets, Hot Samosa & Filter Coffee", "location": "Jagadamba Junction", "priceRange": "₹150 - ₹400", "timing": "Evening Snack", "rating": 4.8}
+        ]
+    ],
+    "rajahmundry": [
+        [
+            {"name": "Srikanya Comfort", "cuisine": "Legendary Godavari Seafood", "specialty": "Godavari Pulasa Fish Curry & Bagara Rice", "location": "Main Road, Kotagummam", "priceRange": "₹500 - ₹1,100", "timing": "Lunch & Dinner", "rating": 4.9},
+            {"name": "Rose Milk Centre (Est. 1950)", "cuisine": "Iconic Heritage Beverage", "specialty": "Chilled Rose Milk with Khoa & Cashew", "location": "Kotagummam Corner", "priceRange": "₹80 - ₹150", "timing": "All Day Refreshment", "rating": 4.9}
+        ],
+        [
+            {"name": "River Bay Godavari Bistro", "cuisine": "Riverfront Andhra Special", "specialty": "Natu Kodi Pulusu & Ragi Sankati", "location": "Gowthami Ghat", "priceRange": "₹600 - ₹1,200", "timing": "Lunch", "rating": 4.7},
+            {"name": "Udupi Sri Krishna Bhavan", "cuisine": "Pure Vegetarian Tiffin Heritage", "specialty": "Ghee Karam Dosa & Filter Coffee", "location": "Pushkar Ghat", "priceRange": "₹150 - ₹350", "timing": "Breakfast & Evening", "rating": 4.8}
+        ],
+        [
+            {"name": "Sri Kanya Grand", "cuisine": "East Godavari Thali Special", "specialty": "Pootharekulu Sweet Roll & Gongura Royyalu", "location": "Danavaipeta", "priceRange": "₹450 - ₹950", "timing": "Lunch & Dinner", "rating": 4.8},
+            {"name": "Kotipalli Bus Stand Mirchi Bajji Stalls", "cuisine": "Crisp Evening Street Food", "specialty": "Stuffed Onion Mirchi Bajji & Tomato Cut", "location": "Kotipalli Center", "priceRange": "₹80 - ₹180", "timing": "Evening Snack", "rating": 4.7}
+        ]
+    ],
+    "ooty": [
+        [
+            {"name": "Nahar's Sidewalk Cafe", "cuisine": "Italian & European Cafe", "specialty": "Thin Crust Woodfired Pizza & Fresh Brew", "location": "Commercial Road", "priceRange": "₹450 - ₹900", "timing": "Lunch & Dinner", "rating": 4.8},
+            {"name": "Earl's Secret (Kings Cliff)", "cuisine": "Colonial Anglo-Indian Dining", "specialty": "Shepherd's Pie, Sizzlers & Herb Soup", "location": "Havelock Road", "priceRange": "₹900 - ₹1,800", "timing": "Candlelight Dinner", "rating": 4.9}
+        ],
+        [
+            {"name": "Hotel Junior Kuppanna", "cuisine": "Kongu Nadu South Indian", "specialty": "Mutton Chukka & Seeraga Samba Biryani", "location": "Charring Cross", "priceRange": "₹400 - ₹850", "timing": "Lunch", "rating": 4.7},
+            {"name": "King Star Bakery (Est. 1942)", "cuisine": "Artisan Confectionery", "specialty": "Handmade Ooty Chocolate Fudge", "location": "Commercial Street", "priceRange": "₹200 - ₹500", "timing": "Sweet Souvenir", "rating": 4.9}
+        ],
+        [
+            {"name": "Shinkow's Chinese Restaurant", "cuisine": "Authentic Heritage Chinese", "specialty": "Chili Garlic Pork, Hakka Noodles & Wonton", "location": "Commissioner's Road", "priceRange": "₹500 - ₹1,100", "timing": "Lunch & Dinner", "rating": 4.8},
+            {"name": "Willy's Coffee Pub", "cuisine": "Book Cafe & Roastery", "specialty": "Filtered Arabica Coffee & Carrot Cake", "location": "Kandal, Ooty", "priceRange": "₹180 - ₹400", "timing": "Afternoon Refreshment", "rating": 4.6}
+        ]
+    ],
+    "manali": [
+        [
+            {"name": "Cafe 1947", "cuisine": "Riverside Italian & Continental", "specialty": "Trout Fish with Garlic Butter & Ravioli", "location": "Old Manali Bridge", "priceRange": "₹600 - ₹1,300", "timing": "Lunch & Sunset", "rating": 4.9},
+            {"name": "Drifters' Cafe", "cuisine": "Mountain Comfort Food", "specialty": "Fluffy Pancakes & Himalayan Mutton Stew", "location": "Manu Temple Road", "priceRange": "₹400 - ₹850", "timing": "Dinner & Live Music", "rating": 4.8}
+        ],
+        [
+            {"name": "Chopsticks Restaurant", "cuisine": "Tibetan & Himalayan", "specialty": "Steamed Pork Momos & Thukpa Noodle Soup", "location": "Mall Road", "priceRange": "₹300 - ₹700", "timing": "Lunch", "rating": 4.8},
+            {"name": "Johnson's Cafe", "cuisine": "Woodfired European Dining", "specialty": "Woodfired Trout Almondine & Apple Crumble", "location": "Circuit House Road", "priceRange": "₹800 - ₹1,700", "timing": "Dinner", "rating": 4.9}
+        ],
+        [
+            {"name": "Jana Heritage Dhabha", "cuisine": "Traditional Himachali", "specialty": "Steamed Siddu with Pure Ghee & Walnut Chutney", "location": "Jana Village Falls", "priceRange": "₹250 - ₹500", "timing": "Lunch", "rating": 4.8}
+        ]
+    ],
+    "paris": [
+        [
+            {"name": "Le Comptoir du Relais", "cuisine": "Quintessential Parisian Bistro", "specialty": "Duck Confit & Escargots de Bourgogne", "location": "Odéon / Saint-Germain", "priceRange": "₹2,800 - ₹5,500", "timing": "Lunch & Dinner", "rating": 4.9},
+            {"name": "Carette Paris (Est. 1927)", "cuisine": "Haute French Patisserie", "specialty": "Legendary Thick Hot Chocolate & Macarons", "location": "Place des Vosges", "priceRange": "₹1,200 - ₹2,500", "timing": "Afternoon Tea", "rating": 4.9}
+        ],
+        [
+            {"name": "Bouillon Chartier", "cuisine": "Belle Époque Classic Dining", "specialty": "Steak Frites & Baba au Rhum", "location": "Rue du Faubourg Montmartre", "priceRange": "₹1,800 - ₹3,500", "timing": "Lunch", "rating": 4.7},
+            {"name": "Pink Mamma", "cuisine": "Italian Trattoria & Rooftop Bar", "specialty": "Truffle Pasta & Burrata Pugliese", "location": "Pigalle / 9th Arr.", "priceRange": "₹2,400 - ₹4,800", "timing": "Dinner", "rating": 4.8}
+        ],
+        [
+            {"name": "L'Ambroisie", "cuisine": "Michelin 3-Star Haute Cuisine", "specialty": "Roasted Sea Bass with Caviar & Sabayon", "location": "Place des Vosges", "priceRange": "₹12,000 - ₹28,000", "timing": "Gala Dinner", "rating": 5.0}
+        ]
+    ],
+    "tokyo": [
+        [
+            {"name": "Ichiran Ramen", "cuisine": "Iconic Tonkotsu Ramen", "specialty": "Classic Tonkotsu Broth with Handmade Noodles", "location": "Shinjuku / Shibuya", "priceRange": "₹800 - ₹1,400", "timing": "Lunch & Late Night", "rating": 4.9},
+            {"name": "Omoide Yokocho Yakitori Alley", "cuisine": "Izakaya Street Grills", "specialty": "Charcoal Grilled Chicken Skewers & Draft Beer", "location": "Shinjuku Station West", "priceRange": "₹1,200 - ₹2,500", "timing": "Evening", "rating": 4.8}
+        ],
+        [
+            {"name": "Gyukatsu Motomura", "cuisine": "Japanese Beef Cutlet", "specialty": "Panko-Crusted Wagyu Beef on Stone Grill", "location": "Shibuya", "priceRange": "₹1,400 - ₹2,800", "timing": "Lunch", "rating": 4.9},
+            {"name": "Afuri Ramen", "cuisine": "Artisan Yuzu Ramen", "specialty": "Yuzu Shio Ramen & Charcoal Chashu", "location": "Harajuku", "priceRange": "₹900 - ₹1,600", "timing": "Dinner", "rating": 4.8}
+        ],
+        [
+            {"name": "Sushi Dai / Daiwa Sushi", "cuisine": "Edomae Sushi Masterclass", "specialty": "Bluefin Otoro, Sea Urchin & Sweet Shrimp", "location": "Toyosu / Tsukiji", "priceRange": "₹3,500 - ₹7,500", "timing": "Morning & Lunch", "rating": 5.0}
+        ]
+    ]
+}
+
+def get_destination_dining_recommendations(dest_name: str, day_idx: int) -> list:
+    dest_lower = dest_name.lower()
+    for k, days_list in DESTINATION_DINING_RECOMMENDATIONS.items():
+        if k in dest_lower or dest_lower in k:
+            return days_list[day_idx % len(days_list)]
+    
+    # Realistic procedural dining recommendations for any global town
+    food_styles = [
+        ("Grand Central Heritage Brasserie", "Regional Epicurean Cuisine", f"Chef's Signature Braised Delicacy with {dest_name} Herb Sauce", "Old Town Plaza", "₹650 - ₹1,400", 4.8),
+        ("The Artisan Table & Roastery", "Farm-to-Table & Local Cafe", "Wood-Smoked Small Plates & Single-Origin Roast", "Artisans Quarter", "₹450 - ₹950", 4.7),
+        ("Riverside Twilight Bistro", "Contemporary Coastal & Grill", "Charcoal Catch of the Day with Truffle Mash", "Waterfront Esplanade", "₹850 - ₹1,800", 4.9),
+        ("Old Market Traditional Food Hall", "Authentic Local Specialties", f"Classic {dest_name} Street Thali & Warm Sweets", "Bazaar Street", "₹250 - ₹600", 4.8)
+    ]
+    f1 = food_styles[(day_idx * 2) % len(food_styles)]
+    f2 = food_styles[(day_idx * 2 + 1) % len(food_styles)]
+    return [
+        {"name": f1[0], "cuisine": f1[1], "specialty": f1[2], "location": f1[3], "priceRange": f1[4], "timing": "Lunch", "rating": f1[5]},
+        {"name": f2[0], "cuisine": f2[1], "specialty": f2[2], "location": f2[3], "priceRange": f2[4], "timing": "Dinner", "rating": f2[5]}
+    ]
+
+# --- Authentic Hotel Recommendations by Budget Tier ---
+DESTINATION_HOTEL_RECOMMENDATIONS = {
+    "vizag": [
+        {"name": "Zostel Vizag / Dolphin Hotel", "tier": "budget", "location": "Daba Gardens / Ramnagar", "pricePerNight": 2200, "rating": 4.6, "amenities": ["Free WiFi", "AC", "Travel Desk", "Breakfast"], "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80", "badge": "Smart Backpacker"},
+        {"name": "The Gateway Hotel Beach Road", "tier": "moderate", "location": "Pandurangapuram, RK Beach", "pricePerNight": 5500, "rating": 4.8, "amenities": ["Sea Views", "Swimming Pool", "Ming Garden", "Spa"], "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80", "badge": "Most Popular"},
+        {"name": "Novotel Visakhapatnam Varun Beach", "tier": "luxury", "location": "Beach Road, Maharani Peta", "pricePerNight": 9500, "rating": 4.9, "amenities": ["Infinity Bay Pool", "Executive Lounge", "Fine Dining", "Sea Facing"], "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80", "badge": "5-Star Luxury"}
+    ],
+    "rajahmundry": [
+        {"name": "Hotel Shelton / La Hospin", "tier": "budget", "location": "Ayyappa Nagar, Rajahmundry", "pricePerNight": 1900, "rating": 4.5, "amenities": ["AC Rooms", "Free WiFi", "Room Service"], "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80", "badge": "Value Pick"},
+        {"name": "Hotel Anand Regency", "tier": "moderate", "location": "JNM Street, Rajahmundry", "pricePerNight": 3800, "rating": 4.7, "amenities": ["Restaurant", "Banquet", "Central AC", "Bar"], "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80", "badge": "City Favorite"},
+        {"name": "River Bay Resort & Water Park", "tier": "luxury", "location": "Gowthami Ghat Road", "pricePerNight": 6500, "rating": 4.8, "amenities": ["Godavari Views", "Water World", "Captain's Deck", "Lawns"], "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80", "badge": "Waterfront Pick"}
+    ],
+    "ooty": [
+        {"name": "Zostel Ooty / Hotel Willow Hill", "tier": "budget", "location": "Elk Hill / Upper Ooty", "pricePerNight": 2400, "rating": 4.7, "amenities": ["Mountain Views", "Cafe", "Bonfire", "Free WiFi"], "image": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80", "badge": "Backpacker Gem"},
+        {"name": "Sterling Ooty Elk Hill", "tier": "moderate", "location": "Elk Hill, Ooty", "pricePerNight": 6200, "rating": 4.8, "amenities": ["Valley Overlook", "Organic Kitchen", "Kids Activity Hub", "Fireplace"], "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80", "badge": "Panoramic Resort"},
+        {"name": "Savoy - IHCL SeleQtions Ooty", "tier": "luxury", "location": "Sylks Road, Central Ooty", "pricePerNight": 14500, "rating": 4.9, "amenities": ["British Colonial Cottages", "English High Tea", "Eucalyptus Spa", "Horse Riding"], "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80", "badge": "Historic Heritage"}
+    ],
+    "manali": [
+        {"name": "The Hosteller Manali / Zostel Old Manali", "tier": "budget", "location": "Old Manali Village", "pricePerNight": 2100, "rating": 4.7, "amenities": ["Riverside Cafe", "Common Lounge", "Heaters", "Mountain Treks"], "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80", "badge": "Alpine Youth"},
+        {"name": "Snow Valley Resorts", "tier": "moderate", "location": "Log Huts Area, Manali", "pricePerNight": 5200, "rating": 4.8, "amenities": ["Cedar Forest Views", "Buffet Dining", "Games Room", "Balconies"], "image": "https://images.unsplash.com/photo-1579619564365-0442e27ab9e2?auto=format&fit=crop&w=800&q=80", "badge": "Valley Retreat"},
+        {"name": "The Himalayan Castle & Cedar Spa", "tier": "luxury", "location": "Hadimba Road, Manali", "pricePerNight": 12500, "rating": 4.9, "amenities": ["Castle Architecture", "Heated Pool", "Fireplace Suites", "Spa"], "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80", "badge": "5-Star Castle"}
+    ],
+    "paris": [
+        {"name": "Generator Paris / The People Marais", "tier": "budget", "location": "10th / 11th Arrondissement", "pricePerNight": 6500, "rating": 4.6, "amenities": ["Rooftop Bar", "Metro Proximity", "Free WiFi"], "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80", "badge": "Trendy Design"},
+        {"name": "CitizenM Paris Champs-Élysées", "tier": "moderate", "location": "8th Arrondissement", "pricePerNight": 18500, "rating": 4.8, "amenities": ["Champs-Élysées Access", "MoodPad Rooms", "CanteenM Bar"], "image": "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=800&q=80", "badge": "Prime Central"},
+        {"name": "Hôtel Plaza Athénée", "tier": "luxury", "location": "Avenue Montaigne, Paris", "pricePerNight": 52000, "rating": 5.0, "amenities": ["Eiffel Views", "Dior Institute Spa", "3-Star Michelin", "Courtyard"], "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80", "badge": "Haute Couture Palace"}
+    ],
+    "tokyo": [
+        {"name": "Hotel Gracery Shinjuku", "tier": "budget", "location": "Kabukicho, Shinjuku", "pricePerNight": 5800, "rating": 4.7, "amenities": ["Godzilla Head View", "Metro Proximity", "Modern Pods"], "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80", "badge": "Pop Icon"},
+        {"name": "Candeo Hotels Tokyo Shimbashi", "tier": "moderate", "location": "Shimbashi, Minato City", "pricePerNight": 15500, "rating": 4.8, "amenities": ["Sky Spa Open-Air Bath", "Sauna", "Tokyo Tower View"], "image": "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80", "badge": "Sky Spa Pick"},
+        {"name": "Aman Tokyo / Ritz-Carlton", "tier": "luxury", "location": "Otemachi / Roppongi", "pricePerNight": 68000, "rating": 5.0, "amenities": ["Panoramic Fuji Views", "Traditional Onsen Spa", "Michelin Dining"], "image": "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=800&q=80", "badge": "Ultra Luxury"}
+    ]
+}
+
+def get_destination_hotel_recommendations(dest_name: str, budget_tier: str, dest_info: dict) -> list:
+    dest_lower = dest_name.lower()
+    hotels = None
+    for k, h_list in DESTINATION_HOTEL_RECOMMENDATIONS.items():
+        if k in dest_lower or dest_lower in k:
+            hotels = [dict(h) for h in h_list]
+            break
+            
+    if not hotels:
+        hotels = [
+            {"name": f"{dest_name} Travelers Lodge & Pods", "tier": "budget", "location": f"Transit Quarter, {dest_name}", "pricePerNight": 2200, "rating": 4.6, "amenities": ["Free WiFi", "AC", "Breakfast", "Travel Desk"], "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80", "badge": "Smart Economy"},
+            {"name": f"The Grand {dest_name} Heritage Hotel", "tier": "moderate", "location": f"Historic Center, {dest_name}", "pricePerNight": 5400, "rating": 4.8, "amenities": ["Pool", "Restaurant", "Garden Lawn", "Fitness Center"], "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80", "badge": "Most Popular"},
+            {"name": f"{dest_name} Royal Palace & Bay Resort", "tier": "luxury", "location": f"Prime Overlook Boulevard, {dest_name}", "pricePerNight": 14500, "rating": 4.9, "amenities": ["Infinity Pool", "Private Balconies", "Ayurvedic Spa", "Chauffeur Service"], "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80", "badge": "5-Star Luxury"}
+        ]
+        
+    # Sort so user's chosen tier comes first
+    tier_order = {"budget": 0, "moderate": 1, "luxury": 2}
+    selected_val = tier_order.get(budget_tier.lower(), 1)
+    hotels.sort(key=lambda h: 0 if tier_order.get(h["tier"], 1) == selected_val else 1)
+    return hotels
+
+# --- Journey & Transit Breakdown Generator ---
+HUB_TRANSIT_DETAILS = {
+    "vizag": {
+        "airport": "Visakhapatnam Intl Airport (VTZ)",
+        "station": "Visakhapatnam Junction (VSKP)",
+        "highways": "NH16 (East Coast Golden Quadrilateral corridor)",
+        "avg_flight_hrs": "1h 15m",
+        "avg_train_hrs": "8h 30m",
+        "avg_drive_hrs": "11h 30m"
+    },
+    "rajahmundry": {
+        "airport": "Rajahmundry Airport (RJA / Madhurapudi)",
+        "station": "Rajahmundry Railway Station (RJY)",
+        "highways": "NH16 via Godavari Arch Bridges",
+        "avg_flight_hrs": "1h 10m",
+        "avg_train_hrs": "6h 00m",
+        "avg_drive_hrs": "8h 30m"
+    },
+    "ooty": {
+        "airport": "Coimbatore Intl Airport (CJB - 88 km) / Mysore Airport (MYQ)",
+        "station": "Udhagamandalam Station (UAM) / Mettupalayam (MTP)",
+        "highways": "NH181 via 36 Hairpin Bends Ghat Road",
+        "avg_flight_hrs": "1h 15m (+2.5h scenic ghat cab)",
+        "avg_train_hrs": "9h 30m (Nilgiri Mountain Toy Train connection)",
+        "avg_drive_hrs": "6h 30m"
+    },
+    "manali": {
+        "airport": "Kullu-Manali Airport at Bhuntar (KUU - 50 km)",
+        "station": "Chandigarh Junction (CDG - 290 km)",
+        "highways": "NH3 via Kiratpur-Nerchowk Expressway & Pandoh",
+        "avg_flight_hrs": "1h 20m (+1.5h cab)",
+        "avg_train_hrs": "8h 00m to Chandigarh (+7h scenic cab)",
+        "avg_drive_hrs": "11h 00m"
+    },
+    "paris": {
+        "airport": "Paris Charles de Gaulle (CDG) / Orly (ORY)",
+        "station": "Gare du Nord / Gare de Lyon (Eurostar / TGV)",
+        "highways": "A1 / A6 Motorway Corridors",
+        "avg_flight_hrs": "1h 20m",
+        "avg_train_hrs": "2h 15m (Eurostar Rail)",
+        "avg_drive_hrs": "5h 45m"
+    },
+    "tokyo": {
+        "airport": "Tokyo Haneda (HND) / Narita Intl (NRT)",
+        "station": "Tokyo Station / Shinagawa (Tokaido Shinkansen)",
+        "highways": "Tomei Expressway / Shuto Expressway",
+        "avg_flight_hrs": "1h 15m",
+        "avg_train_hrs": "2h 30m (Nozomi Shinkansen Bullet Train)",
+        "avg_drive_hrs": "6h 00m"
+    }
+}
+
+def generate_journey_transit_breakdown(origin: str, destination: str, preferred_mode: str, dest_info: dict, origin_coords: dict = None) -> dict:
+    dest_name = dest_info.get("name", destination)
+    dest_lower = dest_name.lower()
+    orig_clean = origin.strip() if origin and origin.lower() != "current location" else "Hyderabad"
+    
+    # Check hub knowledge base
+    matched_hub = None
+    for k, v in HUB_TRANSIT_DETAILS.items():
+        if k in dest_lower or dest_lower in k:
+            matched_hub = v
+            break
+            
+    if not matched_hub:
+        matched_hub = {
+            "airport": f"{dest_name} Domestic / Regional Airport",
+            "station": f"{dest_name} Central Junction",
+            "highways": f"National Highway & Expressway Corridors connecting to {dest_name}",
+            "avg_flight_hrs": "1h 30m",
+            "avg_train_hrs": "7h 30m",
+            "avg_drive_hrs": "9h 45m"
+        }
+
+    # Realistic distance estimation
+    dist_km = 580
+    if origin_coords and dest_info.get("coordinates"):
+        try:
+            lat1, lon1 = origin_coords["lat"], origin_coords["lng"]
+            lat2, lon2 = dest_info["coordinates"]["lat"], dest_info["coordinates"]["lng"]
+            r_earth = 6371
+            d_lat = math.radians(lat2 - lat1)
+            d_lon = math.radians(lon2 - lon1)
+            a = math.sin(d_lat / 2)**2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(d_lon / 2)**2
+            c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+            dist_km = max(80, round(r_earth * c))
+        except Exception:
+            pass
+
+    # Build all 4 transport options in INR
+    flight_cost = max(3200, round(dist_km * 5.8, -2))
+    train_cost = max(650, round(dist_km * 2.2, -1))
+    drive_fuel = max(2400, round(dist_km * 6.5, -2))
+    cab_cost = max(3800, round(dist_km * 11.0, -2))
+
+    options_map = {
+        "flight": {
+            "mode": "flight",
+            "title": f"Express Direct / Connecting Flight ({orig_clean} → {dest_name})",
+            "duration": matched_hub["avg_flight_hrs"],
+            "estimatedCost": flight_cost,
+            "routeOverview": f"Depart from nearest airport servicing {orig_clean} arriving directly at {matched_hub['airport']}. Fast 20-30 min connection into city center.",
+            "highlights": [
+                f"Arrival Hub: {matched_hub['airport']}",
+                "Baggage handling and terminal cab stands included",
+                "Fastest journey with minimum en-route fatigue"
+            ],
+            "terminalDetails": {
+                "departureTerminal": f"Air Hub near {orig_clean}",
+                "arrivalTerminal": matched_hub["airport"]
+            }
+        },
+        "train": {
+            "mode": "train",
+            "title": f"Superfast / Vande Bharat Express to {dest_name}",
+            "duration": matched_hub["avg_train_hrs"],
+            "estimatedCost": train_cost,
+            "routeOverview": f"Direct express railway connection arriving at {matched_hub['station']}. Excellent downtown access with zero airport wait times.",
+            "highlights": [
+                f"Terminal Station: {matched_hub['station']}",
+                "Scenic countryside and panoramic window routes",
+                "Onboard catering and relaxed luggage allowances"
+            ],
+            "terminalDetails": {
+                "departureTerminal": f"Railway Junction, {orig_clean}",
+                "arrivalTerminal": matched_hub["station"]
+            }
+        },
+        "drive": {
+            "mode": "drive",
+            "title": f"Scenic Highway Road Trip via {matched_hub['highways']}",
+            "duration": matched_hub["avg_drive_hrs"],
+            "estimatedCost": drive_fuel,
+            "routeOverview": f"Drive along {matched_hub['highways']}. Smooth multi-lane toll expressways with designated food courts and fuel stations.",
+            "highlights": [
+                f"Main Corridor: {matched_hub['highways']}",
+                f"Approx. {dist_km} km distance with flexible departure timing",
+                "Opportunity for spontaneous scenic viewpoint breaks"
+            ]
+        },
+        "cab": {
+            "mode": "cab",
+            "title": f"Dedicated Outstation Chauffeur AC Cab ({orig_clean} → {dest_name})",
+            "duration": matched_hub["avg_drive_hrs"],
+            "estimatedCost": cab_cost,
+            "routeOverview": f"Private door-to-door AC Sedan or SUV with professional highway driver and flexible pickup from your address in {orig_clean}.",
+            "highlights": [
+                "Zero luggage hassle - door-to-door direct transit",
+                "Experienced highway driver handling tolls and parking",
+                "Custom stops for breakfast and refreshments on request"
+            ]
+        }
+    }
+
+    norm_preferred = preferred_mode.lower() if preferred_mode else "flight"
+    if norm_preferred not in options_map:
+        norm_preferred = "flight"
+        
+    primary = options_map[norm_preferred]
+    alternatives = [opt for k, opt in options_map.items() if k != norm_preferred]
+
+    travel_tips = [
+        f"For {norm_preferred.capitalize()}: Booking 10-14 days in advance secures the best promotional rates and confirmed seats.",
+        f"If driving or taking a cab along {matched_hub['highways']}, start early morning (05:30 AM) to beat city commuter bottlenecks.",
+        f"Upon arriving at {dest_name}, prepaid airport/station taxis and app-based cabs operate 24/7 with regulated tariffs."
+    ]
+
+    return {
+        "preferredMode": norm_preferred,
+        "origin": orig_clean,
+        "destination": dest_name,
+        "distanceKm": dist_km,
+        "primaryOption": primary,
+        "alternativeOptions": alternatives,
+        "travelTips": travel_tips
+    }
 
 def resolve_destination(raw_input: str) -> Dict[str, Any]:
     """
@@ -1166,7 +1629,7 @@ def resolve_destination(raw_input: str) -> Dict[str, Any]:
                 "image": d.get("image"),
                 "bannerImage": d.get("bannerImage", d.get("image")),
                 "highlights": d.get("highlights", []),
-                "currency": d.get("currency", "$")
+                "currency": d.get("currency", "₹")
             }
 
     # 2. Check known custom dictionary (e.g. vizag, visakhapatnam, hyderabad, etc.)
@@ -1181,7 +1644,7 @@ def resolve_destination(raw_input: str) -> Dict[str, Any]:
                 "image": info["image"],
                 "bannerImage": info["bannerImage"],
                 "highlights": info["highlights"],
-                "currency": "$"
+                "currency": "₹"
             }
 
     # 3. Dynamic Photon Geocoding for any unknown global city
@@ -1228,7 +1691,7 @@ def resolve_destination(raw_input: str) -> Dict[str, Any]:
         "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
         "bannerImage": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=80",
         "highlights": dynamic_highlights,
-        "currency": "$"
+        "currency": "₹"
     }
 
 # --- Pydantic Models ---
@@ -1294,7 +1757,7 @@ def plan_trip(req: PlanTripRequest):
     country = dest_info["country"]
     coords = dest_info["coordinates"]
     highlights = dest_info["highlights"]
-    cost_multiplier = 2.5 if req.budget == "luxury" else 0.7 if req.budget == "budget" else 1.2
+    cost_multiplier = 2.5 if req.budget == "luxury" else 0.8 if req.budget == "budget" else 1.2
 
     start_date = datetime.strptime(req.startDate, "%Y-%m-%d") if req.startDate else datetime.utcnow()
     itinerary_days = []
@@ -1376,6 +1839,9 @@ def plan_trip(req: PlanTripRequest):
                 salt=(i * 3 + slot_idx)
             )
 
+            photo_query = f"{dest_name} {s['title']}"
+            unsplash_search_url = f"https://unsplash.com/s/photos/{urllib.parse.quote(photo_query)}"
+
             slots.append({
                 "id": f"day-{i+1}-{period.lower()}",
                 "period": period,
@@ -1387,6 +1853,8 @@ def plan_trip(req: PlanTripRequest):
                 "cost": round(s["base_cost"] * cost_multiplier),
                 "duration": s["duration"],
                 "image": slot_img,
+                "photoQuery": photo_query,
+                "unsplashSearchUrl": unsplash_search_url,
                 "coordinates": slot_coord,
                 "tips": s["tips"]
             })
@@ -1401,7 +1869,8 @@ def plan_trip(req: PlanTripRequest):
                 "condition": "Sunny & Clear" if i % 2 == 0 else "Gentle Breeze",
                 "icon": "Sun"
             },
-            "slots": slots
+            "slots": slots,
+            "diningRecommendations": get_destination_dining_recommendations(dest_name, i)
         })
 
     total_cost = sum(sum(s["cost"] for s in d["slots"]) for d in itinerary_days)
@@ -1423,7 +1892,19 @@ def plan_trip(req: PlanTripRequest):
             "coordinates": coords,
             "heroImage": dest_info.get("bannerImage", dest_info.get("image")),
             "estimatedTotalCost": total_cost,
-            "currency": "$",
+            "currency": "₹",
+            "journeyTransit": generate_journey_transit_breakdown(
+                req.origin or "Current Location",
+                dest_name,
+                req.transport or "flight",
+                dest_info,
+                req.originCoordinates
+            ),
+            "hotelRecommendations": get_destination_hotel_recommendations(
+                dest_name,
+                req.budget,
+                dest_info
+            ),
             "itineraryDays": itinerary_days,
             "aiNotes": [
                 f"Itinerary exclusively customized for {dest_name} ({country}) for {req.travelStyle} travel.",
@@ -1462,7 +1943,7 @@ def get_booking_options(destination: str = ""):
                 "rating": 4.9,
                 "reviews": 1180,
                 "pricePerNight": 210,
-                "currency": "$",
+                "currency": "₹",
                 "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
                 "amenities": ["Infinity Bay Pool", "Fine Dining", "Concierge Chauffeur", "Wellness Spa", "Ocean Views"],
                 "location": f"Prime Bay District, {dest_display}",
@@ -1476,7 +1957,7 @@ def get_booking_options(destination: str = ""):
                 "rating": 4.8,
                 "reviews": 840,
                 "pricePerNight": 145,
-                "currency": "$",
+                "currency": "₹",
                 "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
                 "amenities": ["Sunset Terrace", "Organic Breakfast", "Artisan Lounge", "Bicycle Rentals"],
                 "location": f"Heritage Quarter, {dest_display}",
@@ -1495,7 +1976,7 @@ def get_booking_options(destination: str = ""):
                 "reviews": 320,
                 "duration": "4 Hours",
                 "price": 65,
-                "currency": "$",
+                "currency": "₹",
                 "image": "https://images.unsplash.com/photo-1540946485038-a0c24cb4d271?auto=format&fit=crop&w=800&q=80",
                 "badge": "Top Rated"
             },
@@ -1508,7 +1989,7 @@ def get_booking_options(destination: str = ""):
                 "reviews": 460,
                 "duration": "3 Hours",
                 "price": 85,
-                "currency": "$",
+                "currency": "₹",
                 "image": "https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?auto=format&fit=crop&w=800&q=80",
                 "badge": "Must Do"
             }
@@ -1546,7 +2027,7 @@ def checkout(req: CheckoutRequest):
             "tax": tax,
             "conciergeDiscount": discount,
             "total": total,
-            "currency": "$"
+            "currency": "₹"
         },
         "payment": {
             "method": req.paymentMethod or "credit-card",

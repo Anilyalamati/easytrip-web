@@ -10,7 +10,7 @@ import {
   Check, 
   Plus, 
   ShoppingBag, 
-  DollarSign, 
+  IndianRupee, 
   ShieldCheck, 
   Sparkles 
 } from 'lucide-react';
@@ -149,7 +149,7 @@ export const BookingHub: React.FC = () => {
                   <div>
                     <span className="text-[10px] uppercase font-bold text-slate-400">Nightly Rate</span>
                     <div className="text-lg font-extrabold text-white">
-                      ${hotel.pricePerNight} <span className="text-xs text-slate-400 font-normal">/ night</span>
+                      ₹{hotel.pricePerNight.toLocaleString('en-IN')} <span className="text-xs text-slate-400 font-normal">/ night</span>
                     </div>
                   </div>
 
@@ -227,7 +227,7 @@ export const BookingHub: React.FC = () => {
                 <div className="pt-3 border-t border-navy-800/80 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-slate-400">Rate</span>
-                    <div className="text-lg font-extrabold text-white">${tr.price}</div>
+                    <div className="text-lg font-extrabold text-white">₹{tr.price.toLocaleString('en-IN')}</div>
                   </div>
 
                   <button
@@ -284,7 +284,7 @@ export const BookingHub: React.FC = () => {
                 <div className="p-5 pt-0 border-t border-navy-800/80 flex items-center justify-between mt-4">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-slate-400">Per Person</span>
-                    <div className="text-lg font-extrabold text-white">${exp.price}</div>
+                    <div className="text-lg font-extrabold text-white">₹{exp.price.toLocaleString('en-IN')}</div>
                   </div>
 
                   <button

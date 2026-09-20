@@ -89,7 +89,7 @@ export const SavedTripsModal: React.FC = () => {
                         {trip.days} Days
                       </span>
                       <span className="text-gold-400 font-semibold">
-                        ${trip.estimatedTotalCost}
+                        ₹{trip.estimatedTotalCost.toLocaleString('en-IN')}
                       </span>
                     </div>
                   </div>

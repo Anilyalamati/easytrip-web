@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivitySlot } from '../../types/trip';
-import { Clock, MapPin, DollarSign, Lightbulb, Compass, Sun, Moon, Sunset } from 'lucide-react';
+import { Clock, MapPin, IndianRupee, Lightbulb, Compass, Sun, Moon, Sunset, Camera } from 'lucide-react';
 
 export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({ slot, period }) => {
   const PeriodIcon = period === 'Morning' ? Sun : period === 'Afternoon' ? Sunset : Moon;
@@ -25,6 +25,20 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
           {slot.period}
         </span>
 
+        {/* Unsplash Real Photo Link */}
+        {slot.unsplashSearchUrl && (
+          <a
+            href={slot.unsplashSearchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`View verified photos of ${slot.photoQuery || slot.title} on Unsplash`}
+            className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md bg-black/75 hover:bg-black text-[9px] font-medium text-slate-200 backdrop-blur-sm flex items-center gap-1 transition-all border border-white/20 hover:border-gold-500/60 z-10"
+          >
+            <Camera className="w-2.5 h-2.5 text-gold-400" />
+            Unsplash
+          </a>
+        )}
+
         {/* Category Badge */}
         <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-navy-900/80 text-[10px] font-semibold text-slate-300">
           {slot.category}
@@ -41,8 +55,8 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
               {slot.time}
             </span>
             <span className="font-bold text-slate-200 flex items-center gap-0.5 bg-navy-800 px-2 py-0.5 rounded-md border border-navy-700">
-              <DollarSign className="w-3 h-3 text-gold-400" />
-              Est. ${slot.cost}
+              <IndianRupee className="w-3 h-3 text-gold-400" />
+              Est. ₹{slot.cost.toLocaleString('en-IN')}
             </span>
           </div>
 

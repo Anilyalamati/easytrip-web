@@ -16,6 +16,18 @@ export interface ActivitySlot {
   image: string;
   coordinates: Coordinates;
   tips: string;
+  photoQuery?: string;
+  unsplashSearchUrl?: string;
+}
+
+export interface DiningRecommendation {
+  name: string;
+  cuisine: string;
+  specialty: string;
+  location: string;
+  priceRange: string;
+  timing?: string;
+  rating: number;
 }
 
 export interface DayPlan {
@@ -29,6 +41,41 @@ export interface DayPlan {
     icon: string;
   };
   slots: ActivitySlot[];
+  diningRecommendations?: DiningRecommendation[];
+}
+
+export interface HotelRecommendation {
+  name: string;
+  tier: 'budget' | 'moderate' | 'luxury';
+  location: string;
+  pricePerNight: number;
+  rating: number;
+  amenities: string[];
+  image: string;
+  badge?: string;
+}
+
+export interface TransitOption {
+  mode: 'flight' | 'train' | 'drive' | 'cab';
+  title: string;
+  duration: string;
+  estimatedCost: number;
+  routeOverview: string;
+  highlights: string[];
+  terminalDetails?: {
+    departureTerminal?: string;
+    arrivalTerminal?: string;
+  };
+}
+
+export interface JourneyTransitBreakdown {
+  preferredMode: 'flight' | 'train' | 'drive' | 'cab';
+  origin: string;
+  destination: string;
+  distanceKm: number;
+  primaryOption: TransitOption;
+  alternativeOptions: TransitOption[];
+  travelTips: string[];
 }
 
 export interface TripItinerary {
@@ -49,6 +96,9 @@ export interface TripItinerary {
   currency: string;
   itineraryDays: DayPlan[];
   aiNotes: string[];
+  preferredTransport?: string;
+  journeyTransit?: JourneyTransitBreakdown;
+  hotelRecommendations?: HotelRecommendation[];
   savedAt?: string;
 }
 

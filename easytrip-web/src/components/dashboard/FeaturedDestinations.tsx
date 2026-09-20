@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTrip } from '../../context/TripContext';
-import { Star, MapPin, Calendar, DollarSign, Sparkles, ArrowRight } from 'lucide-react';
+import { Star, MapPin, Calendar, IndianRupee, Sparkles, ArrowRight } from 'lucide-react';
 import { Destination } from '../../types/trip';
 
 export const FeaturedDestinations: React.FC = () => {
@@ -110,8 +110,8 @@ export const FeaturedDestinations: React.FC = () => {
                   <span>{dest.idealDays}</span>
                 </div>
                 <div className="flex items-center gap-1 font-semibold text-slate-200">
-                  <DollarSign className="w-3.5 h-3.5 text-gold-400" />
-                  <span>${dest.avgCostPerDay.moderate}/day</span>
+                  <IndianRupee className="w-3.5 h-3.5 text-gold-400" />
+                  <span>₹{dest.avgCostPerDay.moderate.toLocaleString('en-IN')}/day</span>
                 </div>
               </div>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DayPlan } from '../../types/trip';
 import { ActivityItem } from './ActivityItem';
-import { Sun, CloudSun, Calendar, Sparkles } from 'lucide-react';
+import { Sun, Sparkles, UtensilsCrossed, Star, MapPin } from 'lucide-react';
 
 export const DayCard: React.FC<{ day: DayPlan }> = ({ day }) => {
   return (
@@ -43,6 +43,62 @@ export const DayCard: React.FC<{ day: DayPlan }> = ({ day }) => {
           <ActivityItem key={slot.id} slot={slot} period={slot.period} />
         ))}
       </div>
+
+      {/* Curated Local Dining Section */}
+      {day.diningRecommendations && day.diningRecommendations.length > 0 && (
+        <div className="mt-6 pt-5 border-t border-navy-750/80">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 rounded-lg bg-gold-500/10 border border-gold-500/30 flex items-center justify-center">
+              <UtensilsCrossed className="w-4 h-4 text-gold-400" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white tracking-wide">
+                Curated Culinary Picks & Signature Spots (Day {day.dayNumber})
+              </h4>
+              <p className="text-[11px] text-slate-400">Authentic regional flavors and top-rated local dining</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {day.diningRecommendations.map((dining, idx) => (
+              <div
+                key={idx}
+                className="p-3.5 rounded-2xl bg-navy-900/90 border border-navy-750 hover:border-gold-500/40 transition-colors flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <h5 className="font-bold text-white text-sm hover:text-gold-300 transition-colors">
+                      {dining.name}
+                    </h5>
+                    <span className="flex items-center gap-1 text-[11px] font-bold text-amber-400 shrink-0 bg-navy-800 px-1.5 py-0.5 rounded border border-navy-700">
+                      <Star className="w-3 h-3 fill-amber-400" />
+                      {dining.rating}
+                    </span>
+                  </div>
+
+                  <span className="inline-block text-[11px] font-medium text-gold-400/90 mt-0.5">
+                    {dining.cuisine} • <span className="text-slate-400">{dining.timing}</span>
+                  </span>
+
+                  <p className="text-xs text-slate-300 mt-2">
+                    <strong className="text-slate-200">Must Try:</strong> {dining.specialty}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between mt-3 pt-2 border-t border-navy-800 text-[11px] text-slate-400">
+                  <span className="flex items-center gap-1 truncate">
+                    <MapPin className="w-3 h-3 text-gold-500 shrink-0" />
+                    {dining.location}
+                  </span>
+                  <span className="font-semibold text-gold-300 shrink-0">
+                    {dining.priceRange}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -13,11 +13,11 @@
     "coordinates": { "lat": 17.6868, "lng": 83.2185 },
     "idealDays": "3 - 5 Days",
     "avgCostPerDay": {
-      "budget": 25,
-      "moderate": 65,
-      "luxury": 200
+      "budget": 1800,
+      "moderate": 4500,
+      "luxury": 14000
     },
-    "currency": "INR",
+    "currency": "₹",
     "bestSeason": "Oct - Mar",
     "highlights": ["INS Kursura Submarine Museum", "Rushikonda Beach", "Kailasagiri Ropeway", "Simhachalam Temple", "Borra Caves & Araku"],
     "tags": ["Submarine", "Beaches", "Ropeway", "Hills", "Caves"]
@@ -36,14 +36,37 @@
     "coordinates": { "lat": 17.0005, "lng": 81.8040 },
     "idealDays": "2 - 4 Days",
     "avgCostPerDay": {
-      "budget": 22,
-      "moderate": 55,
-      "luxury": 180
+      "budget": 1600,
+      "moderate": 3800,
+      "luxury": 11000
     },
-    "currency": "INR",
+    "currency": "₹",
     "bestSeason": "Oct - Mar",
     "highlights": ["Pushkar Ghat", "Havelock Bridge", "Sir Arthur Cotton Barrage", "Kadiyam Nurseries", "Papikondalu Cruise"],
     "tags": ["Godavari", "Bridges", "River Cruise", "Nurseries", "Temples"]
+  },
+  {
+    "id": "ooty",
+    "name": "Ooty (Udhagamandalam)",
+    "country": "India",
+    "tagline": "Queen of Nilgiri Hill Stations, heritage toy train & rolling tea gardens",
+    "category": "Mountain Retreat",
+    "badge": "Queen of Hills",
+    "rating": 4.9,
+    "reviewCount": 10240,
+    "image": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=1200&q=80",
+    "bannerImage": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1600&q=80",
+    "coordinates": { "lat": 11.4102, "lng": 76.6950 },
+    "idealDays": "3 - 5 Days",
+    "avgCostPerDay": {
+      "budget": 2000,
+      "moderate": 4800,
+      "luxury": 15000
+    },
+    "currency": "₹",
+    "bestSeason": "Year Round",
+    "highlights": ["Nilgiri Mountain Railway Toy Train", "Ooty Botanical Gardens", "Doddabetta Peak", "Pykara Waterfalls & Lake", "Avalanche Lake & Tea Estates"],
+    "tags": ["Toy Train", "Tea Gardens", "Waterfalls", "Botanical", "Lakes"]
   },
   {
     "id": "goa",
@@ -59,11 +82,11 @@
     "coordinates": { "lat": 15.2993, "lng": 74.1240 },
     "idealDays": "3 - 5 Days",
     "avgCostPerDay": {
-      "budget": 35,
-      "moderate": 85,
-      "luxury": 260
+      "budget": 2400,
+      "moderate": 5500,
+      "luxury": 18000
     },
-    "currency": "INR",
+    "currency": "₹",
     "bestSeason": "Nov - Mar",
     "highlights": ["Palolem Beach", "Fort Aguada", "Fontainhas Latin Quarter", "Dudhsagar Falls", "Anjuna Flea Market"],
     "tags": ["Beaches", "Nightlife", "Heritage", "Seafood", "Sunsets"]
@@ -82,11 +105,11 @@
     "coordinates": { "lat": 26.9124, "lng": 75.7873 },
     "idealDays": "2 - 4 Days",
     "avgCostPerDay": {
-      "budget": 30,
-      "moderate": 75,
-      "luxury": 240
+      "budget": 2000,
+      "moderate": 5000,
+      "luxury": 16000
     },
-    "currency": "INR",
+    "currency": "₹",
     "bestSeason": "Oct - Mar",
     "highlights": ["Amber Palace", "Hawa Mahal", "City Palace", "Nahargarh Fort", "Johari Bazaar"],
     "tags": ["Palaces", "Forts", "Textiles", "Architecture", "Jewelry"]
@@ -105,11 +128,11 @@
     "coordinates": { "lat": 32.2396, "lng": 77.1887 },
     "idealDays": "3 - 5 Days",
     "avgCostPerDay": {
-      "budget": 28,
-      "moderate": 70,
-      "luxury": 210
+      "budget": 2000,
+      "moderate": 4800,
+      "luxury": 14000
     },
-    "currency": "INR",
+    "currency": "₹",
     "bestSeason": "Year Round",
     "highlights": ["Solang Valley", "Rohtang Pass", "Old Manali Cafes", "Hadimba Temple", "Jogini Waterfalls"],
     "tags": ["Mountains", "Snow", "Trekking", "Cafes", "Rafting"]
@@ -128,11 +151,11 @@
     "coordinates": { "lat": 19.0760, "lng": 72.8777 },
     "idealDays": "2 - 4 Days",
     "avgCostPerDay": {
-      "budget": 40,
-      "moderate": 110,
-      "luxury": 320
+      "budget": 2800,
+      "moderate": 7500,
+      "luxury": 22000
     },
-    "currency": "INR",
+    "currency": "₹",
     "bestSeason": "Nov - Feb",
     "highlights": ["Gateway of India", "Marine Drive", "Colaba Causeway", "Elephanta Caves", "Bandra Art District"],
     "tags": ["Skyline", "Ocean Drive", "Nightlife", "Street Food", "Art"]
@@ -151,11 +174,11 @@
     "coordinates": { "lat": 25.3176, "lng": 82.9739 },
     "idealDays": "2 - 3 Days",
     "avgCostPerDay": {
-      "budget": 25,
-      "moderate": 60,
-      "luxury": 180
+      "budget": 1600,
+      "moderate": 3800,
+      "luxury": 12000
     },
-    "currency": "INR",
+    "currency": "₹",
     "bestSeason": "Oct - Mar",
     "highlights": ["Dashashwamedh Ghat", "Ganga Sunrise Boat Tour", "Assi Ghat", "Sarnath", "Kashi Vishwanath"],
     "tags": ["Ghats", "Spiritual", "Culture", "Silk", "Sunrise"]
@@ -174,11 +197,11 @@
     "coordinates": { "lat": 48.8566, "lng": 2.3522 },
     "idealDays": "4 - 7 Days",
     "avgCostPerDay": {
-      "budget": 80,
-      "moderate": 210,
-      "luxury": 550
+      "budget": 7500,
+      "moderate": 18000,
+      "luxury": 45000
     },
-    "currency": "EUR",
+    "currency": "₹",
     "bestSeason": "Apr - Oct",
     "highlights": ["Eiffel Tower", "Louvre Museum", "Montmartre", "Seine River Cruise", "Palace of Versailles"],
     "tags": ["Art", "Dining", "Architecture", "Romance", "Fashion"]
@@ -197,11 +220,11 @@
     "coordinates": { "lat": 35.6762, "lng": 139.6503 },
     "idealDays": "5 - 8 Days",
     "avgCostPerDay": {
-      "budget": 75,
-      "moderate": 190,
-      "luxury": 520
+      "budget": 6500,
+      "moderate": 16000,
+      "luxury": 42000
     },
-    "currency": "JPY",
+    "currency": "₹",
     "bestSeason": "Mar - May, Sep - Nov",
     "highlights": ["Shibuya Crossing", "Senso-ji Temple", "Shinjuku Gyoen", "Akihabara", "TeamLab Planets"],
     "tags": ["Tech", "Sushi", "Temples", "Anime", "Gardens"]
@@ -220,11 +243,11 @@
     "coordinates": { "lat": -8.4095, "lng": 115.1889 },
     "idealDays": "4 - 7 Days",
     "avgCostPerDay": {
-      "budget": 35,
-      "moderate": 90,
-      "luxury": 300
+      "budget": 3000,
+      "moderate": 7500,
+      "luxury": 22000
     },
-    "currency": "IDR",
+    "currency": "₹",
     "bestSeason": "Apr - Oct",
     "highlights": ["Ubud Monkey Forest", "Tegallalang Terraces", "Uluwatu Temple Cliff", "Seminyak Beach", "Nusa Penida"],
     "tags": ["Villas", "Surfing", "Yoga", "Sunsets", "Temples"]
