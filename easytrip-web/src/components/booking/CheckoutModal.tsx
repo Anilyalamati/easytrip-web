@@ -84,12 +84,12 @@ export const CheckoutModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-navy-850 border border-gold-500/30 rounded-3xl p-6 sm:p-8 shadow-gold-glow-lg my-8">
+      <div className="relative w-full max-w-2xl bg-navy-850 border border-gold-500/30 rounded-md p-6 sm:p-8 shadow-gold-glow-lg my-8">
         
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-navy-700/80">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-navy-800 border border-gold-500/40 flex items-center justify-center p-2">
+            <div className="w-10 h-10 rounded-sm bg-navy-800 border border-gold-500/40 flex items-center justify-center p-2">
               <CreditCard className="w-5 h-5 text-gold-400" />
             </div>
             <div>
@@ -104,7 +104,7 @@ export const CheckoutModal: React.FC = () => {
 
           <button
             onClick={handleClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-navy-750 transition-all"
+            className="p-2 rounded-sm text-slate-400 hover:text-white hover:bg-navy-750 transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -113,13 +113,13 @@ export const CheckoutModal: React.FC = () => {
         {/* Confirmation Pass Screen */}
         {latestConfirmation ? (
           <div className="mt-6 space-y-6">
-            <div className="p-6 rounded-3xl bg-gradient-to-b from-navy-800 to-navy-900 border border-gold-500/40 relative overflow-hidden shadow-2xl">
+            <div className="p-6 rounded-md bg-gradient-to-b from-navy-800 to-navy-900 border border-gold-500/40 relative overflow-hidden shadow-2xl">
               <div className="flex items-center justify-between border-b border-navy-700/80 pb-4">
                 <div className="flex items-center gap-2.5">
                   <img src="/assets/easytrip_logo.png" alt="EasyTrip" className="w-7 h-7 object-contain" />
                   <span className="text-lg font-bold text-white">Easy<span className="gold-gradient-text">Trip</span> Pass</span>
                 </div>
-                <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                <span className="px-3 py-1 rounded-sm bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" /> Confirmed
                 </span>
               </div>
@@ -168,14 +168,14 @@ export const CheckoutModal: React.FC = () => {
             <div className="flex gap-3">
               <button
                 onClick={() => window.print()}
-                className="flex-1 py-3 rounded-2xl bg-navy-800 hover:bg-navy-750 text-slate-200 font-bold text-xs border border-navy-700 transition-all flex items-center justify-center gap-2"
+                className="flex-1 py-3 rounded-sm bg-navy-800 hover:bg-navy-750 text-slate-200 font-bold text-xs border border-navy-700 transition-all flex items-center justify-center gap-2"
               >
                 <Printer className="w-4 h-4" />
                 <span>Print / Save Voucher</span>
               </button>
               <button
                 onClick={handleClose}
-                className="flex-1 py-3 rounded-2xl gold-gradient-bg text-navy-950 font-bold text-xs transition-all"
+                className="flex-1 py-3 rounded-sm gold-gradient-bg text-navy-950 font-bold text-xs transition-all"
               >
                 Done
               </button>
@@ -189,7 +189,7 @@ export const CheckoutModal: React.FC = () => {
                 <p className="text-sm">Your booking cart is empty.</p>
                 <button
                   onClick={handleClose}
-                  className="px-4 py-2 rounded-xl bg-navy-800 text-gold-400 text-xs font-semibold"
+                  className="px-4 py-2 rounded-sm bg-navy-800 text-gold-400 text-xs font-semibold"
                 >
                   Browse Stays & Transport
                 </button>
@@ -204,7 +204,7 @@ export const CheckoutModal: React.FC = () => {
                   {cart.map(item => (
                     <div
                       key={item.id}
-                      className="p-3 rounded-2xl bg-navy-900 border border-navy-750 flex items-center justify-between gap-3 text-xs"
+                      className="p-3 rounded-sm bg-navy-900 border border-navy-750 flex items-center justify-between gap-3 text-xs"
                     >
                       <div className="flex-1">
                         <div className="font-bold text-white">{item.title}</div>
@@ -236,7 +236,7 @@ export const CheckoutModal: React.FC = () => {
                       onChange={e => setName(e.target.value)}
                       placeholder="Full Name"
                       required
-                      className="px-3.5 py-2 rounded-xl bg-navy-900 border border-navy-700 text-white text-xs focus:outline-none focus:border-gold-500"
+                      className="px-3.5 py-2 rounded-sm bg-navy-900 border border-navy-700 text-white text-xs focus:outline-none focus:border-gold-500"
                     />
                     <input
                       type="email"
@@ -244,7 +244,7 @@ export const CheckoutModal: React.FC = () => {
                       onChange={e => setEmail(e.target.value)}
                       placeholder="Email Address"
                       required
-                      className="px-3.5 py-2 rounded-xl bg-navy-900 border border-navy-700 text-white text-xs focus:outline-none focus:border-gold-500"
+                      className="px-3.5 py-2 rounded-sm bg-navy-900 border border-navy-700 text-white text-xs focus:outline-none focus:border-gold-500"
                     />
                     <input
                       type="tel"
@@ -252,13 +252,13 @@ export const CheckoutModal: React.FC = () => {
                       onChange={e => setPhone(e.target.value)}
                       placeholder="Mobile Number"
                       required
-                      className="px-3.5 py-2 rounded-xl bg-navy-900 border border-navy-700 text-white text-xs focus:outline-none focus:border-gold-500"
+                      className="px-3.5 py-2 rounded-sm bg-navy-900 border border-navy-700 text-white text-xs focus:outline-none focus:border-gold-500"
                     />
                   </div>
                 </div>
 
                 {/* Price Breakdown */}
-                <div className="p-4 rounded-2xl bg-navy-900 border border-navy-750 space-y-2 text-xs">
+                <div className="p-4 rounded-md bg-navy-900 border border-navy-750 space-y-2 text-xs">
                   <div className="flex justify-between text-slate-400">
                     <span>Subtotal</span>
                     <span className="font-semibold text-slate-200">₹{subtotal.toLocaleString('en-IN')}</span>
@@ -281,7 +281,7 @@ export const CheckoutModal: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full py-3.5 rounded-2xl gold-gradient-bg text-navy-950 font-extrabold text-sm tracking-wide shadow-gold-glow hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-md gold-gradient-bg text-navy-950 font-extrabold text-sm tracking-wide shadow-gold-glow hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>{isProcessing ? 'Issuing Reservation Pass...' : `Confirm & Pay ₹${total.toLocaleString('en-IN')}`}</span>

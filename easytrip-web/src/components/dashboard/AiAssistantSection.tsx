@@ -112,7 +112,7 @@ export const AiAssistantSection: React.FC = () => {
     <section id="ai-assistant-section" className="my-16 sm:my-20 scroll-mt-24">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-200">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-brand-50 text-brand-700 text-xs font-bold border border-brand-200">
           <Bot className="w-3.5 h-3.5" />
           <span>SECTION 04 — AI TRAVEL ASSISTANT</span>
         </div>
@@ -125,24 +125,24 @@ export const AiAssistantSection: React.FC = () => {
       </div>
 
       {/* Main Conversational Box Container */}
-      <div className="surface-elevated rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto space-y-6">
+      <div className="surface-elevated rounded-md p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto space-y-6">
         
         {/* Assistant Header Status */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-brand-600 text-white flex items-center justify-center shadow-sm">
+            <div className="w-10 h-10 rounded-sm bg-brand-600 text-white flex items-center justify-center shadow-sm">
               <Bot className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-midnight-900">EasyTrip Intelligence Concierge</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="w-2 h-2 rounded-sm bg-emerald-500 animate-pulse" />
               </div>
               <p className="text-xs text-charcoal-500">Live destination knowledge, route safety & INR budgets</p>
             </div>
           </div>
 
-          <span className="hidden sm:inline-block text-[11px] font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-full border border-teal-200">
+          <span className="hidden sm:inline-block text-[11px] font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-sm border border-teal-200">
             Automated Intelligence
           </span>
         </div>
@@ -164,7 +164,7 @@ export const AiAssistantSection: React.FC = () => {
                 key={p.key}
                 type="button"
                 onClick={() => handleSelectPrompt(p.key)}
-                className={`text-xs px-3.5 py-1.5 rounded-xl border font-semibold transition-all duration-200 active:scale-95 ${
+                className={`text-xs px-3.5 py-1.5 rounded-sm border font-semibold transition-all duration-200 active:scale-95 ${
                   activeKey === p.key && !isTyping
                     ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
                     : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-brand-300 hover:bg-white'
@@ -177,37 +177,37 @@ export const AiAssistantSection: React.FC = () => {
         </div>
 
         {/* Chat / Knowledge Card Display with Staggered Cascades */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4 overflow-hidden">
+        <div className="p-5 sm:p-6 rounded-md bg-slate-50 border border-slate-200/80 space-y-4 overflow-hidden">
           
           {/* User Prompt Bubble with Spring Slide */}
           <div className="flex items-start gap-3 justify-end animate-fade-in-up">
-            <div className="max-w-xl bg-midnight-900 text-white text-xs sm:text-sm font-semibold p-3.5 rounded-2xl rounded-tr-sm shadow-sm">
+            <div className="max-w-xl bg-midnight-900 text-white text-xs sm:text-sm font-semibold p-3.5 rounded-sm shadow-sm">
               {activeData.question}
             </div>
           </div>
 
           {/* Assistant Processing Indicator or Staggered Intelligence Cards */}
           {isTyping ? (
-            <div className="flex items-center gap-3 py-6 px-4 bg-white rounded-2xl border border-slate-200/80 text-xs text-charcoal-600 animate-fade-in">
-              <div className="w-8 h-8 rounded-xl bg-brand-50 border border-brand-200 text-brand-600 flex items-center justify-center shrink-0 shadow-sm">
+            <div className="flex items-center gap-3 py-6 px-4 bg-white rounded-sm border border-slate-200/80 text-xs text-charcoal-600 animate-fade-in">
+              <div className="w-8 h-8 rounded-sm bg-brand-50 border border-brand-200 text-brand-600 flex items-center justify-center shrink-0 shadow-sm">
                 <Bot className="w-4 h-4" />
               </div>
               <div className="flex items-center gap-2">
                 <span>Analyzing travel telemetry & verified local safety</span>
                 <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-sm bg-brand-600 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-sm bg-brand-600 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-sm bg-brand-600 animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             </div>
           ) : (
             <div className="flex items-start gap-3 animate-fade-in">
-              <div className="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 mt-1 shadow-sm">
+              <div className="w-8 h-8 rounded-sm bg-brand-600 text-white flex items-center justify-center shrink-0 mt-1 shadow-sm">
                 <Sparkles className="w-4 h-4" />
               </div>
 
-              <div className="flex-1 space-y-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm text-xs text-charcoal-700">
+              <div className="flex-1 space-y-4 bg-white p-4 sm:p-5 rounded-sm border border-slate-200/90 shadow-sm text-xs text-charcoal-700">
                 {/* Main Summary */}
                 <p className="text-sm font-normal text-midnight-900 leading-relaxed">
                   {activeData.summary}
@@ -215,7 +215,7 @@ export const AiAssistantSection: React.FC = () => {
 
                 {/* Staggered Structured Intelligence Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-100">
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1 animate-telemetry-slide hover:border-brand-200 transition-colors">
+                  <div className="p-3.5 rounded-sm bg-slate-50 border border-slate-200/80 space-y-1 animate-telemetry-slide hover:border-brand-200 transition-colors">
                     <span className="text-[10px] uppercase font-bold text-charcoal-400 flex items-center gap-1">
                       <Car className="w-3 h-3 text-brand-600" />
                       Transit & Arrival
@@ -223,15 +223,15 @@ export const AiAssistantSection: React.FC = () => {
                     <p className="text-xs text-charcoal-700 leading-normal">{activeData.transit}</p>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-teal-50/70 border border-teal-200/80 space-y-1 animate-telemetry-slide hover:border-teal-300 transition-colors" style={{ animationDelay: '100ms' }}>
+                  <div className="p-3.5 rounded-sm bg-teal-50/70 border border-teal-200/80 space-y-1 animate-telemetry-slide hover:border-teal-300 transition-colors" style={{ animationDelay: '100ms' }}>
                     <span className="text-[10px] uppercase font-bold text-teal-800 flex items-center gap-1">
-                      <ShieldCheck className="w-3 h-3 text-teal-600" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-teal-600" />
                       Safety Assessment
                     </span>
                     <p className="text-xs text-teal-900 leading-normal">{activeData.safety}</p>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1 animate-telemetry-slide hover:border-teal-200 transition-colors" style={{ animationDelay: '200ms' }}>
+                  <div className="p-3.5 rounded-sm bg-slate-50 border border-slate-200/80 space-y-1 animate-telemetry-slide hover:border-teal-200 transition-colors" style={{ animationDelay: '200ms' }}>
                     <span className="text-[10px] uppercase font-bold text-charcoal-400 flex items-center gap-1">
                       <IndianRupee className="w-3 h-3 text-teal-600" />
                       Realistic INR Cost
@@ -248,7 +248,7 @@ export const AiAssistantSection: React.FC = () => {
 
                   <button
                     onClick={() => openPlannerWithDestination(activeData.destination)}
-                    className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-sm transition-all self-start sm:self-auto active:scale-95"
+                    className="px-4 py-2 rounded-sm bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-sm transition-all self-start sm:self-auto active:scale-95"
                   >
                     <span>Plan {activeData.destination} Trip</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -267,11 +267,11 @@ export const AiAssistantSection: React.FC = () => {
             value={customQuery}
             onChange={e => setCustomQuery(e.target.value)}
             placeholder="Ask anything about a destination, safety, transit, or budget..."
-            className="w-full pl-4 pr-24 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
+            className="w-full pl-4 pr-24 py-3.5 rounded-sm bg-slate-50 border border-slate-200 text-sm text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
           />
           <button
             type="submit"
-            className="absolute right-2 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-all flex items-center gap-1 shadow-sm"
+            className="absolute right-2 px-4 py-2 rounded-sm bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-all flex items-center gap-1 shadow-sm"
           >
             <span>Ask AI</span>
             <Send className="w-3 h-3" />

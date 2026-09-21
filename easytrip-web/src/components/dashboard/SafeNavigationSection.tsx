@@ -84,7 +84,7 @@ export const SafeNavigationSection: React.FC = () => {
     <section id="navigation-section" className="my-16 sm:my-20 scroll-mt-24">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200">
           <Route className="w-3.5 h-3.5" />
           <span>SECTION 03 — SAFE NAVIGATION</span>
         </div>
@@ -97,7 +97,7 @@ export const SafeNavigationSection: React.FC = () => {
       </div>
 
       {/* Main Navigation Card Container */}
-      <div className="surface-elevated rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto space-y-6">
+      <div className="surface-elevated rounded-md p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto space-y-6">
         
         {/* Top Corridor Selector Tabs */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
@@ -109,10 +109,10 @@ export const SafeNavigationSection: React.FC = () => {
               <button
                 key={c.id}
                 onClick={() => setActiveCorridor(c)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-sm text-xs font-bold transition-all ${
                   activeCorridor.id === c.id
                     ? 'bg-midnight-900 text-white shadow-sm'
-                    : 'bg-slate-100 text-charcoal-700 hover:bg-slate-200'
+                    : 'bg-slate-100 text-charcoal-700 hover:bg-slate-200 border border-slate-200'
                 }`}
               >
                 {c.origin} → {c.destination.split(' ')[0]}
@@ -128,7 +128,7 @@ export const SafeNavigationSection: React.FC = () => {
           <div className="lg:col-span-6 space-y-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-black uppercase">
+                <span className="px-2.5 py-0.5 rounded-sm bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-black uppercase">
                   {activeCorridor.safetyStatus}
                 </span>
                 <span className="text-xs font-bold text-charcoal-500 flex items-center gap-1">
@@ -145,7 +145,7 @@ export const SafeNavigationSection: React.FC = () => {
             </div>
 
             {/* Travel Specs Card */}
-            <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs">
+            <div className="grid grid-cols-2 gap-3 p-4 rounded-md bg-slate-50 border border-slate-200/80 text-xs">
               <div>
                 <span className="text-[10px] uppercase font-bold text-charcoal-400 block mb-0.5">
                   Direct Corridor Distance
@@ -182,7 +182,7 @@ export const SafeNavigationSection: React.FC = () => {
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-midnight-900 hover:bg-black text-white font-bold text-xs tracking-normal shadow-sm transition-all flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-sm bg-midnight-900 hover:bg-black text-white font-bold text-xs tracking-normal shadow-sm transition-all flex items-center gap-1.5"
               >
                 <Navigation className="w-3.5 h-3.5 text-teal-400" />
                 <span>Open in Google Maps</span>
@@ -191,7 +191,7 @@ export const SafeNavigationSection: React.FC = () => {
 
               <button
                 onClick={() => setActiveView('map')}
-                className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-midnight-900 border border-slate-200 font-bold text-xs tracking-normal transition-all flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-midnight-900 border border-slate-200 font-bold text-xs tracking-normal transition-all flex items-center gap-1.5"
               >
                 <span>Interactive Route Viewer</span>
                 <ArrowRight className="w-3.5 h-3.5 text-brand-600" />
@@ -200,7 +200,7 @@ export const SafeNavigationSection: React.FC = () => {
           </div>
 
           {/* Right 6 Cols: Graphical Corridor Route Diagram */}
-          <div className="lg:col-span-6 bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-4">
+          <div className="lg:col-span-6 bg-slate-50 rounded-md p-5 border border-slate-200/80 space-y-4">
             
             {/* Diagram Header */}
             <div className="flex items-center justify-between text-xs font-bold text-midnight-900">
@@ -208,13 +208,13 @@ export const SafeNavigationSection: React.FC = () => {
                 <Route className="w-4 h-4 text-brand-600" />
                 Live Animated Corridor Schematic
               </span>
-              <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+              <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-sm border border-teal-200">
                 OSRM Routing Synced
               </span>
             </div>
 
             {/* Interactive Animated SVG Corridor Canvas */}
-            <div className="relative h-28 w-full bg-white rounded-xl border border-slate-200 p-2 overflow-hidden flex items-center justify-center">
+            <div className="relative h-28 w-full bg-white rounded-sm border border-slate-200 p-2 overflow-hidden flex items-center justify-center">
               <svg 
                 key={activeCorridor.id}
                 viewBox="0 0 400 80" 
@@ -276,21 +276,21 @@ export const SafeNavigationSection: React.FC = () => {
               
               {/* Departure Node */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-brand-600 ring-4 ring-brand-100 animate-pulse" />
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-sm bg-brand-600 ring-4 ring-brand-100 animate-pulse" />
                 <div className="text-xs font-bold text-midnight-900">{activeCorridor.origin} Hub Departure</div>
                 <div className="text-[11px] text-charcoal-500">Terminal & Highway Interchange Hub</div>
               </div>
 
               {/* En-Route Checkpoint */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-teal-500 ring-4 ring-teal-100" />
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-sm bg-teal-500 ring-4 ring-teal-100" />
                 <div className="text-xs font-bold text-teal-900">Midway Rest & Safety Checkpoint</div>
                 <div className="text-[11px] text-charcoal-500">{activeCorridor.restStops}</div>
               </div>
 
               {/* Destination Node */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-emerald-600 ring-4 ring-emerald-100 animate-pulse" />
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-sm bg-emerald-600 ring-4 ring-emerald-100 animate-pulse" />
                 <div className="text-xs font-bold text-midnight-900">{activeCorridor.destination} Arrival</div>
                 <div className="text-[11px] text-charcoal-500">24/7 Regulated Prepaid Cabs & Hotel Links</div>
               </div>
@@ -298,7 +298,7 @@ export const SafeNavigationSection: React.FC = () => {
             </div>
 
             {/* Emergency Hotline Banner inside diagram */}
-            <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs flex items-center justify-between shadow-sm">
+            <div className="p-3 rounded-sm bg-white border border-slate-200 text-xs flex items-center justify-between shadow-sm">
               <div className="flex items-center gap-2">
                 <Hospital className="w-4 h-4 text-rose-500" />
                 <span className="font-semibold text-charcoal-700">En-route Emergency Dispatch:</span>

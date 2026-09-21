@@ -140,12 +140,12 @@ export const TripPlannerModal: React.FC = () => {
       {isSubmitting && <GenerationOverlay destination={destination} />}
 
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
-        <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-elevated my-8 animate-marker-pop">
+        <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-md p-6 sm:p-8 shadow-elevated my-8 animate-marker-pop">
           
           {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-brand-50 border border-brand-200 flex items-center justify-center p-2 text-brand-600">
+              <div className="w-10 h-10 rounded-sm bg-brand-50 border border-brand-200 flex items-center justify-center p-2 text-brand-600">
                 <Sparkles className="w-5 h-5" />
               </div>
               <div>
@@ -160,7 +160,7 @@ export const TripPlannerModal: React.FC = () => {
 
             <button
               onClick={() => setIsPlannerOpen(false)}
-              className="p-2 rounded-xl text-charcoal-400 hover:text-charcoal-700 hover:bg-slate-100 transition-all"
+              className="p-2 rounded-sm text-charcoal-400 hover:text-charcoal-700 hover:bg-slate-100 transition-all"
             >
               <X className="w-5 h-5" />
             </button>
@@ -180,7 +180,7 @@ export const TripPlannerModal: React.FC = () => {
                     type="button"
                     onClick={detectLocation}
                     disabled={isLocating}
-                    className="text-[11px] font-medium text-brand-600 hover:text-brand-700 transition-colors flex items-center gap-1 cursor-pointer bg-brand-50 px-2 py-0.5 rounded-md border border-brand-200 hover:bg-brand-100"
+                    className="text-[11px] font-medium text-brand-600 hover:text-brand-700 transition-colors flex items-center gap-1 cursor-pointer bg-brand-50 px-2 py-0.5 rounded-sm border border-brand-200 hover:bg-brand-100"
                     title="Detect city from current GPS coordinates"
                   >
                     {isLocating ? (
@@ -211,13 +211,13 @@ export const TripPlannerModal: React.FC = () => {
                     }}
                     placeholder="e.g. Mumbai, Visakhapatnam, London"
                     required
-                    className="w-full px-4 py-2.5 pr-9 rounded-xl bg-slate-50 border border-slate-200 text-charcoal-900 placeholder-charcoal-400 focus:outline-none focus:border-brand-500 focus:bg-white text-sm transition-all"
+                    className="w-full px-4 py-2.5 pr-9 rounded-sm bg-slate-50 border border-slate-200 text-charcoal-900 placeholder-charcoal-400 focus:outline-none focus:border-brand-500 focus:bg-white text-sm transition-all"
                   />
                   <button
                     type="button"
                     onClick={detectLocation}
                     disabled={isLocating}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-lg text-charcoal-400 hover:text-brand-600 hover:bg-slate-200 transition-all"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-sm text-charcoal-400 hover:text-brand-600 hover:bg-slate-200 transition-all"
                     title="Detect city from GPS location"
                   >
                     {isLocating ? (
@@ -245,7 +245,7 @@ export const TripPlannerModal: React.FC = () => {
                   onChange={e => setDestination(e.target.value)}
                   placeholder="e.g. Goa, Jaipur, Manali"
                   required
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-charcoal-900 placeholder-charcoal-400 focus:outline-none focus:border-brand-500 focus:bg-white text-sm transition-all"
+                  className="w-full px-4 py-2.5 rounded-sm bg-slate-50 border border-slate-200 text-charcoal-900 placeholder-charcoal-400 focus:outline-none focus:border-brand-500 focus:bg-white text-sm transition-all"
                 />
               </div>
             </div>
@@ -259,7 +259,7 @@ export const TripPlannerModal: React.FC = () => {
                     key={city}
                     type="button"
                     onClick={() => setDestination(city)}
-                    className={`text-xs px-2.5 py-1 rounded-lg border transition-all ${
+                    className={`text-xs px-2.5 py-1 rounded-sm border transition-all ${
                       destination.toLowerCase() === city.toLowerCase()
                         ? 'bg-brand-600 text-white border-brand-600 font-bold shadow-sm'
                         : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-brand-300 hover:bg-slate-100'
@@ -281,7 +281,7 @@ export const TripPlannerModal: React.FC = () => {
                   type="date"
                   value={startDate}
                   onChange={e => setStartDate(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-charcoal-900 focus:outline-none focus:border-brand-500 focus:bg-white text-sm transition-all"
+                  className="w-full px-4 py-2.5 rounded-sm bg-slate-50 border border-slate-200 text-charcoal-900 focus:outline-none focus:border-brand-500 focus:bg-white text-sm transition-all"
                 />
               </div>
 
@@ -295,7 +295,7 @@ export const TripPlannerModal: React.FC = () => {
                       key={num}
                       type="button"
                       onClick={() => setDays(num)}
-                      className={`flex-1 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                      className={`flex-1 py-2 rounded-sm text-xs font-semibold border transition-all ${
                         days === num
                           ? 'bg-brand-600 text-white border-brand-600 font-bold shadow-sm'
                           : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-brand-300 hover:bg-slate-100'
@@ -323,7 +323,7 @@ export const TripPlannerModal: React.FC = () => {
                     key={item.key}
                     type="button"
                     onClick={() => setBudget(item.key as any)}
-                    className={`p-3 rounded-2xl border text-left transition-all ${
+                    className={`p-3 rounded-sm border text-left transition-all ${
                       budget === item.key
                         ? 'bg-brand-50 border-brand-500 text-charcoal-900 shadow-sm ring-1 ring-brand-500'
                         : 'bg-slate-50 border-slate-200 text-charcoal-700 hover:border-slate-300'
@@ -349,7 +349,7 @@ export const TripPlannerModal: React.FC = () => {
                     key={style}
                     type="button"
                     onClick={() => setTravelStyle(style)}
-                    className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all ${
+                    className={`py-2 px-3 rounded-sm text-xs font-semibold border transition-all ${
                       travelStyle === style
                         ? 'bg-brand-600 text-white border-brand-600 font-bold shadow-sm'
                         : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-brand-300 hover:bg-slate-100'
@@ -379,7 +379,7 @@ export const TripPlannerModal: React.FC = () => {
                       key={item.id}
                       type="button"
                       onClick={() => setTransport(item.id)}
-                      className={`py-2 px-2.5 rounded-xl text-xs font-semibold border flex items-center justify-center gap-1.5 transition-all ${
+                      className={`py-2 px-2.5 rounded-sm text-xs font-semibold border flex items-center justify-center gap-1.5 transition-all ${
                         transport === item.id
                           ? 'bg-brand-600 text-white border-brand-600 font-bold shadow-sm'
                           : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-brand-300 hover:bg-slate-100'
@@ -406,7 +406,7 @@ export const TripPlannerModal: React.FC = () => {
                       key={tag}
                       type="button"
                       onClick={() => toggleInterest(tag)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-all ${
+                      className={`px-3 py-1.5 rounded-sm text-xs font-medium border transition-all ${
                         isSelected
                           ? 'bg-brand-50 border-brand-300 text-brand-700 font-semibold'
                           : 'bg-slate-50 border-slate-200 text-charcoal-600 hover:border-slate-300'
@@ -423,7 +423,7 @@ export const TripPlannerModal: React.FC = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm tracking-wide shadow-card hover:shadow-elevated active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-md bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm tracking-wide shadow-card hover:shadow-elevated active:scale-[0.99] transition-all flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Design My Journey with EasyTrip AI</span>

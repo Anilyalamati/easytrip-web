@@ -65,7 +65,7 @@ export const SafetySosWidget: React.FC = () => {
     <section id="safety-section" className="my-16 sm:my-20 scroll-mt-24">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-safety-50 text-safety-700 text-xs font-bold border border-safety-200">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-safety-50 text-safety-700 text-xs font-bold border border-safety-200">
           <ShieldAlert className="w-3.5 h-3.5 text-safety-600" />
           <span>SECTION 05 — SAFETY & SOS</span>
         </div>
@@ -78,10 +78,10 @@ export const SafetySosWidget: React.FC = () => {
       </div>
 
       {/* Main Container */}
-      <div className="surface-elevated rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto space-y-8">
+      <div className="surface-elevated rounded-md p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto space-y-8">
         
         {/* Interactive 4-Stage SOS Console */}
-        <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-4">
+        <div className="p-6 rounded-md bg-slate-50 border border-slate-200/90 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-charcoal-500 block mb-0.5">
@@ -91,7 +91,7 @@ export const SafetySosWidget: React.FC = () => {
                 4-Stage Controlled SOS Confirmation Protocol
               </h3>
             </div>
-            <span className="text-[11px] font-bold text-charcoal-600 bg-white px-2.5 py-1 rounded-full border border-slate-200 shadow-sm self-start sm:self-auto">
+            <span className="text-[11px] font-bold text-charcoal-600 bg-white px-2.5 py-1 rounded-sm border border-slate-200 shadow-sm self-start sm:self-auto">
               Accidental Trigger Protected
             </span>
           </div>
@@ -111,7 +111,7 @@ export const SafetySosWidget: React.FC = () => {
 
               <button
                 onClick={startSosFlow}
-                className="px-5 py-3 rounded-2xl bg-safety-600 hover:bg-safety-700 text-white font-bold text-xs tracking-normal shadow-sm hover:shadow-md active:scale-95 transition-all duration-200 flex items-center gap-2 shrink-0 self-start sm:self-auto"
+                className="px-5 py-3 rounded-sm bg-safety-600 hover:bg-safety-700 text-white font-bold text-xs tracking-normal shadow-sm hover:shadow-md active:scale-95 transition-all duration-200 flex items-center gap-2 shrink-0 self-start sm:self-auto"
               >
                 <ShieldAlert className="w-4 h-4 text-white" />
                 <span>Initiate Travel SOS</span>
@@ -122,7 +122,7 @@ export const SafetySosWidget: React.FC = () => {
 
           {/* Stage 1: Confirmation with 5s countdown SVG ring */}
           {sosStage === 'confirm' && (
-            <div className="p-5 rounded-2xl bg-white border border-safety-200 space-y-4 animate-fade-in shadow-sm">
+            <div className="p-5 rounded-sm bg-white border border-safety-200 space-y-4 animate-fade-in shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5 text-sm font-bold text-safety-700">
                   <AlertTriangle className="w-5 h-5 text-safety-600" />
@@ -130,7 +130,7 @@ export const SafetySosWidget: React.FC = () => {
                 </div>
                 
                 {/* 5-second circular SVG countdown timer */}
-                <div className="flex items-center gap-2 bg-safety-50 px-3 py-1.5 rounded-full border border-safety-200 text-xs font-bold text-safety-700">
+                <div className="flex items-center gap-2 bg-safety-50 px-3 py-1.5 rounded-sm border border-safety-200 text-xs font-bold text-safety-700">
                   <svg className="w-4 h-4 -rotate-90" viewBox="0 0 36 36">
                     <circle
                       cx="18"
@@ -164,13 +164,13 @@ export const SafetySosWidget: React.FC = () => {
               <div className="flex items-center gap-3 pt-1">
                 <button
                   onClick={confirmSos}
-                  className="px-4 py-2.5 rounded-xl bg-safety-600 hover:bg-safety-700 text-white text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
+                  className="px-4 py-2.5 rounded-sm bg-safety-600 hover:bg-safety-700 text-white text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
                 >
                   Confirm Immediately (Stage 2)
                 </button>
                 <button
                   onClick={cancelSos}
-                  className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-charcoal-700 text-xs font-semibold transition-all duration-200 active:scale-95"
+                  className="px-4 py-2.5 rounded-sm bg-slate-100 hover:bg-slate-200 text-charcoal-700 text-xs font-semibold transition-all duration-200 active:scale-95 border border-slate-200"
                 >
                   Cancel / Return to Safety Dashboard
                 </button>
@@ -180,7 +180,7 @@ export const SafetySosWidget: React.FC = () => {
 
           {/* Stage 2: Locating */}
           {sosStage === 'locating' && (
-            <div className="p-5 rounded-2xl bg-white border border-brand-200 flex items-center gap-3 animate-fade-in shadow-sm">
+            <div className="p-5 rounded-sm bg-white border border-brand-200 flex items-center gap-3 animate-fade-in shadow-sm">
               <Loader2 className="w-5 h-5 text-brand-600 animate-spin shrink-0" />
               <div>
                 <div className="text-xs font-bold text-midnight-900">Stage 2 of 4: Preparing high-accuracy GPS coordinates...</div>
@@ -191,7 +191,7 @@ export const SafetySosWidget: React.FC = () => {
 
           {/* Stage 3: Sharing */}
           {sosStage === 'sharing' && (
-            <div className="p-5 rounded-2xl bg-white border border-teal-200 flex items-center gap-3 animate-fade-in shadow-sm">
+            <div className="p-5 rounded-sm bg-white border border-teal-200 flex items-center gap-3 animate-fade-in shadow-sm">
               <Loader2 className="w-5 h-5 text-teal-600 animate-spin shrink-0" />
               <div>
                 <div className="text-xs font-bold text-teal-900">Stage 3 of 4: Sharing location with regional emergency hub...</div>
@@ -202,7 +202,7 @@ export const SafetySosWidget: React.FC = () => {
 
           {/* Stage 4: Alert Active */}
           {sosStage === 'active' && (
-            <div className="p-4 rounded-xl bg-white border border-emerald-300 space-y-3 animate-fade-in">
+            <div className="p-4 rounded-sm bg-white border border-emerald-300 space-y-3 animate-fade-in">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm font-black text-emerald-800">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600" />
@@ -225,7 +225,7 @@ export const SafetySosWidget: React.FC = () => {
                   <a
                     key={i}
                     href={`tel:${c.number.split(' ')[0]}`}
-                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-safety-50 border border-slate-200 hover:border-safety-300 text-left transition-all group"
+                    className="p-2.5 rounded-sm bg-slate-50 hover:bg-safety-50 border border-slate-200 hover:border-safety-300 text-left transition-all group"
                   >
                     <div className="text-[10px] font-bold text-charcoal-500 truncate">{c.title}</div>
                     <div className="text-xs font-extrabold text-safety-600 group-hover:text-safety-700 flex items-center gap-1 mt-0.5">
@@ -259,7 +259,7 @@ export const SafetySosWidget: React.FC = () => {
             {contacts.map((c, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between space-y-3"
+                className="p-4 rounded-md bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between space-y-3"
               >
                 <div>
                   <div className="text-xs font-bold text-midnight-900">{c.title}</div>
@@ -268,7 +268,7 @@ export const SafetySosWidget: React.FC = () => {
 
                 <a
                   href={`tel:${c.number.split(' ')[0]}`}
-                  className="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 hover:bg-brand-50 border border-slate-200 hover:border-brand-300 text-midnight-900 hover:text-brand-600 text-xs font-bold transition-all"
+                  className="flex items-center justify-between px-3 py-2 rounded-sm bg-slate-50 hover:bg-brand-50 border border-slate-200 hover:border-brand-300 text-midnight-900 hover:text-brand-600 text-xs font-bold transition-all"
                 >
                   <span>{c.number}</span>
                   <PhoneCall className="w-3.5 h-3.5 text-brand-600" />

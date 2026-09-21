@@ -35,8 +35,8 @@ export const ItineraryView: React.FC = () => {
 
   if (!currentTrip) {
     return (
-      <div className="my-16 text-center py-20 glass-card rounded-3xl border border-navy-750 max-w-xl mx-auto p-8">
-        <div className="w-16 h-16 rounded-3xl bg-navy-850 border border-gold-500/30 flex items-center justify-center mx-auto mb-4 text-gold-400">
+      <div className="my-16 text-center py-20 glass-card rounded-md border border-navy-750 max-w-xl mx-auto p-8">
+        <div className="w-16 h-16 rounded-sm bg-navy-850 border border-gold-500/30 flex items-center justify-center mx-auto mb-4 text-gold-400">
           <Sparkles className="w-8 h-8" />
         </div>
         <h3 className="text-2xl font-bold text-white mb-2">No Active Itinerary</h3>
@@ -45,7 +45,7 @@ export const ItineraryView: React.FC = () => {
         </p>
         <button
           onClick={() => setIsPlannerOpen(true)}
-          className="px-6 py-3 rounded-2xl gold-gradient-bg text-navy-950 font-bold text-xs tracking-wide shadow-gold-glow hover:brightness-110 transition-all inline-flex items-center gap-2"
+          className="px-6 py-3 rounded-sm gold-gradient-bg text-navy-950 font-bold text-xs tracking-wide shadow-gold-glow hover:brightness-110 transition-all inline-flex items-center gap-2"
         >
           <Sparkles className="w-4 h-4" />
           <span>Design a Trip Now</span>
@@ -103,7 +103,7 @@ export const ItineraryView: React.FC = () => {
   return (
     <div className="my-8 space-y-8">
       {/* Top Banner Header */}
-      <div className="relative rounded-3xl overflow-hidden glass-card border border-gold-500/30 shadow-navy-card">
+      <div className="relative rounded-md overflow-hidden glass-card border border-gold-500/30 shadow-navy-card">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30 scale-105"
           style={{ backgroundImage: `url(${currentTrip.heroImage})` }}
@@ -113,13 +113,13 @@ export const ItineraryView: React.FC = () => {
         <div className="relative p-6 sm:p-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-gold-500/20 border border-gold-500/40 text-gold-300 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+              <span className="px-3 py-1 rounded-sm bg-gold-500/20 border border-gold-500/40 text-gold-300 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5" /> EasyTrip AI Curated
               </span>
-              <span className="px-2.5 py-1 rounded-full bg-navy-800/80 border border-navy-700 text-xs font-semibold text-slate-300 capitalize">
+              <span className="px-2.5 py-1 rounded-sm bg-navy-800/80 border border-navy-700 text-xs font-semibold text-slate-300 capitalize">
                 {currentTrip.budgetTier} Tier
               </span>
-              <span className="px-2.5 py-1 rounded-full bg-navy-800/80 border border-navy-700 text-xs font-semibold text-slate-300">
+              <span className="px-2.5 py-1 rounded-sm bg-navy-800/80 border border-navy-700 text-xs font-semibold text-slate-300">
                 {currentTrip.travelStyle}
               </span>
             </div>
@@ -148,7 +148,7 @@ export const ItineraryView: React.FC = () => {
           <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
             <button
               onClick={handleSave}
-              className={`px-4 py-2.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`px-4 py-2.5 rounded-sm border text-xs font-bold flex items-center gap-1.5 transition-all ${
                 isAlreadySaved
                   ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                   : 'bg-navy-800 text-slate-200 border-navy-700 hover:border-gold-500/40'
@@ -160,7 +160,7 @@ export const ItineraryView: React.FC = () => {
 
             <button
               onClick={() => setActiveView('map')}
-              className="px-4 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-750 text-slate-200 border border-navy-700 hover:border-gold-500/40 text-xs font-bold flex items-center gap-1.5 transition-all"
+              className="px-4 py-2.5 rounded-sm bg-navy-800 hover:bg-navy-750 text-slate-200 border border-navy-700 hover:border-gold-500/40 text-xs font-bold flex items-center gap-1.5 transition-all"
             >
               <Map className="w-4 h-4 text-gold-400" />
               <span>Road Route</span>
@@ -168,7 +168,7 @@ export const ItineraryView: React.FC = () => {
 
             <button
               onClick={() => setActiveView('booking')}
-              className="px-4 py-2.5 rounded-xl gold-gradient-bg text-navy-950 font-bold text-xs tracking-wide shadow-gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-sm gold-gradient-bg text-navy-950 font-bold text-xs tracking-wide shadow-gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5"
             >
               <ShoppingBag className="w-4 h-4" />
               <span>Book Stays & Transport</span>
@@ -176,7 +176,7 @@ export const ItineraryView: React.FC = () => {
 
             <button
               onClick={() => window.print()}
-              className="p-2.5 rounded-xl bg-navy-800 border border-navy-700 text-slate-400 hover:text-white transition-all hidden sm:flex"
+              className="p-2.5 rounded-sm bg-navy-800 border border-navy-700 text-slate-400 hover:text-white transition-all hidden sm:flex"
               title="Print Itinerary"
             >
               <Printer className="w-4 h-4" />
@@ -191,7 +191,7 @@ export const ItineraryView: React.FC = () => {
           </span>
           <button
             onClick={() => setSelectedDayFilter('all')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all shrink-0 ${
+            className={`px-3 py-1 rounded-sm text-xs font-bold transition-all shrink-0 ${
               selectedDayFilter === 'all'
                 ? 'bg-gold-500 text-navy-950 shadow'
                 : 'bg-navy-800 text-slate-300 hover:bg-navy-750'
@@ -203,7 +203,7 @@ export const ItineraryView: React.FC = () => {
             <button
               key={d.dayNumber}
               onClick={() => setSelectedDayFilter(d.dayNumber)}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all shrink-0 ${
+              className={`px-3 py-1 rounded-sm text-xs font-bold transition-all shrink-0 ${
                 selectedDayFilter === d.dayNumber
                   ? 'bg-gold-500 text-navy-950 shadow'
                   : 'bg-navy-800 text-slate-300 hover:bg-navy-750'
@@ -217,7 +217,7 @@ export const ItineraryView: React.FC = () => {
 
       {/* Journey & Transit Breakdown Section */}
       {jt && (
-        <div className="glass-card rounded-3xl p-6 sm:p-8 border border-navy-750 space-y-6">
+        <div className="glass-card rounded-md p-6 sm:p-8 border border-navy-750 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-navy-750 gap-4">
             <div>
               <div className="flex items-center gap-2 text-gold-400 text-xs font-bold uppercase tracking-wider mb-1">
@@ -226,7 +226,7 @@ export const ItineraryView: React.FC = () => {
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                 {jt.origin} <span className="text-gold-400">→</span> {jt.destination}
-                <span className="ml-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-navy-800 text-slate-300 border border-navy-700">
+                <span className="ml-3 text-xs font-semibold px-2.5 py-1 rounded-sm bg-navy-800 text-slate-300 border border-navy-700">
                   Approx. {jt.distanceKm} km
                 </span>
               </h2>
@@ -236,7 +236,7 @@ export const ItineraryView: React.FC = () => {
             </div>
 
             {/* Interactive Mode Switcher Tabs */}
-            <div className="flex flex-wrap gap-1.5 self-start sm:self-auto bg-navy-900/90 p-1.5 rounded-2xl border border-navy-750">
+            <div className="flex flex-wrap gap-1.5 self-start sm:self-auto bg-navy-900/90 p-1.5 rounded-sm border border-navy-750">
               {allTransitOptions.map(opt => {
                 const ModeIcon = getTransitIcon(opt.mode);
                 const isSelected = (opt.mode === currentMode);
@@ -244,7 +244,7 @@ export const ItineraryView: React.FC = () => {
                   <button
                     key={opt.mode}
                     onClick={() => setSelectedTransitMode(opt.mode)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    className={`px-3 py-1.5 rounded-sm text-xs font-bold transition-all flex items-center gap-1.5 ${
                       isSelected
                         ? 'bg-gold-500 text-navy-950 shadow-gold-glow'
                         : 'text-slate-300 hover:text-white hover:bg-navy-800'
@@ -260,11 +260,11 @@ export const ItineraryView: React.FC = () => {
 
           {/* Active Option Detail Card */}
           {activeTransitOption && (
-            <div className="p-5 sm:p-6 rounded-2xl bg-navy-900/90 border border-navy-700/80 space-y-4">
+            <div className="p-5 sm:p-6 rounded-md bg-navy-900/90 border border-navy-700/80 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md bg-gold-500/20 text-gold-300 border border-gold-500/30 text-[10px] font-extrabold uppercase">
+                    <span className="px-2.5 py-0.5 rounded-sm bg-gold-500/20 text-gold-300 border border-gold-500/30 text-[10px] font-extrabold uppercase">
                       {activeTransitOption.mode === jt.preferredMode ? '★ Selected Choice' : 'Alternative Mode'}
                     </span>
                     <h3 className="text-base sm:text-lg font-bold text-white">
@@ -276,7 +276,7 @@ export const ItineraryView: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex sm:flex-col items-center sm:items-end justify-between gap-1 shrink-0 bg-navy-800/80 px-4 py-2.5 rounded-xl border border-navy-700">
+                <div className="flex sm:flex-col items-center sm:items-end justify-between gap-1 shrink-0 bg-navy-800/80 px-4 py-2.5 rounded-sm border border-navy-700">
                   <div className="flex items-center gap-1 text-gold-300 font-extrabold text-base sm:text-lg">
                     <IndianRupee className="w-4 h-4 text-gold-400" />
                     <span>₹{activeTransitOption.estimatedCost.toLocaleString('en-IN')}</span>
@@ -291,11 +291,11 @@ export const ItineraryView: React.FC = () => {
               {/* Terminal Details if applicable */}
               {activeTransitOption.terminalDetails && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-navy-800 text-xs">
-                  <div className="p-3 rounded-xl bg-navy-850 border border-navy-750">
+                  <div className="p-3 rounded-sm bg-navy-850 border border-navy-750">
                     <span className="text-[10px] text-slate-400 uppercase font-bold block mb-0.5">Origin Terminal / Station</span>
                     <span className="font-semibold text-slate-200">{activeTransitOption.terminalDetails.departureTerminal}</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-navy-850 border border-navy-750">
+                  <div className="p-3 rounded-sm bg-navy-850 border border-navy-750">
                     <span className="text-[10px] text-slate-400 uppercase font-bold block mb-0.5">Destination Hub & Transit</span>
                     <span className="font-semibold text-gold-300">{activeTransitOption.terminalDetails.arrivalTerminal}</span>
                   </div>
@@ -305,7 +305,7 @@ export const ItineraryView: React.FC = () => {
               {/* Highlights */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
                 {activeTransitOption.highlights.map((hl, i) => (
-                  <div key={i} className="flex items-start gap-2 text-xs text-slate-300 p-2.5 rounded-xl bg-navy-850/60 border border-navy-750">
+                  <div key={i} className="flex items-start gap-2 text-xs text-slate-300 p-2.5 rounded-sm bg-navy-850/60 border border-navy-750">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                     <span>{hl}</span>
                   </div>
@@ -321,7 +321,7 @@ export const ItineraryView: React.FC = () => {
                   <ul className="space-y-1 text-xs text-slate-300">
                     {jt.travelTips.map((tip, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-gold-400 mt-1.5 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-sm bg-gold-400 mt-1.5 shrink-0" />
                         <span>{tip}</span>
                       </li>
                     ))}
@@ -335,7 +335,7 @@ export const ItineraryView: React.FC = () => {
 
       {/* Recommended Stays Section */}
       {currentTrip.hotelRecommendations && currentTrip.hotelRecommendations.length > 0 && (
-        <div className="glass-card rounded-3xl p-6 sm:p-8 border border-navy-750 space-y-6">
+        <div className="glass-card rounded-md p-6 sm:p-8 border border-navy-750 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-navy-750 gap-2">
             <div>
               <div className="flex items-center gap-2 text-gold-400 text-xs font-bold uppercase tracking-wider mb-1">
@@ -364,7 +364,7 @@ export const ItineraryView: React.FC = () => {
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl bg-navy-900/90 border border-navy-750 hover:border-gold-500/40 transition-all flex flex-col justify-between overflow-hidden group"
+                  className="rounded-md bg-navy-900/90 border border-navy-750 hover:border-gold-500/40 transition-all flex flex-col justify-between overflow-hidden group"
                 >
                   <div>
                     <div className="relative h-44 w-full overflow-hidden">
@@ -373,10 +373,10 @@ export const ItineraryView: React.FC = () => {
                         alt={hotel.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-navy-900/90 text-[10px] font-bold text-gold-300 border border-gold-500/30 uppercase">
+                      <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-sm bg-navy-900/90 text-[10px] font-bold text-gold-300 border border-gold-500/30 uppercase">
                         {hotel.badge}
                       </span>
-                      <div className="absolute top-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-navy-900/90 text-xs font-bold text-white">
+                      <div className="absolute top-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-sm bg-navy-900/90 text-xs font-bold text-white">
                         <Star className="w-3 h-3 text-gold-400 fill-gold-400" />
                         <span>{hotel.rating}</span>
                       </div>
@@ -393,7 +393,7 @@ export const ItineraryView: React.FC = () => {
 
                       <div className="flex flex-wrap gap-1 pt-1.5">
                         {hotel.amenities.map(a => (
-                          <span key={a} className="text-[9px] px-2 py-0.5 rounded-md bg-navy-800 text-slate-300 border border-navy-700">
+                          <span key={a} className="text-[9px] px-2 py-0.5 rounded-sm bg-navy-800 text-slate-300 border border-navy-700">
                             {a}
                           </span>
                         ))}
@@ -413,7 +413,7 @@ export const ItineraryView: React.FC = () => {
 
                     <button
                       onClick={() => handleBookHotel(hotel)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+                      className={`px-3 py-1.5 rounded-sm text-xs font-bold transition-all flex items-center gap-1 ${
                         inCart
                           ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                           : 'gold-gradient-bg text-navy-950 hover:brightness-110 shadow-sm'
@@ -442,7 +442,7 @@ export const ItineraryView: React.FC = () => {
         {/* Right 1 Col: AI Insights & Quick Stats */}
         <div className="space-y-6">
           {/* AI Curator Notes */}
-          <div className="glass-card rounded-3xl p-6 border border-gold-500/25 space-y-4">
+          <div className="glass-card rounded-md p-6 border border-gold-500/25 space-y-4">
             <div className="flex items-center gap-2 text-gold-400 text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-4 h-4" />
               <span>EasyTrip AI Design Notes</span>
@@ -450,7 +450,7 @@ export const ItineraryView: React.FC = () => {
             <ul className="space-y-2.5 text-xs text-slate-300 leading-relaxed">
               {currentTrip.aiNotes?.map((note, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold-400 mt-1.5 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-sm bg-gold-400 mt-1.5 shrink-0" />
                   <span>{note}</span>
                 </li>
               ))}
@@ -458,7 +458,7 @@ export const ItineraryView: React.FC = () => {
           </div>
 
           {/* Budget & Cost Estimator Card */}
-          <div className="glass-card rounded-3xl p-6 border border-navy-750 space-y-4">
+          <div className="glass-card rounded-md p-6 border border-navy-750 space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-sm font-bold text-white uppercase tracking-wider">
                 Budget Breakdown
@@ -490,7 +490,7 @@ export const ItineraryView: React.FC = () => {
             </div>
             <button
               onClick={() => setActiveView('booking')}
-              className="w-full py-2.5 rounded-xl bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-slate-200 font-bold text-xs tracking-wide border border-navy-700 hover:border-gold-400 transition-all flex items-center justify-center gap-1.5"
+              className="w-full py-2.5 rounded-sm bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-slate-200 font-bold text-xs tracking-wide border border-navy-700 hover:border-gold-400 transition-all flex items-center justify-center gap-1.5"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
               <span>Add Hotel & Travel Passes</span>
@@ -498,14 +498,14 @@ export const ItineraryView: React.FC = () => {
           </div>
 
           {/* Plan Another Trip CTA */}
-          <div className="p-6 rounded-3xl bg-navy-850 border border-navy-700 text-center space-y-3">
+          <div className="p-6 rounded-md bg-navy-850 border border-navy-700 text-center space-y-3">
             <h4 className="text-sm font-bold text-white">Want to adjust your trip?</h4>
             <p className="text-xs text-slate-400">
               Re-run the planner with new dates, other travel companions, or a different budget tier.
             </p>
             <button
               onClick={() => setIsPlannerOpen(true)}
-              className="w-full py-2.5 rounded-xl bg-navy-800 hover:bg-navy-750 text-gold-400 border border-gold-500/40 font-semibold text-xs transition-all"
+              className="w-full py-2.5 rounded-sm bg-navy-800 hover:bg-navy-750 text-gold-400 border border-gold-500/40 font-semibold text-xs transition-all"
             >
               Modify Plan & Preferences
             </button>

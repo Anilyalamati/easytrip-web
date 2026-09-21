@@ -62,7 +62,7 @@ export const RouteMap: React.FC = () => {
   return (
     <div className="my-8 space-y-6">
       {/* Header bar */}
-      <div className="surface-card rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="surface-card rounded-md p-6 sm:p-8 border border-slate-200/80 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 text-brand-600 text-xs uppercase font-bold tracking-wider mb-1">
             <Compass className="w-3.5 h-3.5" />
@@ -78,7 +78,7 @@ export const RouteMap: React.FC = () => {
 
         {/* Stats & Actions */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+          <div className="px-4 py-2 rounded-sm bg-slate-50 border border-slate-200 flex items-center gap-3">
             <div>
               <span className="block text-[10px] text-charcoal-400 uppercase font-bold">Estimated Distance</span>
               <span className="text-sm font-bold text-brand-700">{distanceKm} km</span>
@@ -96,7 +96,7 @@ export const RouteMap: React.FC = () => {
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs tracking-wide shadow-sm hover:shadow transition-all flex items-center gap-2"
+            className="px-4 py-2.5 rounded-sm bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs tracking-wide shadow-sm hover:shadow transition-all flex items-center gap-2"
           >
             <Navigation className="w-3.5 h-3.5" />
             <span>Open in Google Maps</span>
@@ -106,7 +106,7 @@ export const RouteMap: React.FC = () => {
       </div>
 
       {/* Map Viewer Container */}
-      <div className="h-[560px] w-full rounded-2xl overflow-hidden bg-white border border-slate-200 relative shadow-card">
+      <div className="h-[560px] w-full rounded-md overflow-hidden bg-white border border-slate-200 relative shadow-card">
         <MapContainer
           center={centerPoint}
           zoom={10}
@@ -175,7 +175,7 @@ export const RouteMap: React.FC = () => {
         </MapContainer>
 
         {/* Floating Route Info Overlay */}
-        <div className="absolute bottom-4 left-4 z-[1000] p-4 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200 text-xs space-y-1 shadow-elevated max-w-xs text-charcoal-800">
+        <div className="absolute bottom-4 left-4 z-[1000] p-4 rounded-sm bg-white/95 backdrop-blur-md border border-slate-200 text-xs space-y-1 shadow-elevated max-w-xs text-charcoal-800">
           <div className="flex items-center gap-1.5 font-bold text-charcoal-900">
             <Sparkles className="w-3.5 h-3.5 text-brand-600" />
             <span>{currentTrip?.destination || 'EasyTrip'} Scenic Route</span>

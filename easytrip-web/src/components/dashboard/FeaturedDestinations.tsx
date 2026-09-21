@@ -108,7 +108,7 @@ export const FeaturedDestinations: React.FC = () => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200">
             <Compass className="w-3.5 h-3.5" />
             <span>SECTION 02 — KINETIC EXPLORATION</span>
           </div>
@@ -122,7 +122,7 @@ export const FeaturedDestinations: React.FC = () => {
 
         {/* Category Pill Filters & Arrow Controls */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex flex-wrap gap-1.5 bg-slate-100/90 p-1 rounded-2xl border border-slate-200">
+          <div className="flex flex-wrap gap-1.5 bg-slate-100/90 p-1 rounded-md border border-slate-200">
             {tabs.map(tab => {
               const Icon = tab.icon;
               const isActive = selectedTab === tab.id;
@@ -130,7 +130,7 @@ export const FeaturedDestinations: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 active:scale-95 flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-sm text-xs font-bold transition-all duration-200 active:scale-95 flex items-center gap-1.5 ${
                     isActive
                       ? 'bg-white text-midnight-900 shadow-sm'
                       : 'text-charcoal-600 hover:text-midnight-900'
@@ -144,11 +144,11 @@ export const FeaturedDestinations: React.FC = () => {
           </div>
 
           {/* Precision Spring Arrow Controls */}
-          <div className="hidden sm:flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200">
+          <div className="hidden sm:flex items-center gap-1.5 bg-slate-100 p-1 rounded-md border border-slate-200">
             <button
               onClick={() => scrollByAmount('left')}
               disabled={!canScrollLeft}
-              className={`p-2 rounded-xl text-charcoal-700 hover:bg-white hover:text-brand-600 transition-all duration-200 active:scale-90 shadow-sm ${
+              className={`p-2 rounded-sm text-charcoal-700 hover:bg-white hover:text-brand-600 transition-all duration-200 active:scale-90 shadow-sm ${
                 !canScrollLeft ? 'opacity-40 cursor-not-allowed' : ''
               }`}
               title="Previous Destinations"
@@ -159,7 +159,7 @@ export const FeaturedDestinations: React.FC = () => {
             <button
               onClick={() => scrollByAmount('right')}
               disabled={!canScrollRight}
-              className={`p-2 rounded-xl text-charcoal-700 hover:bg-white hover:text-brand-600 transition-all duration-200 active:scale-90 shadow-sm ${
+              className={`p-2 rounded-sm text-charcoal-700 hover:bg-white hover:text-brand-600 transition-all duration-200 active:scale-90 shadow-sm ${
                 !canScrollRight ? 'opacity-40 cursor-not-allowed' : ''
               }`}
               title="Next Destinations"
@@ -180,7 +180,7 @@ export const FeaturedDestinations: React.FC = () => {
         onMouseLeave={handleMouseUp}
         onKeyDown={handleKeyDown}
         tabIndex={0}
-        className={`flex gap-6 overflow-x-auto pb-6 pt-2 px-1 no-scrollbar select-none focus:outline-none focus:ring-1 focus:ring-brand-400 rounded-3xl ${
+        className={`flex gap-6 overflow-x-auto pb-6 pt-2 px-1 no-scrollbar select-none focus:outline-none focus:ring-1 focus:ring-brand-400 rounded-md ${
           isMouseDown ? 'cursor-grabbing' : 'cursor-grab'
         }`}
         style={{ scrollBehavior: isMouseDown ? 'auto' : 'smooth' }}
@@ -188,7 +188,7 @@ export const FeaturedDestinations: React.FC = () => {
         {filtered.map((dest: Destination) => (
           <div
             key={dest.id}
-            className="group surface-card rounded-3xl overflow-hidden border border-slate-200/90 hover:border-brand-400 transition-all duration-300 flex flex-col justify-between interactive-card min-w-[290px] sm:min-w-[340px] max-w-[340px] shrink-0"
+            className="group surface-card rounded-md overflow-hidden border border-slate-200/90 hover:border-brand-400 transition-all duration-300 flex flex-col justify-between interactive-card min-w-[290px] sm:min-w-[340px] max-w-[340px] shrink-0"
           >
             {/* Top Image Container with Zoom & Blur Mask */}
             <div 
@@ -203,12 +203,12 @@ export const FeaturedDestinations: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-midnight-950/85 via-midnight-950/20 to-transparent" />
               
               {/* Badge */}
-              <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-midnight-900 shadow-sm uppercase tracking-wider">
+              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-sm bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-midnight-900 shadow-sm uppercase tracking-wider border border-slate-200/60">
                 {dest.badge}
               </span>
 
               {/* Rating */}
-              <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-xs font-extrabold text-midnight-900 shadow-sm">
+              <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-sm bg-white/95 backdrop-blur-md text-xs font-extrabold text-midnight-900 shadow-sm border border-slate-200/60">
                 <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                 <span>{dest.rating}</span>
               </div>
@@ -234,7 +234,7 @@ export const FeaturedDestinations: React.FC = () => {
                 {dest.highlights.slice(0, 3).map((hl: string) => (
                   <span
                     key={hl}
-                    className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-charcoal-700 border border-slate-200"
+                    className="text-[10px] font-semibold px-2 py-0.5 rounded-sm bg-slate-100 text-charcoal-700 border border-slate-200"
                   >
                     {hl}
                   </span>
@@ -257,13 +257,13 @@ export const FeaturedDestinations: React.FC = () => {
               <div className="grid grid-cols-2 gap-2 pt-1">
                 <button
                   onClick={() => setInspectedDest(dest)}
-                  className="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-midnight-900 font-bold text-xs tracking-normal transition-all text-center active:scale-95"
+                  className="py-2.5 rounded-sm bg-slate-100 hover:bg-slate-200 text-midnight-900 font-bold text-xs tracking-normal transition-all text-center active:scale-95 border border-slate-200"
                 >
                   Quick Inspect
                 </button>
                 <button
                   onClick={() => openPlannerWithDestination(dest.name)}
-                  className="py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs tracking-normal transition-all flex items-center justify-center gap-1 shadow-sm active:scale-95"
+                  className="py-2.5 rounded-sm bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs tracking-normal transition-all flex items-center justify-center gap-1 shadow-sm active:scale-95"
                 >
                   <span>Plan Trip</span>
                   <ArrowRight className="w-3 h-3" />
@@ -277,7 +277,7 @@ export const FeaturedDestinations: React.FC = () => {
       {/* Shared-Element Destination Detail Modal with Morphing Transition */}
       {inspectedDest && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
-          <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-elevated my-8 animate-marker-pop">
+          <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-md overflow-hidden shadow-elevated my-8 animate-marker-pop">
             
             {/* Header Image */}
             <div className="relative h-64 sm:h-72 w-full overflow-hidden">
@@ -290,7 +290,7 @@ export const FeaturedDestinations: React.FC = () => {
               
               <button
                 onClick={() => setInspectedDest(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-midnight-900/60 hover:bg-midnight-900 text-white backdrop-blur-md transition-all active:scale-95"
+                className="absolute top-4 right-4 p-2 rounded-sm bg-midnight-900/60 hover:bg-midnight-900 text-white backdrop-blur-md transition-all active:scale-95"
                 aria-label="Close details"
               >
                 <X className="w-5 h-5" />
@@ -298,10 +298,10 @@ export const FeaturedDestinations: React.FC = () => {
 
               <div className="absolute bottom-4 left-6 right-6 text-white">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="px-2.5 py-0.5 rounded-full bg-teal-500 text-white text-[10px] font-bold uppercase tracking-wider">
+                  <span className="px-2 py-0.5 rounded-sm bg-teal-500 text-white text-[10px] font-bold uppercase tracking-wider">
                     {inspectedDest.badge}
                   </span>
-                  <span className="flex items-center gap-1 text-xs font-bold bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-full">
+                  <span className="flex items-center gap-1 text-xs font-bold bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-sm">
                     <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
                     {inspectedDest.rating} Rating
                   </span>
@@ -331,7 +331,7 @@ export const FeaturedDestinations: React.FC = () => {
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {inspectedDest.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs font-semibold text-charcoal-800">
+                    <div key={i} className="flex items-center gap-2 p-2.5 rounded-sm bg-slate-50 border border-slate-200/80 text-xs font-semibold text-charcoal-800">
                       <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
                       <span>{h}</span>
                     </div>
@@ -340,7 +340,7 @@ export const FeaturedDestinations: React.FC = () => {
               </div>
 
               {/* Cost & Duration Summary */}
-              <div className="p-4 rounded-2xl bg-brand-50/60 border border-brand-200 flex items-center justify-between">
+              <div className="p-4 rounded-md bg-brand-50/60 border border-brand-200 flex items-center justify-between">
                 <div>
                   <span className="text-[11px] font-bold text-charcoal-500 uppercase block">Estimated Moderate Budget</span>
                   <span className="text-base font-extrabold text-midnight-900">
@@ -357,7 +357,7 @@ export const FeaturedDestinations: React.FC = () => {
               <div className="pt-2 flex items-center gap-3">
                 <button
                   onClick={() => setInspectedDest(null)}
-                  className="flex-1 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-charcoal-800 font-bold text-xs transition-all"
+                  className="flex-1 py-3.5 rounded-sm bg-slate-100 hover:bg-slate-200 text-charcoal-800 font-bold text-xs transition-all border border-slate-200"
                 >
                   Close Preview
                 </button>
@@ -367,7 +367,7 @@ export const FeaturedDestinations: React.FC = () => {
                     setInspectedDest(null);
                     openPlannerWithDestination(destName);
                   }}
-                  className="flex-1 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95"
+                  className="flex-1 py-3.5 rounded-sm bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Design Itinerary for {inspectedDest.name}</span>

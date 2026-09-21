@@ -6,9 +6,9 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
   const PeriodIcon = period === 'Morning' ? Sun : period === 'Afternoon' ? Sunset : Moon;
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 p-4 rounded-2xl bg-navy-850/90 border border-navy-700/80 hover:border-gold-500/40 transition-all duration-300 group">
+    <div className="flex flex-col sm:flex-row gap-4 p-4 rounded-md bg-navy-850/90 border border-navy-700/80 hover:border-gold-500/40 transition-all duration-300 group">
       {/* Image Thumbnail */}
-      <div className="sm:w-44 h-32 rounded-xl overflow-hidden relative shrink-0 border border-navy-700">
+      <div className="sm:w-44 h-32 rounded-sm overflow-hidden relative shrink-0 border border-navy-700">
         <img
           src={slot.image}
           alt={slot.title}
@@ -20,7 +20,7 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
         <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
         
         {/* Period Badge */}
-        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-navy-900/90 backdrop-blur-md border border-gold-500/30 text-[10px] font-bold text-gold-300 flex items-center gap-1">
+        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-sm bg-navy-900/90 backdrop-blur-md border border-gold-500/30 text-[10px] font-bold text-gold-300 flex items-center gap-1">
           <PeriodIcon className="w-3 h-3 text-gold-400" />
           {slot.period}
         </span>
@@ -32,7 +32,7 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
             target="_blank"
             rel="noopener noreferrer"
             title={`View verified photos of ${slot.photoQuery || slot.title} on Unsplash`}
-            className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md bg-black/75 hover:bg-black text-[9px] font-medium text-slate-200 backdrop-blur-sm flex items-center gap-1 transition-all border border-white/20 hover:border-gold-500/60 z-10"
+            className="absolute top-2 right-2 px-1.5 py-0.5 rounded-sm bg-black/75 hover:bg-black text-[9px] font-medium text-slate-200 backdrop-blur-sm flex items-center gap-1 transition-all border border-white/20 hover:border-gold-500/60 z-10"
           >
             <Camera className="w-2.5 h-2.5 text-gold-400" />
             Unsplash
@@ -40,7 +40,7 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
         )}
 
         {/* Category Badge */}
-        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-navy-900/80 text-[10px] font-semibold text-slate-300">
+        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-sm bg-navy-900/80 text-[10px] font-semibold text-slate-300">
           {slot.category}
         </span>
       </div>
@@ -54,7 +54,7 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
               <Clock className="w-3.5 h-3.5" />
               {slot.time}
             </span>
-            <span className="font-bold text-slate-200 flex items-center gap-0.5 bg-navy-800 px-2 py-0.5 rounded-md border border-navy-700">
+            <span className="font-bold text-slate-200 flex items-center gap-0.5 bg-navy-800 px-2 py-0.5 rounded-sm border border-navy-700">
               <IndianRupee className="w-3 h-3 text-gold-400" />
               Est. ₹{slot.cost.toLocaleString('en-IN')}
             </span>
@@ -79,7 +79,7 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
 
         {/* Local Tip Box */}
         {slot.tips && (
-          <div className="flex items-start gap-2 p-2 rounded-xl bg-navy-900/90 border border-navy-750 text-[11px] text-slate-300">
+          <div className="flex items-start gap-2 p-2 rounded-sm bg-navy-900/90 border border-navy-750 text-[11px] text-slate-300">
             <Lightbulb className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
             <span><strong className="text-gold-400">Insider Tip:</strong> {slot.tips}</span>
           </div>

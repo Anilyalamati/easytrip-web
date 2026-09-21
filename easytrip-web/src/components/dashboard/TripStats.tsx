@@ -30,13 +30,13 @@ export const TripStats: React.FC = () => {
   ];
 
   return (
-    <section className="my-12 py-8 px-6 sm:px-10 rounded-2xl bg-white border border-slate-200/80 shadow-card">
+    <section className="my-12 py-8 px-6 sm:px-10 rounded-md bg-white border border-slate-200/80 shadow-card">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((s, idx) => {
           const Icon = s.icon;
           return (
             <div key={idx} className="flex flex-col space-y-2">
-              <div className="w-12 h-12 rounded-xl bg-brand-50 border border-brand-200/60 flex items-center justify-center text-brand-600 mb-1">
+              <div className="w-12 h-12 rounded-sm bg-brand-50 border border-brand-200/60 flex items-center justify-center text-brand-600 mb-1">
                 <Icon className="w-6 h-6" />
               </div>
               <div className="text-xl font-bold text-charcoal-900 tracking-tight">

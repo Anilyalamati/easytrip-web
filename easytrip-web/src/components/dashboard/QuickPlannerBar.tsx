@@ -116,7 +116,7 @@ export const QuickPlannerBar: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-200">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-brand-50 text-brand-700 text-xs font-bold border border-brand-200">
             <Sparkles className="w-3.5 h-3.5" />
             <span>SECTION 01 — PLAN</span>
           </div>
@@ -129,7 +129,7 @@ export const QuickPlannerBar: React.FC = () => {
         </div>
 
         {/* Interactive Planner Canvas */}
-        <div className="surface-elevated rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto">
+        <div className="surface-elevated rounded-md p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto">
           <form onSubmit={handleGenerate} className="space-y-6">
             
             {/* Top Grid: Departure & Destination */}
@@ -157,7 +157,7 @@ export const QuickPlannerBar: React.FC = () => {
                     value={origin}
                     onChange={e => setOrigin(e.target.value)}
                     placeholder="e.g. Hyderabad, Bengaluru, Delhi"
-                    className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm font-medium text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
+                    className="w-full px-4 py-3 rounded-sm bg-slate-50 border border-slate-200 text-sm font-medium text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
                   />
                 </div>
               </div>
@@ -175,7 +175,7 @@ export const QuickPlannerBar: React.FC = () => {
                     onChange={e => setDestination(e.target.value)}
                     placeholder="e.g. Vizag, Rajahmundry, Ooty, Paris, Manali"
                     required
-                    className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm font-semibold text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
+                    className="w-full px-4 py-3 rounded-sm bg-slate-50 border border-slate-200 text-sm font-semibold text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
                   />
                 </div>
               </div>
@@ -189,7 +189,7 @@ export const QuickPlannerBar: React.FC = () => {
                   key={city}
                   type="button"
                   onClick={() => setDestination(city)}
-                  className={`text-xs px-3 py-1.5 rounded-xl border transition-all ${
+                  className={`text-xs px-3 py-1.5 rounded-sm border transition-all ${
                     destination.toLowerCase() === city.toLowerCase()
                       ? 'bg-brand-600 text-white border-brand-600 font-bold shadow-sm'
                       : 'bg-white text-charcoal-700 border-slate-200 hover:border-brand-300 hover:text-brand-600'
@@ -215,7 +215,7 @@ export const QuickPlannerBar: React.FC = () => {
                       key={num}
                       type="button"
                       onClick={() => setDays(num)}
-                      className={`py-2 rounded-xl text-xs font-bold border transition-all ${
+                      className={`py-2 rounded-sm text-xs font-bold border transition-all ${
                         days === num
                           ? 'bg-midnight-900 text-white border-midnight-900 shadow-sm'
                           : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-slate-300'
@@ -243,7 +243,7 @@ export const QuickPlannerBar: React.FC = () => {
                       key={b.key}
                       type="button"
                       onClick={() => setBudget(b.key as any)}
-                      className={`py-2 px-1 text-center rounded-xl text-xs font-bold border transition-all capitalize ${
+                      className={`py-2 px-1 text-center rounded-sm text-xs font-bold border transition-all capitalize ${
                         budget === b.key
                           ? 'bg-midnight-900 text-white border-midnight-900 shadow-sm'
                           : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-slate-300'
@@ -274,7 +274,7 @@ export const QuickPlannerBar: React.FC = () => {
                         key={t.id}
                         type="button"
                         onClick={() => setTransport(t.id)}
-                        className={`py-2 text-center rounded-xl text-xs font-bold border flex items-center justify-center gap-1 transition-all ${
+                        className={`py-2 text-center rounded-sm text-xs font-bold border flex items-center justify-center gap-1 transition-all ${
                           transport === t.id
                             ? 'bg-midnight-900 text-white border-midnight-900 shadow-sm'
                             : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-slate-300'
@@ -295,7 +295,7 @@ export const QuickPlannerBar: React.FC = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-4 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm tracking-normal shadow-button hover:shadow-lg active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-md bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm tracking-normal shadow-button hover:shadow-lg active:scale-[0.99] transition-all flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Generate Verified {days}-Day Itinerary for {destination}</span>

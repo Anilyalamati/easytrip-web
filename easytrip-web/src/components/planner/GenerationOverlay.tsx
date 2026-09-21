@@ -27,22 +27,22 @@ export const GenerationOverlay: React.FC<GenerationOverlayProps> = ({ destinatio
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-midnight-950/70 backdrop-blur-xl p-4">
-      <div className="max-w-md w-full bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/90 text-center relative overflow-hidden shadow-2xl">
+      <div className="max-w-md w-full bg-white p-8 sm:p-10 rounded-md border border-slate-200/90 text-center relative overflow-hidden shadow-2xl">
         
         {/* Subtle Background Accent */}
         <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand-100/50 rounded-full blur-3xl pointer-events-none" />
 
         {/* Brand Icon with Pulse Animation */}
         <div className="relative mx-auto w-20 h-20 mb-6">
-          <div className="absolute inset-0 rounded-3xl bg-brand-500/15 blur-lg animate-pulse" />
-          <div className="relative w-full h-full rounded-2xl bg-midnight-900 border border-slate-200 flex items-center justify-center p-3 shadow-md">
+          <div className="absolute inset-0 rounded-md bg-brand-500/15 blur-lg animate-pulse" />
+          <div className="relative w-full h-full rounded-sm bg-midnight-900 border border-slate-200 flex items-center justify-center p-3 shadow-md">
             <img 
               src="/assets/easytrip_logo.png" 
               alt="EasyTrip Logo" 
               className="w-full h-full object-contain"
             />
           </div>
-          <div className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-brand-600 text-white shadow">
+          <div className="absolute -bottom-1 -right-1 p-1.5 rounded-sm bg-brand-600 text-white shadow">
             <Sparkles className="w-3.5 h-3.5 animate-spin" />
           </div>
         </div>
@@ -86,9 +86,9 @@ export const GenerationOverlay: React.FC<GenerationOverlayProps> = ({ destinatio
         </div>
 
         {/* Bottom Loading Bar */}
-        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+        <div className="w-full bg-slate-100 h-2 rounded-sm overflow-hidden border border-slate-200">
           <div 
-            className="h-full bg-brand-600 transition-all duration-500 rounded-full"
+            className="h-full bg-brand-600 transition-all duration-500 rounded-sm"
             style={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
           />
         </div>
