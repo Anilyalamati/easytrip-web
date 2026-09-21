@@ -1206,34 +1206,34 @@ CURATED_DESTINATION_PLANS = {
 # 7 Varied Procedural Blueprints for Any Global City (Zero Boilerplate)
 PROCEDURAL_DAY_BLUEPRINTS = [
     {
-        "title_template": "Historic Citadel, Culinary Quarters & Sunset Lookout",
-        "theme_template": "Ancient Ramparts, Epicurean Discovery & Horizon Twilight",
+        "title_template": "Historic Quarter, Artisan Delicacies & Sunset Lookout",
+        "theme_template": "Cultural Heritage, Regional Flavors & Horizon Golden Hour",
         "morning": {
-            "title": "{city} Historic Citadel & Ancient Ramparts Walk",
-            "category": "Historic Fortifications",
-            "location": "Old Town Citadel Hill, {city}",
-            "description": "Ascend ancient fortress walls and stone battlements guarding {city}, enjoying commanding hilltop vistas across the historic quarter and surrounding landscapes.",
+            "title": "{city} Heritage Quarter & Landmark Trail",
+            "category": "Historical Heritage",
+            "location": "Historic District, {city}",
+            "description": "Explore the storied heritage landmarks, architectural monuments, and cultural precincts that anchor {city}'s vibrant identity.",
             "duration": "3.5 hrs",
-            "base_cost": 980,
-            "tips": "Wear comfortable walking shoes with good grip for historic stone inclines."
+            "base_cost": 500,
+            "tips": "Arrive early in the morning to capture the monuments bathed in golden sunlight without crowds."
         },
         "afternoon": {
-            "title": "Epicurean Tasting Tour & {city} Food Hall",
+            "title": "Authentic {city} Culinary Walk & Regional Specialties",
             "category": "Gastronomy & Local Flavors",
-            "location": "Grand Central Market, {city}",
-            "description": "Immerse yourself in authentic {city} delicacies, sampling chef-curated small plates, farm cheeses, regional pastries, and time-honored family recipes.",
+            "location": "Traditional Food Bazaar, {city}",
+            "description": "Savor authentic regional dishes, signature street food specialties, and time-honored recipes perfected across generations in {city}.",
             "duration": "3 hrs",
-            "base_cost": 1620,
-            "tips": "Sample the signature house specialty and pair it with a fresh locally pressed fruit cooler."
+            "base_cost": 650,
+            "tips": "Ask for the legendary house signature dish and pair it with a refreshing local beverage."
         },
         "evening": {
-            "title": "{city} Sunset Lookout & Skyline Terrace Lounge",
+            "title": "{city} Golden Hour Panorama & Twilight Promenade",
             "category": "Sunset & Scenic Vista",
-            "location": "Skyline Panorama Terrace, {city}",
-            "description": "Watch vibrant golden hour colors descend across {city} from a premier high-altitude terrace, accompanied by craft refreshments and relaxing twilight breezes.",
+            "location": "Scenic Vista Point, {city}",
+            "description": "Watch vibrant twilight hues illuminate {city} from a picturesque viewpoint, soaking in refreshing evening breezes and scenic horizons.",
             "duration": "3.5 hrs",
-            "base_cost": 1950,
-            "tips": "Arrive 30 minutes before sunset to claim prime window seating overlooking the horizon."
+            "base_cost": 450,
+            "tips": "Arrive 30 minutes before dusk to enjoy the transition from golden hour into twinkling night lights."
         }
     },
     {
@@ -1519,7 +1519,7 @@ def get_destination_dining_recommendations(dest_name: str, day_idx: int) -> list
     
     # Realistic procedural dining recommendations for any global town
     food_styles = [
-        ("Grand Central Heritage Brasserie", "Regional Epicurean Cuisine", f"Chef's Signature Braised Delicacy with {dest_name} Herb Sauce", "Old Town Plaza", "₹650 - ₹1,400", 4.8),
+        ("Grand Central Heritage Restaurant", "Authentic Regional Cuisine", f"Chef's Signature Specialty with {dest_name} Spices", "Central Bazaar", "₹650 - ₹1,400", 4.8),
         ("The Artisan Table & Roastery", "Farm-to-Table & Local Cafe", "Wood-Smoked Small Plates & Single-Origin Roast", "Artisans Quarter", "₹450 - ₹950", 4.7),
         ("Riverside Twilight Bistro", "Contemporary Coastal & Grill", "Charcoal Catch of the Day with Truffle Mash", "Waterfront Esplanade", "₹850 - ₹1,800", 4.9),
         ("Old Market Traditional Food Hall", "Authentic Local Specialties", f"Classic {dest_name} Street Thali & Warm Sweets", "Bazaar Street", "₹250 - ₹600", 4.8)
@@ -1925,12 +1925,13 @@ def generate_itinerary_with_grok(
     Connects to the xAI Grok API (https://api.x.ai/v1) using model grok-2 (fallback: grok-beta)
     to dynamically generate a live, authentic, structured travel itinerary.
     """
-    api_key = os.getenv("XAI_API_KEY", "").strip()
-    if not api_key:
+    xai_api_key = os.getenv("XAI_API_KEY")
+    if not xai_api_key or not xai_api_key.strip():
+        print("GROK API NOTICE: XAI_API_KEY is not set in environment. Falling back to verified catalog.")
         return None
 
     dest_name = dest_info.get("name", req.destination)
-    country = dest_info.get("country", "Global")
+    country = dest_info.get("country", "India")
     origin = req.origin.strip() if req.origin and req.origin.lower() != "current location" else "Hyderabad"
     budget_tier = req.budget or "moderate"
     travel_style = req.travelStyle or "Couple"
@@ -1938,15 +1939,9 @@ def generate_itinerary_with_grok(
     preferred_transport = req.transport or "flight"
 
     system_prompt = (
-        "You are EasyTrip AI, an elite travel technology concierge and verified trip planner. "
-        "Generate a verified, authentic, realistic day-by-day travel itinerary strictly formatted in JSON. "
-        "CRITICAL REQUIREMENTS:\n"
-        "1. Authentic Sightseeing Spots: Only include real, verified, existing tourist attractions, heritage monuments, beaches, or cultural sights located in the exact destination. Never invent fictional places or use generic boilerplate descriptions.\n"
-        "2. Authentic Regional Dining: Provide genuine local restaurants and exact regional specialty dishes for each day.\n"
-        "3. Transit Breakdown: Provide genuine transit details (real airport codes like VTZ/HYD/CDG, real railway station names, or major National Highway corridors like NH16/NH48).\n"
-        "4. Costs in INR (₹): Calculate all budgets, ticket prices, and activity costs strictly in Indian Rupees (₹), calibrated realistically for the chosen budget tier.\n"
-        "5. Clean Photo Search Keywords: Provide concise, clean photography search queries per landmark for Unsplash matching (e.g., 'visakhapatnam submarine museum', 'godavari arch bridge rajahmundry').\n"
-        "6. Valid JSON Only: Return ONLY a valid JSON object without markdown code blocks, backticks, or conversational filler."
+        "You are an expert local Indian travel planner. Provide 100% authentic, real existing sightseeing landmarks, "
+        "genuine local restaurants with signature dishes, real transit routes (railway station codes like VSKP/RJY, airport codes, or National Highways), "
+        "and realistic pricing in Indian Rupees (₹). Output strictly valid JSON without Markdown fences."
     )
 
     user_prompt = f"""Plan a realistic {num_days}-day travel itinerary for:
@@ -2125,8 +2120,18 @@ Return a single JSON object strictly matching this schema:
 """
 
     raw_content = None
-    client = get_xai_client()
-    models_to_try = ["grok-2", "grok-beta", "grok-2-latest"]
+    client = None
+    if OpenAI:
+        try:
+            client = OpenAI(
+                api_key=xai_api_key,
+                base_url="https://api.x.ai/v1"
+            )
+        except Exception as e:
+            print(f"GROK API CRITICAL ERROR: {type(e).__name__} - {e}")
+
+    # Primary model: "grok-2" (fallback to "grok-beta" if grok-2 returns a 404/model_not_found error)
+    models_to_try = ["grok-2", "grok-beta"]
 
     # 1. Try OpenAI client
     if client:
@@ -2143,19 +2148,20 @@ Return a single JSON object strictly matching this schema:
                 if chat_completion.choices and chat_completion.choices[0].message:
                     raw_content = chat_completion.choices[0].message.content
                     if raw_content:
+                        print(f"GROK API SUCCESS: Generated live itinerary using model '{model_name}'.")
                         break
             except Exception as e:
-                print(f"xAI Grok model '{model_name}' via client failed: {e}")
+                print(f"GROK API CRITICAL ERROR: {type(e).__name__} - {e}")
                 continue
 
     # 2. Fallback to direct HTTP via requests if client wasn't used or failed
     if not raw_content:
-        for model_name in ["grok-2", "grok-beta"]:
+        for model_name in models_to_try:
             try:
                 resp = requests.post(
-                    f"{XAI_API_BASE_URL}/chat/completions",
+                    "https://api.x.ai/v1/chat/completions",
                     headers={
-                        "Authorization": f"Bearer {api_key}",
+                        "Authorization": f"Bearer {xai_api_key}",
                         "Content-Type": "application/json"
                     },
                     json={
@@ -2174,14 +2180,16 @@ Return a single JSON object strictly matching this schema:
                     if choices and choices[0].get("message"):
                         raw_content = choices[0]["message"].get("content")
                         if raw_content:
+                            print(f"GROK API SUCCESS: Direct HTTP generated live itinerary using model '{model_name}'.")
                             break
                 else:
-                    print(f"Direct xAI HTTP call failed with status {resp.status_code}: {resp.text[:200]}")
-            except Exception as http_err:
-                print(f"Direct xAI HTTP call error for model {model_name}: {http_err}")
+                    print(f"GROK API CRITICAL ERROR: HTTP {resp.status_code} - {resp.text[:300]}")
+            except Exception as e:
+                print(f"GROK API CRITICAL ERROR: {type(e).__name__} - {e}")
                 continue
 
     if not raw_content:
+        print("GROK API CRITICAL ERROR: No response content received from Grok-2 or Grok-beta. Falling back to catalog engine.")
         return None
 
     # Parse and clean JSON content
@@ -2370,7 +2378,7 @@ def plan_trip(req: PlanTripRequest):
                     "data": grok_plan
                 }
         except Exception as grok_err:
-            print(f"[xAI Grok Fallback] Dynamic generation encountered an error: {grok_err}. Reverting to verified catalog engine.")
+            print(f"GROK API CRITICAL ERROR: {type(grok_err).__name__} - {grok_err}")
 
     # 2. Existing robust verified catalog & procedural engine fallback
     dest_name = dest_info["name"]

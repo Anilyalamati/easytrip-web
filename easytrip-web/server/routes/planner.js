@@ -1033,34 +1033,34 @@ const curatedDestinationPlans = {
 
 const proceduralDayBlueprints = [
   {
-    titleTemplate: 'Historic Citadel, Culinary Quarters & Sunset Lookout',
-    themeTemplate: 'Ancient Ramparts, Epicurean Discovery & Horizon Twilight',
+    titleTemplate: 'Historic Quarter, Artisan Delicacies & Sunset Lookout',
+    themeTemplate: 'Cultural Heritage, Regional Flavors & Horizon Golden Hour',
     morning: {
-      title: '{city} Historic Citadel & Ancient Ramparts Walk',
-      category: 'Historic Fortifications',
-      location: 'Old Town Citadel Hill, {city}',
-      description: 'Ascend ancient fortress walls and stone battlements guarding {city}, enjoying commanding hilltop vistas across the historic quarter and surrounding landscapes.',
+      title: '{city} Heritage Quarter & Landmark Trail',
+      category: 'Historical Heritage',
+      location: 'Historic District, {city}',
+      description: 'Explore the storied heritage landmarks, architectural monuments, and cultural precincts that anchor {city}\'s vibrant identity.',
       duration: '3.5 hrs',
-      baseCost: 980,
-      tips: 'Wear comfortable walking shoes with good grip for historic stone inclines.'
+      baseCost: 500,
+      tips: 'Arrive early in the morning to capture the monuments bathed in golden sunlight without crowds.'
     },
     afternoon: {
-      title: 'Epicurean Tasting Tour & {city} Food Hall',
+      title: 'Authentic {city} Culinary Walk & Regional Specialties',
       category: 'Gastronomy & Local Flavors',
-      location: 'Grand Central Market, {city}',
-      description: 'Immerse yourself in authentic {city} delicacies, sampling chef-curated small plates, farm cheeses, regional pastries, and time-honored family recipes.',
+      location: 'Traditional Food Bazaar, {city}',
+      description: 'Savor authentic regional dishes, signature street food specialties, and time-honored recipes perfected across generations in {city}.',
       duration: '3 hrs',
-      baseCost: 1620,
+      baseCost: 650,
       tips: 'Sample the signature house specialty and pair it with a fresh locally pressed fruit cooler.'
     },
     evening: {
-      title: '{city} Sunset Lookout & Skyline Terrace Lounge',
+      title: '{city} Golden Hour Panorama & Twilight Promenade',
       category: 'Sunset & Scenic Vista',
-      location: 'Skyline Panorama Terrace, {city}',
-      description: 'Watch vibrant golden hour colors descend across {city} from a premier high-altitude terrace, accompanied by craft refreshments and relaxing twilight breezes.',
+      location: 'Scenic Vista Point, {city}',
+      description: 'Watch vibrant twilight hues illuminate {city} from a picturesque viewpoint, soaking in refreshing evening breezes and scenic horizons.',
       duration: '3.5 hrs',
-      baseCost: 1950,
-      tips: 'Arrive 30 minutes before sunset to claim prime window seating overlooking the horizon.'
+      baseCost: 450,
+      tips: 'Arrive 30 minutes before dusk to enjoy the transition from golden hour into twinkling night lights.'
     }
   },
   {
@@ -1220,7 +1220,7 @@ function getDestinationDiningRecommendations(destName, dayIdx) {
   }
 
   return [
-    { name: 'Grand Central Heritage Brasserie', cuisine: 'Regional Epicurean Cuisine', specialty: `Chef's Signature Braised Delicacy with ${destName} Herbs`, location: 'Old Town Plaza', priceRange: '₹650 - ₹1,400', timing: 'Lunch', rating: 4.8 },
+    { name: 'Grand Central Heritage Restaurant', cuisine: 'Authentic Regional Cuisine', specialty: `Chef's Signature Specialty with ${destName} Spices`, location: 'Central Bazaar', priceRange: '₹650 - ₹1,400', timing: 'Lunch', rating: 4.8 },
     { name: 'The Artisan Table & Roastery', cuisine: 'Farm-to-Table & Local Cafe', specialty: 'Wood-Smoked Small Plates & Single-Origin Roast', location: 'Artisans Quarter', priceRange: '₹450 - ₹950', timing: 'Dinner', rating: 4.7 }
   ];
 }

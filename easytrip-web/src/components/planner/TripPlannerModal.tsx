@@ -423,10 +423,22 @@ export const TripPlannerModal: React.FC = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-md gold-gradient-bg text-[#0e131f] font-extrabold text-sm tracking-wide shadow-gold-glow hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className={`w-full py-3.5 rounded-md gold-gradient-bg text-[#0e131f] font-extrabold text-sm tracking-wide shadow-gold-glow hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 ${
+                  isSubmitting ? 'opacity-80 cursor-wait' : ''
+                }`}
               >
-                <Sparkles className="w-4 h-4" />
-                <span>Design My Journey with EasyTrip AI</span>
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 rounded-full border-2 border-[#0e131f] border-t-transparent animate-spin" />
+                    <span>Contacting Grok Intelligence & Mapping Itinerary...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4" />
+                    <span>Design My Journey with EasyTrip AI</span>
+                  </>
+                )}
               </button>
             </div>
 

@@ -101,7 +101,7 @@ export const ItineraryView: React.FC = () => {
   };
 
   return (
-    <div className="my-8 space-y-8">
+    <div id="itinerary-view-container" className="my-8 space-y-8 scroll-mt-24">
       {/* Top Banner Header */}
       <div className="relative rounded-md overflow-hidden bg-[#141b26] border border-[#222d3d] shadow-2xl">
         <div

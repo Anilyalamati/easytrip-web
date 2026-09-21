@@ -11,6 +11,7 @@ interface TripContextType {
   activeView: 'dashboard' | 'itinerary' | 'booking' | 'map';
   isPlannerOpen: boolean;
   isGenerating: boolean;
+  generatingDestination: string;
   isSavedTripsOpen: boolean;
   isSosOpen: boolean;
   isCheckoutOpen: boolean;
@@ -43,6 +44,7 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [activeView, setActiveView] = useState<'dashboard' | 'itinerary' | 'booking' | 'map'>('dashboard');
   const [isPlannerOpen, setIsPlannerOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatingDestination, setGeneratingDestination] = useState<string>('');
   const [isSavedTripsOpen, setIsSavedTripsOpen] = useState(false);
   const [isSosOpen, setIsSosOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -66,6 +68,8 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const planTrip = async (params: any): Promise<TripItinerary> => {
+    const destName = params.destination?.trim() || 'Your Destination';
+    setGeneratingDestination(destName);
     setIsGenerating(true);
     try {
       console.log('[EasyTrip API] Submitting plan-trip payload:', params);
@@ -87,9 +91,22 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsPlannerOpen(false);
       setPrefillDestination(null);
       setPrefillDays(null);
+
+      // Seamless smooth scroll into ItineraryView once rendered
+      setTimeout(() => {
+        const elem = document.getElementById('itinerary-view-container');
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 250);
+
       return generatedTrip;
     } finally {
-      setIsGenerating(false);
+      setTimeout(() => {
+        setIsGenerating(false);
+      }, 450);
     }
   };
 
@@ -163,6 +180,7 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
         activeView,
         isPlannerOpen,
         isGenerating,
+        generatingDestination,
         isSavedTripsOpen,
         isSosOpen,
         isCheckoutOpen,

@@ -16,12 +16,16 @@ import { TripPlannerModal } from './components/planner/TripPlannerModal';
 import { CheckoutModal } from './components/booking/CheckoutModal';
 import { SavedTripsModal } from './components/history/SavedTripsModal';
 import { EmergencyModal } from './components/sos/EmergencyModal';
+import { GenerationOverlay } from './components/planner/GenerationOverlay';
 
 export const App: React.FC = () => {
-  const { activeView } = useTrip();
+  const { activeView, isGenerating, generatingDestination } = useTrip();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0b0e14] text-[#f1f5f9] font-sans selection:bg-[#f3b740]/30 selection:text-[#f7d56e]">
+      {/* Global Immersive Multi-Stage Loading Overlay */}
+      {isGenerating && <GenerationOverlay destination={generatingDestination} />}
+
       {/* Navigation */}
       <Navbar />
 

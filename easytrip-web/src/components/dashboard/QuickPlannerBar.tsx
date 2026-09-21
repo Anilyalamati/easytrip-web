@@ -295,11 +295,23 @@ export const QuickPlannerBar: React.FC = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-4 rounded-md bg-[#f3b740] hover:bg-[#e5a83b] text-[#0e131f] font-extrabold text-sm tracking-normal shadow-[0_2px_14px_rgba(243,183,64,0.35)] active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className={`w-full py-4 rounded-md bg-[#f3b740] hover:bg-[#e5a83b] text-[#0e131f] font-extrabold text-sm tracking-normal shadow-[0_2px_14px_rgba(243,183,64,0.35)] active:scale-[0.99] transition-all flex items-center justify-center gap-2 ${
+                  isSubmitting ? 'opacity-85 cursor-wait' : ''
+                }`}
               >
-                <Sparkles className="w-4 h-4 text-[#0e131f]" />
-                <span>Generate Verified {days}-Day Itinerary for {destination}</span>
-                <ArrowRight className="w-4 h-4 ml-1" />
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 rounded-full border-2 border-[#0e131f] border-t-transparent animate-spin" />
+                    <span>Contacting Grok Intelligence & Mapping Itinerary...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4 text-[#0e131f]" />
+                    <span>Generate Verified {days}-Day Itinerary for {destination || 'Destination'}</span>
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </>
+                )}
               </button>
             </div>
 
