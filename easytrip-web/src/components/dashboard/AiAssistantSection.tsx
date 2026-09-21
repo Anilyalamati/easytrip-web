@@ -147,7 +147,7 @@ export const AiAssistantSection: React.FC = () => {
           </span>
         </div>
 
-        {/* Suggested Prompt Chips */}
+        {/* Suggested Prompt Chips with Spring Physics */}
         <div className="space-y-2">
           <span className="text-xs font-bold text-charcoal-500 uppercase tracking-wider block">
             Suggested Traveler Inquiries:
@@ -164,7 +164,7 @@ export const AiAssistantSection: React.FC = () => {
                 key={p.key}
                 type="button"
                 onClick={() => handleSelectPrompt(p.key)}
-                className={`text-xs px-3.5 py-1.5 rounded-xl border font-semibold transition-all ${
+                className={`text-xs px-3.5 py-1.5 rounded-xl border font-semibold transition-all duration-200 active:scale-95 ${
                   activeKey === p.key && !isTyping
                     ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
                     : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-brand-300 hover:bg-white'
@@ -176,37 +176,46 @@ export const AiAssistantSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Chat / Knowledge Card Display */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4">
+        {/* Chat / Knowledge Card Display with Staggered Cascades */}
+        <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4 overflow-hidden">
           
-          {/* User Prompt Bubble */}
-          <div className="flex items-start gap-3 justify-end">
+          {/* User Prompt Bubble with Spring Slide */}
+          <div className="flex items-start gap-3 justify-end animate-fade-in-up">
             <div className="max-w-xl bg-midnight-900 text-white text-xs sm:text-sm font-semibold p-3.5 rounded-2xl rounded-tr-sm shadow-sm">
               {activeData.question}
             </div>
           </div>
 
-          {/* Assistant Response Card */}
+          {/* Assistant Processing Indicator or Staggered Intelligence Cards */}
           {isTyping ? (
-            <div className="flex items-center gap-2 text-xs text-charcoal-500 py-4 pl-2">
-              <Bot className="w-4 h-4 text-brand-600 animate-bounce" />
-              <span>EasyTrip AI is analyzing verified destination intelligence...</span>
+            <div className="flex items-center gap-3 py-6 px-4 bg-white rounded-2xl border border-slate-200/80 text-xs text-charcoal-600 animate-fade-in">
+              <div className="w-8 h-8 rounded-xl bg-brand-50 border border-brand-200 text-brand-600 flex items-center justify-center shrink-0 shadow-sm">
+                <Bot className="w-4 h-4" />
+              </div>
+              <div className="flex items-center gap-2">
+                <span>Analyzing travel telemetry & verified local safety</span>
+                <div className="flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-600 animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
             </div>
           ) : (
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 animate-fade-in">
               <div className="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 mt-1 shadow-sm">
                 <Sparkles className="w-4 h-4" />
               </div>
 
-              <div className="flex-1 space-y-3 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm text-xs text-charcoal-700">
+              <div className="flex-1 space-y-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm text-xs text-charcoal-700">
                 {/* Main Summary */}
                 <p className="text-sm font-normal text-midnight-900 leading-relaxed">
                   {activeData.summary}
                 </p>
 
-                {/* Structured Intelligence Grid */}
+                {/* Staggered Structured Intelligence Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-100">
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1 animate-telemetry-slide hover:border-brand-200 transition-colors">
                     <span className="text-[10px] uppercase font-bold text-charcoal-400 flex items-center gap-1">
                       <Car className="w-3 h-3 text-brand-600" />
                       Transit & Arrival
@@ -214,7 +223,7 @@ export const AiAssistantSection: React.FC = () => {
                     <p className="text-xs text-charcoal-700 leading-normal">{activeData.transit}</p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-teal-50/70 border border-teal-200/80 space-y-1">
+                  <div className="p-3.5 rounded-xl bg-teal-50/70 border border-teal-200/80 space-y-1 animate-telemetry-slide hover:border-teal-300 transition-colors" style={{ animationDelay: '100ms' }}>
                     <span className="text-[10px] uppercase font-bold text-teal-800 flex items-center gap-1">
                       <ShieldCheck className="w-3 h-3 text-teal-600" />
                       Safety Assessment
@@ -222,7 +231,7 @@ export const AiAssistantSection: React.FC = () => {
                     <p className="text-xs text-teal-900 leading-normal">{activeData.safety}</p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1 animate-telemetry-slide hover:border-teal-200 transition-colors" style={{ animationDelay: '200ms' }}>
                     <span className="text-[10px] uppercase font-bold text-charcoal-400 flex items-center gap-1">
                       <IndianRupee className="w-3 h-3 text-teal-600" />
                       Realistic INR Cost
@@ -239,7 +248,7 @@ export const AiAssistantSection: React.FC = () => {
 
                   <button
                     onClick={() => openPlannerWithDestination(activeData.destination)}
-                    className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-sm transition-all self-start sm:self-auto"
+                    className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-sm transition-all self-start sm:self-auto active:scale-95"
                   >
                     <span>Plan {activeData.destination} Trip</span>
                     <ArrowRight className="w-3.5 h-3.5" />

@@ -113,11 +113,22 @@ export default {
         'gold-glow-lg': '0 0 35px -5px rgba(37, 99, 235, 0.35)',
         'navy-card': '0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 6px 20px -2px rgba(15, 23, 42, 0.08)',
       },
+      transitionTimingFunction: {
+        'spring-overshoot': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+        'spring-smooth': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'spring-bounce': 'cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+        'cinematic': 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
       animation: {
         'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'fade-in': 'fadeIn 0.5s ease-out forwards',
         'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'slide-down': 'slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'pulse-radar': 'pulseRadar 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite',
+        'marker-pop': 'markerPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+        'route-draw': 'routeDraw 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'telemetry-slide': 'telemetrySlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'halo-glow': 'haloGlow 3s ease-in-out infinite alternate',
       },
       keyframes: {
         fadeIn: {
@@ -131,7 +142,28 @@ export default {
         slideDown: {
           '0%': { opacity: '0', transform: 'translateY(-12px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
-        }
+        },
+        pulseRadar: {
+          '0%': { transform: 'scale(0.95)', opacity: '0.85' },
+          '100%': { transform: 'scale(2.2)', opacity: '0' },
+        },
+        markerPop: {
+          '0%': { transform: 'scale(0) translateY(12px)', opacity: '0' },
+          '70%': { transform: 'scale(1.18) translateY(-2px)', opacity: '1' },
+          '100%': { transform: 'scale(1) translateY(0)', opacity: '1' },
+        },
+        routeDraw: {
+          '0%': { strokeDashoffset: '1000' },
+          '100%': { strokeDashoffset: '0' },
+        },
+        telemetrySlide: {
+          '0%': { opacity: '0', transform: 'translateY(20px) scale(0.96)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        haloGlow: {
+          '0%': { opacity: '0.4', transform: 'scale(1)' },
+          '100%': { opacity: '0.85', transform: 'scale(1.08)' },
+        },
       }
     },
   },

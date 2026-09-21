@@ -206,20 +206,78 @@ export const SafeNavigationSection: React.FC = () => {
             <div className="flex items-center justify-between text-xs font-bold text-midnight-900">
               <span className="flex items-center gap-1.5">
                 <Route className="w-4 h-4 text-brand-600" />
-                Live Corridor Schematic
+                Live Animated Corridor Schematic
               </span>
               <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
                 OSRM Routing Synced
               </span>
             </div>
 
-            {/* Visual Waypoint Track */}
-            <div className="relative pl-6 space-y-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-brand-600 before:via-teal-500 before:to-emerald-600">
+            {/* Interactive Animated SVG Corridor Canvas */}
+            <div className="relative h-28 w-full bg-white rounded-xl border border-slate-200 p-2 overflow-hidden flex items-center justify-center">
+              <svg 
+                key={activeCorridor.id}
+                viewBox="0 0 400 80" 
+                className="w-full h-full"
+              >
+                <defs>
+                  <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#2563EB" />
+                    <stop offset="50%" stopColor="#0D9488" />
+                    <stop offset="100%" stopColor="#10B981" />
+                  </linearGradient>
+                </defs>
+
+                {/* Subtle Background Guide Track */}
+                <path
+                  d="M 40 40 Q 120 15, 200 40 T 360 40"
+                  fill="none"
+                  stroke="#E2E8F0"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                />
+
+                {/* Animated Glowing Active Polyline */}
+                <path
+                  d="M 40 40 Q 120 15, 200 40 T 360 40"
+                  fill="none"
+                  stroke="url(#routeGradient)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  className="svg-route-draw"
+                />
+
+                {/* Origin Pin with Pulse */}
+                <circle cx="40" cy="40" r="7" fill="#2563EB" className="animate-pulse" />
+                <circle cx="40" cy="40" r="3" fill="#FFFFFF" />
+                <text x="35" y="65" fontSize="10" fontWeight="bold" fill="#0F172A">
+                  {activeCorridor.origin.split(' ')[0]}
+                </text>
+
+                {/* Midway Checkpoint */}
+                <circle cx="200" cy="40" r="5" fill="#0D9488" />
+                <circle cx="200" cy="40" r="2" fill="#FFFFFF" />
+                <text x="180" y="24" fontSize="9" fontWeight="600" fill="#64748B">
+                  Rest Plaza
+                </text>
+
+                {/* Destination Pin with Spring Radar */}
+                <circle cx="360" cy="40" r="7" fill="#10B981" className="animate-ping" opacity="0.4" />
+                <circle cx="360" cy="40" r="7" fill="#10B981" />
+                <circle cx="360" cy="40" r="3" fill="#FFFFFF" />
+                <text x="330" y="65" fontSize="10" fontWeight="bold" fill="#0F172A">
+                  {activeCorridor.destination.split(' ')[0]}
+                </text>
+              </svg>
+            </div>
+
+            {/* Visual Waypoint Track with Spring Nodes */}
+            <div className="relative pl-6 space-y-5 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-brand-600 before:via-teal-500 before:to-emerald-600">
               
               {/* Departure Node */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-brand-600 ring-4 ring-brand-100" />
-                <div className="text-xs font-bold text-midnight-900">{activeCorridor.origin} Departure</div>
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-brand-600 ring-4 ring-brand-100 animate-pulse" />
+                <div className="text-xs font-bold text-midnight-900">{activeCorridor.origin} Hub Departure</div>
                 <div className="text-[11px] text-charcoal-500">Terminal & Highway Interchange Hub</div>
               </div>
 
@@ -232,7 +290,7 @@ export const SafeNavigationSection: React.FC = () => {
 
               {/* Destination Node */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-emerald-600 ring-4 ring-emerald-100" />
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-emerald-600 ring-4 ring-emerald-100 animate-pulse" />
                 <div className="text-xs font-bold text-midnight-900">{activeCorridor.destination} Arrival</div>
                 <div className="text-[11px] text-charcoal-500">24/7 Regulated Prepaid Cabs & Hotel Links</div>
               </div>
@@ -240,7 +298,7 @@ export const SafeNavigationSection: React.FC = () => {
             </div>
 
             {/* Emergency Hotline Banner inside diagram */}
-            <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs flex items-center justify-between">
+            <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs flex items-center justify-between shadow-sm">
               <div className="flex items-center gap-2">
                 <Hospital className="w-4 h-4 text-rose-500" />
                 <span className="font-semibold text-charcoal-700">En-route Emergency Dispatch:</span>

@@ -73,6 +73,33 @@ export const HeroBanner: React.FC = () => {
     }
   };
 
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Max 5 degrees tilt
+    const rotateX = ((y - centerY) / centerY) * -4;
+    const rotateY = ((x - centerX) / centerX) * 4;
+
+    setTilt({ x: rotateY, y: rotateX });
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.15
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setGlare({ x: 50, y: 50, opacity: 0 });
+  };
+
   return (
     <section className="relative pt-6 sm:pt-10 pb-16 overflow-hidden">
       {/* Subtle Background Glows */}
@@ -100,20 +127,20 @@ export const HeroBanner: React.FC = () => {
             Plan your journey, discover places worth visiting, and get safety-aware travel assistance — all in one place.
           </p>
 
-          {/* 650ms Sequence: Action CTAs */}
+          {/* 650ms Sequence: Action CTAs with Spring Physics */}
           <div className="animate-fade-in-up pt-2 flex flex-wrap items-center justify-center gap-3.5">
             <button
               onClick={() => setIsPlannerOpen(true)}
-              className="px-6 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm tracking-normal shadow-button hover:shadow-lg active:scale-95 transition-all flex items-center gap-2 group"
+              className="btn-primary px-6 py-3.5 rounded-2xl font-bold text-sm tracking-normal flex items-center gap-2 group"
             >
               <Sparkles className="w-4 h-4 text-white" />
               <span>Plan My Trip</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
             </button>
 
             <button
               onClick={scrollToExplore}
-              className="px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-midnight-900 border border-slate-200/90 font-bold text-sm tracking-normal shadow-sm hover:border-slate-300 active:scale-95 transition-all"
+              className="btn-secondary px-6 py-3.5 rounded-2xl font-bold text-sm tracking-normal shadow-sm"
             >
               Explore EasyTrip
             </button>
@@ -136,149 +163,179 @@ export const HeroBanner: React.FC = () => {
           </div>
         </div>
 
-        {/* 800ms Sequence: Interactive Product Mockup Settle */}
-        <div className="animate-fade-in-up surface-elevated rounded-3xl p-4 sm:p-7 max-w-5xl mx-auto border border-slate-200/90 shadow-elevated relative overflow-hidden">
-          
-          {/* Mockup Window Chrome Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 mr-2">
-                <span className="w-3 h-3 rounded-full bg-rose-400/80" />
-                <span className="w-3 h-3 rounded-full bg-amber-400/80" />
-                <span className="w-3 h-3 rounded-full bg-emerald-400/80" />
+        {/* 800ms Sequence: Interactive 3D Mockup with Cursor Parallax */}
+        <div 
+          className="perspective-container max-w-5xl mx-auto"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div 
+            className="surface-elevated rounded-3xl p-4 sm:p-7 border border-slate-200/90 shadow-elevated relative overflow-hidden transition-transform duration-300 ease-out"
+            style={{
+              transform: `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
+              transformStyle: 'preserve-3d',
+            }}
+          >
+            {/* Dynamic Cursor Spotlight Glare */}
+            <div 
+              className="pointer-events-none absolute inset-0 rounded-3xl transition-opacity duration-300 -z-0"
+              style={{
+                background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(37, 99, 235, 0.12) 0%, transparent 60%)`,
+                opacity: glare.opacity,
+              }}
+            />
+            
+            {/* Mockup Window Chrome Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3 relative z-10">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 mr-2">
+                  <span className="w-3 h-3 rounded-full bg-rose-400/80" />
+                  <span className="w-3 h-3 rounded-full bg-amber-400/80" />
+                  <span className="w-3 h-3 rounded-full bg-emerald-400/80" />
+                </div>
+                <span className="text-xs font-bold text-midnight-900 flex items-center gap-1.5">
+                  <Navigation className="w-3.5 h-3.5 text-brand-600" />
+                  EasyTrip Intelligence Preview
+                </span>
               </div>
-              <span className="text-xs font-bold text-midnight-900 flex items-center gap-1.5">
-                <Navigation className="w-3.5 h-3.5 text-brand-600" />
-                EasyTrip Intelligence Preview
-              </span>
+
+              {/* Quick City Switcher within mockup */}
+              <div className="flex items-center gap-1.5 bg-slate-100/90 p-1 rounded-xl">
+                {(['Vizag', 'Ooty', 'Paris'] as const).map(city => (
+                  <button
+                    key={city}
+                    onClick={() => setActivePreviewCity(city)}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all duration-200 active:scale-95 ${
+                      activePreviewCity === city
+                        ? 'bg-white text-midnight-900 shadow-sm'
+                        : 'text-charcoal-500 hover:text-midnight-900'
+                    }`}
+                  >
+                    {city}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Quick City Switcher within mockup */}
-            <div className="flex items-center gap-1.5 bg-slate-100/90 p-1 rounded-xl">
-              {(['Vizag', 'Ooty', 'Paris'] as const).map(city => (
+            {/* Inner Interactive Dashboard Layout */}
+            <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch relative z-10">
+              
+              {/* Left 7 Cols: Image & Itinerary Preview */}
+              <div className="lg:col-span-7 rounded-2xl overflow-hidden relative min-h-[300px] sm:min-h-[360px] flex flex-col justify-between p-5 border border-slate-200/80 group">
+                <img
+                  src={currentPreview.image}
+                  alt={currentPreview.name}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-midnight-950/90 via-midnight-950/40 to-transparent" />
+
+                {/* Floating Top Indicators */}
+                <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
+                  <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-midnight-900 font-extrabold text-xs shadow-sm flex items-center gap-1">
+                    <Sun className="w-3.5 h-3.5 text-amber-500" />
+                    {currentPreview.temp} • {currentPreview.condition}
+                  </span>
+
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/90 backdrop-blur-md text-white font-bold text-xs shadow-sm flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    {currentPreview.safetyScore} Safety Index
+                  </span>
+                </div>
+
+                {/* Bottom Card Context */}
+                <div className="relative z-10 space-y-2 text-white">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-teal-300">
+                    FEATURED ITINERARY PREVIEW
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-black tracking-tight">
+                    {currentPreview.name}
+                  </h3>
+                  <p className="text-xs text-slate-200 max-w-md line-clamp-2">
+                    <strong>Highlight:</strong> {currentPreview.highlight}
+                  </p>
+                  <div className="pt-2">
+                    <button
+                      onClick={() => openPlannerWithDestination(currentPreview.name)}
+                      className="px-4 py-2 rounded-xl bg-white text-midnight-900 hover:bg-brand-50 font-bold text-xs transition-all inline-flex items-center gap-1.5 shadow active:scale-95"
+                    >
+                      <span>View Full 3-Day Plan</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-600" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right 5 Cols: Live Metrics & Safety Indicator Card */}
+              <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
+                
+                {/* Route & Transit Card */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 hover:border-brand-300 transition-colors">
+                  <div className="flex items-center justify-between text-xs text-charcoal-500 font-semibold">
+                    <span className="flex items-center gap-1">
+                      <Route className="w-3.5 h-3.5 text-brand-600" />
+                      Verified Corridor
+                    </span>
+                    <span className="text-midnight-900 font-bold">{currentPreview.distance}</span>
+                  </div>
+                  <div className="text-sm font-bold text-midnight-900">
+                    {currentPreview.route}
+                  </div>
+                  <div className="text-xs text-charcoal-600 flex items-center gap-1 font-medium">
+                    <Clock className="w-3.5 h-3.5 text-slate-400" />
+                    <span>Est. Duration: {currentPreview.duration}</span>
+                  </div>
+                </div>
+
+                {/* Safety & Emergency Status */}
+                <div className="p-4 rounded-2xl bg-teal-50/70 border border-teal-200/80 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-teal-800 flex items-center gap-1">
+                      <ShieldCheck className="w-4 h-4 text-teal-600" />
+                      Safety Corridor Assessment
+                    </span>
+                    <span className="text-[11px] font-black text-teal-700 bg-white px-2 py-0.5 rounded-md border border-teal-200">
+                      High Confidence
+                    </span>
+                  </div>
+                  <p className="text-xs text-teal-900 leading-relaxed font-medium">
+                    {currentPreview.safetyStatus}. Automated SOS connection to emergency police, certified hospitals, and travel helplines active 24/7.
+                  </p>
+                </div>
+
+                {/* Recommended Stay Preview */}
+                <div className="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-1.5 shadow-sm">
+                  <span className="text-[10px] uppercase font-bold text-charcoal-400 block">
+                    Curated Verified Stay
+                  </span>
+                  <div className="text-xs font-bold text-midnight-900">
+                    {currentPreview.stayPick}
+                  </div>
+                  <p className="text-[11px] text-charcoal-500">
+                    Verified rating 4.8+ • Breakfast & executive airport transfer included.
+                  </p>
+                </div>
+
+                {/* Quick Action */}
                 <button
-                  key={city}
-                  onClick={() => setActivePreviewCity(city)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                    activePreviewCity === city
-                      ? 'bg-white text-midnight-900 shadow-sm'
-                      : 'text-charcoal-500 hover:text-midnight-900'
-                  }`}
+                  onClick={() => setIsPlannerOpen(true)}
+                  className="w-full py-3 rounded-xl bg-slate-900 hover:bg-midnight-900 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95"
                 >
-                  {city}
+                  <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+                  <span>Customize This Trip with AI</span>
                 </button>
-              ))}
+              </div>
+
             </div>
           </div>
+        </div>
 
-          {/* Inner Interactive Dashboard Layout */}
-          <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            
-            {/* Left 7 Cols: Image & Itinerary Preview */}
-            <div className="lg:col-span-7 rounded-2xl overflow-hidden relative min-h-[300px] sm:min-h-[360px] flex flex-col justify-between p-5 border border-slate-200/80 group">
-              <img
-                src={currentPreview.image}
-                alt={currentPreview.name}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-midnight-950/90 via-midnight-950/40 to-transparent" />
-
-              {/* Floating Top Indicators */}
-              <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
-                <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-midnight-900 font-extrabold text-xs shadow-sm flex items-center gap-1">
-                  <Sun className="w-3.5 h-3.5 text-amber-500" />
-                  {currentPreview.temp} • {currentPreview.condition}
-                </span>
-
-                <span className="px-3 py-1 rounded-full bg-emerald-500/90 backdrop-blur-md text-white font-bold text-xs shadow-sm flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  {currentPreview.safetyScore} Safety Index
-                </span>
-              </div>
-
-              {/* Bottom Card Context */}
-              <div className="relative z-10 space-y-2 text-white">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-teal-300">
-                  FEATURED ITINERARY PREVIEW
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-black tracking-tight">
-                  {currentPreview.name}
-                </h3>
-                <p className="text-xs text-slate-200 max-w-md line-clamp-2">
-                  <strong>Highlight:</strong> {currentPreview.highlight}
-                </p>
-                <div className="pt-2">
-                  <button
-                    onClick={() => openPlannerWithDestination(currentPreview.name)}
-                    className="px-4 py-2 rounded-xl bg-white text-midnight-900 hover:bg-brand-50 font-bold text-xs transition-all inline-flex items-center gap-1.5 shadow"
-                  >
-                    <span>View Full 3-Day Plan</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-600" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Right 5 Cols: Live Metrics & Safety Indicator Card */}
-            <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
-              
-              {/* Route & Transit Card */}
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
-                <div className="flex items-center justify-between text-xs text-charcoal-500 font-semibold">
-                  <span className="flex items-center gap-1">
-                    <Route className="w-3.5 h-3.5 text-brand-600" />
-                    Verified Corridor
-                  </span>
-                  <span className="text-midnight-900 font-bold">{currentPreview.distance}</span>
-                </div>
-                <div className="text-sm font-bold text-midnight-900">
-                  {currentPreview.route}
-                </div>
-                <div className="text-xs text-charcoal-600 flex items-center gap-1 font-medium">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Est. Duration: {currentPreview.duration}</span>
-                </div>
-              </div>
-
-              {/* Safety & Emergency Status */}
-              <div className="p-4 rounded-2xl bg-teal-50/70 border border-teal-200/80 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-teal-800 flex items-center gap-1">
-                    <ShieldCheck className="w-4 h-4 text-teal-600" />
-                    Safety Corridor Assessment
-                  </span>
-                  <span className="text-[11px] font-black text-teal-700 bg-white px-2 py-0.5 rounded-md border border-teal-200">
-                    High Confidence
-                  </span>
-                </div>
-                <p className="text-xs text-teal-900 leading-relaxed font-medium">
-                  {currentPreview.safetyStatus}. Automated SOS connection to emergency police, certified hospitals, and travel helplines active 24/7.
-                </p>
-              </div>
-
-              {/* Recommended Stay Preview */}
-              <div className="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-1.5 shadow-sm">
-                <span className="text-[10px] uppercase font-bold text-charcoal-400 block">
-                  Curated Verified Stay
-                </span>
-                <div className="text-xs font-bold text-midnight-900">
-                  {currentPreview.stayPick}
-                </div>
-                <p className="text-[11px] text-charcoal-500">
-                  Verified rating 4.8+ • Breakfast & executive airport transfer included.
-                </p>
-              </div>
-
-              {/* Quick Action */}
-              <button
-                onClick={() => setIsPlannerOpen(true)}
-                className="w-full py-3 rounded-xl bg-slate-900 hover:bg-midnight-900 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-teal-400" />
-                <span>Customize This Trip with AI</span>
-              </button>
-            </div>
-
+        {/* Continuous Flow Scroll Indicator */}
+        <div className="mt-12 flex flex-col items-center justify-center gap-2 text-charcoal-400 hover:text-brand-600 transition-colors cursor-pointer group" onClick={() => {
+          document.getElementById('plan-section')?.scrollIntoView({ behavior: 'smooth' });
+        }}>
+          <span className="text-[11px] font-bold uppercase tracking-wider">Start Trip Planning</span>
+          <div className="w-6 h-9 rounded-full border-2 border-slate-300 group-hover:border-brand-600 flex items-start justify-center p-1 transition-colors">
+            <div className="w-1.5 h-2 rounded-full bg-slate-400 group-hover:bg-brand-600 animate-bounce" />
           </div>
         </div>
 

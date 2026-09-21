@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTrip } from '../../context/TripContext';
 import { 
   ShieldAlert, 
@@ -19,8 +19,10 @@ export const SafetySosWidget: React.FC = () => {
 
   // 4-Stage SOS Confirmation: 'idle' | 'confirm' | 'locating' | 'sharing' | 'active'
   const [sosStage, setSosStage] = useState<'idle' | 'confirm' | 'locating' | 'sharing' | 'active'>('idle');
+  const [countdown, setCountdown] = useState<number>(5);
 
   const startSosFlow = () => {
+    setCountdown(5);
     setSosStage('confirm');
   };
 
@@ -30,13 +32,27 @@ export const SafetySosWidget: React.FC = () => {
       setSosStage('sharing');
       setTimeout(() => {
         setSosStage('active');
-      }, 1200);
-    }, 1200);
+      }, 1000);
+    }, 1000);
   };
 
   const cancelSos = () => {
     setSosStage('idle');
+    setCountdown(5);
   };
+
+  // Countdown timer in confirm state
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (sosStage === 'confirm' && countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(prev => prev - 1);
+      }, 1000);
+    } else if (sosStage === 'confirm' && countdown === 0) {
+      confirmSos();
+    }
+    return () => clearTimeout(timer);
+  }, [sosStage, countdown]);
 
   const contacts = [
     { title: 'Police / Law Enforcement', number: '112 / 100', desc: 'Instant local emergency dispatch' },
@@ -80,7 +96,7 @@ export const SafetySosWidget: React.FC = () => {
             </span>
           </div>
 
-          {/* Stage 0: Idle state */}
+          {/* Stage 0: Idle state with calm aura */}
           {sosStage === 'idle' && (
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-2">
               <div className="space-y-1">
@@ -95,7 +111,7 @@ export const SafetySosWidget: React.FC = () => {
 
               <button
                 onClick={startSosFlow}
-                className="px-5 py-3 rounded-2xl bg-safety-600 hover:bg-safety-700 text-white font-bold text-xs tracking-normal shadow-sm hover:shadow-md active:scale-95 transition-all flex items-center gap-2 shrink-0 self-start sm:self-auto"
+                className="px-5 py-3 rounded-2xl bg-safety-600 hover:bg-safety-700 text-white font-bold text-xs tracking-normal shadow-sm hover:shadow-md active:scale-95 transition-all duration-200 flex items-center gap-2 shrink-0 self-start sm:self-auto"
               >
                 <ShieldAlert className="w-4 h-4 text-white" />
                 <span>Initiate Travel SOS</span>
@@ -104,26 +120,57 @@ export const SafetySosWidget: React.FC = () => {
             </div>
           )}
 
-          {/* Stage 1: Confirmation */}
+          {/* Stage 1: Confirmation with 5s countdown SVG ring */}
           {sosStage === 'confirm' && (
-            <div className="p-4 rounded-xl bg-white border border-safety-200 space-y-3 animate-fade-in">
-              <div className="flex items-center gap-2 text-sm font-bold text-safety-700">
-                <AlertTriangle className="w-4 h-4 text-safety-600" />
-                <span>Stage 1 of 4: Are you sure you want to trigger SOS?</span>
+            <div className="p-5 rounded-2xl bg-white border border-safety-200 space-y-4 animate-fade-in shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5 text-sm font-bold text-safety-700">
+                  <AlertTriangle className="w-5 h-5 text-safety-600" />
+                  <span>Stage 1 of 4: Are you sure you want to trigger SOS?</span>
+                </div>
+                
+                {/* 5-second circular SVG countdown timer */}
+                <div className="flex items-center gap-2 bg-safety-50 px-3 py-1.5 rounded-full border border-safety-200 text-xs font-bold text-safety-700">
+                  <svg className="w-4 h-4 -rotate-90" viewBox="0 0 36 36">
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="14"
+                      fill="none"
+                      stroke="#FEE2E2"
+                      strokeWidth="3"
+                    />
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="14"
+                      fill="none"
+                      stroke="#DC2626"
+                      strokeWidth="3"
+                      strokeDasharray="88"
+                      strokeDashoffset={88 - (88 * (5 - countdown)) / 5}
+                      strokeLinecap="round"
+                      className="transition-all duration-1000 ease-linear"
+                    />
+                  </svg>
+                  <span>Auto-advancing in {countdown}s</span>
+                </div>
               </div>
-              <p className="text-xs text-charcoal-600">
-                This will prepare your current GPS coordinates, identify the nearest police and ambulance stations in {currentTrip?.destination || 'your location'}, and unlock priority tourist dispatch lines.
+
+              <p className="text-xs text-charcoal-600 leading-relaxed">
+                This will prepare high-accuracy GPS coordinates, identify certified medical units in {currentTrip?.destination || 'your destination'}, and unlock priority tourist emergency lines.
               </p>
+
               <div className="flex items-center gap-3 pt-1">
                 <button
                   onClick={confirmSos}
-                  className="px-4 py-2 rounded-xl bg-safety-600 hover:bg-safety-700 text-white text-xs font-bold transition-all shadow-sm"
+                  className="px-4 py-2.5 rounded-xl bg-safety-600 hover:bg-safety-700 text-white text-xs font-bold transition-all duration-200 active:scale-95 shadow-sm"
                 >
-                  Yes, Proceed to SOS (Stage 2)
+                  Confirm Immediately (Stage 2)
                 </button>
                 <button
                   onClick={cancelSos}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-charcoal-700 text-xs font-semibold transition-all"
+                  className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-charcoal-700 text-xs font-semibold transition-all duration-200 active:scale-95"
                 >
                   Cancel / Return to Safety Dashboard
                 </button>
@@ -133,7 +180,7 @@ export const SafetySosWidget: React.FC = () => {
 
           {/* Stage 2: Locating */}
           {sosStage === 'locating' && (
-            <div className="p-4 rounded-xl bg-white border border-brand-200 flex items-center gap-3 animate-fade-in">
+            <div className="p-5 rounded-2xl bg-white border border-brand-200 flex items-center gap-3 animate-fade-in shadow-sm">
               <Loader2 className="w-5 h-5 text-brand-600 animate-spin shrink-0" />
               <div>
                 <div className="text-xs font-bold text-midnight-900">Stage 2 of 4: Preparing high-accuracy GPS coordinates...</div>
@@ -144,7 +191,7 @@ export const SafetySosWidget: React.FC = () => {
 
           {/* Stage 3: Sharing */}
           {sosStage === 'sharing' && (
-            <div className="p-4 rounded-xl bg-white border border-teal-200 flex items-center gap-3 animate-fade-in">
+            <div className="p-5 rounded-2xl bg-white border border-teal-200 flex items-center gap-3 animate-fade-in shadow-sm">
               <Loader2 className="w-5 h-5 text-teal-600 animate-spin shrink-0" />
               <div>
                 <div className="text-xs font-bold text-teal-900">Stage 3 of 4: Sharing location with regional emergency hub...</div>
