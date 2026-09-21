@@ -1,93 +1,124 @@
 import React, { useState } from 'react';
 import { useTrip } from '../../context/TripContext';
-import { Star, MapPin, Calendar, IndianRupee, Sparkles, ArrowRight } from 'lucide-react';
+import { 
+  Star, 
+  MapPin, 
+  Calendar, 
+  IndianRupee, 
+  Sparkles, 
+  ArrowRight, 
+  Utensils, 
+  Building2, 
+  Compass, 
+  Car, 
+  Landmark 
+} from 'lucide-react';
 import { Destination } from '../../types/trip';
 
 export const FeaturedDestinations: React.FC = () => {
   const { destinations, openPlannerWithDestination } = useTrip();
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedTab, setSelectedTab] = useState<'all' | 'places' | 'food' | 'hotels' | 'activities' | 'transport'>('all');
 
-  const categories = ['All', 'Beach & Coastal', 'Heritage & Culture', 'Mountain Retreat', 'Urban Luxury'];
+  const tabs = [
+    { id: 'all', label: 'All Destinations', icon: Compass },
+    { id: 'places', label: 'Places & Sights', icon: Landmark },
+    { id: 'food', label: 'Food & Dining', icon: Utensils },
+    { id: 'hotels', label: 'Verified Stays', icon: Building2 },
+    { id: 'activities', label: 'Experiences', icon: Sparkles },
+    { id: 'transport', label: 'Transit Corridors', icon: Car },
+  ] as const;
 
-  const filtered = selectedCategory === 'All'
-    ? destinations
-    : destinations.filter(d => d.category === selectedCategory);
+  const filterMap: Record<string, (d: Destination) => boolean> = {
+    all: () => true,
+    places: (d) => d.category.includes('Heritage') || d.highlights.some(h => h.includes('Ghat') || h.includes('Museum') || h.includes('Tower')),
+    food: (d) => d.highlights.some(h => h.includes('Food') || h.includes('Fish') || h.includes('Seafood') || h.includes('Cafe') || h.includes('Wine') || h.includes('Ramen')),
+    hotels: () => true,
+    activities: (d) => d.highlights.some(h => h.includes('Train') || h.includes('Hike') || h.includes('Safari') || h.includes('Cruise') || h.includes('Ropeway')),
+    transport: (d) => !!d.idealDays,
+  };
+
+  const filtered = destinations.filter(filterMap[selectedTab] || (() => true));
 
   return (
-    <section className="my-12">
+    <section id="explore" className="my-16 sm:my-20 scroll-mt-24">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-gold-400 text-xs uppercase font-bold tracking-widest mb-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Curated Catalog</span>
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200">
+            <Compass className="w-3.5 h-3.5" />
+            <span>SECTION 02 — EXPLORE</span>
           </div>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">
-            Popular <span className="gold-gradient-text">Destinations</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-midnight-900 tracking-tight">
+            Curated places, authentic experiences.
           </h2>
-          <p className="text-sm text-slate-400 mt-1 max-w-lg">
-            Real places from your EasyTrip destination catalog, complete with verified highlights and travel windows.
+          <p className="text-sm text-charcoal-600 max-w-xl leading-relaxed">
+            Verified travel hubs featuring iconic local landmarks, signature regional culinary specialties, and comfortable stays.
           </p>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap gap-2">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
-                selectedCategory === cat
-                  ? 'bg-gold-500 text-navy-950 border-gold-400 font-bold shadow-gold-glow'
-                  : 'bg-navy-850 text-slate-300 border-navy-700 hover:border-gold-500/30'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Category Pill Filters */}
+        <div className="flex flex-wrap gap-1.5 bg-slate-100/90 p-1 rounded-2xl border border-slate-200">
+          {tabs.map(tab => {
+            const Icon = tab.icon;
+            const isActive = selectedTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedTab(tab.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  isActive
+                    ? 'bg-white text-midnight-900 shadow-sm'
+                    : 'text-charcoal-600 hover:text-midnight-900'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5 text-brand-600" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Destinations Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filtered.map((dest: Destination) => (
           <div
             key={dest.id}
-            className="group glass-card rounded-3xl overflow-hidden border border-navy-750 hover:border-gold-500/50 transition-all duration-300 flex flex-col glass-card-hover"
+            className="group surface-card rounded-3xl overflow-hidden border border-slate-200/90 hover:border-brand-300 transition-all duration-300 flex flex-col justify-between surface-card-hover"
           >
-            {/* Image Container */}
-            <div className="relative h-48 w-full overflow-hidden">
+            {/* Top Image Container */}
+            <div className="relative h-52 w-full overflow-hidden">
               <img
                 src={dest.image}
                 alt={dest.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-midnight-950/80 via-transparent to-transparent" />
               
               {/* Badge */}
-              <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-navy-900/85 backdrop-blur-md border border-gold-500/40 text-[10px] font-bold text-gold-300 uppercase tracking-wider">
+              <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-midnight-900 shadow-sm uppercase tracking-wider">
                 {dest.badge}
               </span>
 
               {/* Rating */}
-              <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-full bg-navy-900/85 backdrop-blur-md border border-navy-700 text-xs font-bold text-white">
-                <Star className="w-3 h-3 text-gold-400 fill-gold-400" />
+              <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-xs font-extrabold text-midnight-900 shadow-sm">
+                <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                 <span>{dest.rating}</span>
               </div>
 
-              {/* Destination & Country */}
-              <div className="absolute bottom-3 left-3 right-3">
-                <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-gold-400" />
+              {/* Destination & Country at Bottom of Image */}
+              <div className="absolute bottom-3 left-3 right-3 text-white">
+                <h3 className="text-xl font-black tracking-tight flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-teal-400" />
                   {dest.name}
                 </h3>
-                <p className="text-xs text-slate-300 font-medium">{dest.country}</p>
+                <p className="text-xs text-slate-200 font-medium">{dest.country}</p>
               </div>
             </div>
 
-            {/* Details */}
+            {/* Details Content */}
             <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-charcoal-600 line-clamp-2 leading-relaxed">
                 {dest.tagline}
               </p>
 
@@ -96,33 +127,32 @@ export const FeaturedDestinations: React.FC = () => {
                 {dest.highlights.slice(0, 3).map((hl: string) => (
                   <span
                     key={hl}
-                    className="text-[10px] px-2 py-0.5 rounded-md bg-navy-800 text-slate-300 border border-navy-700"
+                    className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-charcoal-700 border border-slate-200"
                   >
                     {hl}
                   </span>
                 ))}
               </div>
 
-              {/* Stats row */}
-              <div className="pt-3 border-t border-navy-700/60 flex items-center justify-between text-xs text-slate-400">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-gold-400" />
+              {/* Stats Row */}
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-charcoal-500">
+                <div className="flex items-center gap-1 font-semibold">
+                  <Calendar className="w-3.5 h-3.5 text-brand-600" />
                   <span>{dest.idealDays}</span>
                 </div>
-                <div className="flex items-center gap-1 font-semibold text-slate-200">
-                  <IndianRupee className="w-3.5 h-3.5 text-gold-400" />
+                <div className="flex items-center gap-0.5 font-bold text-midnight-900">
+                  <IndianRupee className="w-3.5 h-3.5 text-teal-600" />
                   <span>₹{dest.avgCostPerDay.moderate.toLocaleString('en-IN')}/day</span>
                 </div>
               </div>
 
-              {/* Action */}
+              {/* Action Button */}
               <button
                 onClick={() => openPlannerWithDestination(dest.name)}
-                className="w-full py-2.5 rounded-xl bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-slate-200 border border-navy-700 hover:border-gold-400 font-bold text-xs tracking-wide transition-all flex items-center justify-center gap-2 group/btn"
+                className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-brand-600 hover:text-white text-midnight-900 font-bold text-xs tracking-normal transition-all flex items-center justify-center gap-1.5 group/btn"
               >
-                <Sparkles className="w-3.5 h-3.5 text-gold-400 group-hover/btn:text-navy-950" />
-                <span>Plan Trip Here</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                <span>Plan Trip to {dest.name}</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>

@@ -3,77 +3,163 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
   body {
-    background-color: #0b0e19;
-    color: #e2e8f0;
+    background-color: #F8FAFC;
+    color: #1E293B;
     overflow-x: hidden;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
-/* Luxury Glassmorphic Styles */
+/* Premium Surface & Elevation Cards */
+.surface-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+}
+
+.surface-card-hover {
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.surface-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+}
+
+.surface-elevated {
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+}
+
+/* Backward compatibility for existing glass-card classes */
 .glass-card {
-  background: rgba(15, 19, 33, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(211, 170, 84, 0.18);
-  box-shadow: 0 10px 30px -10px rgba(5, 7, 13, 0.8);
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 4px 16px -2px rgba(15, 23, 42, 0.05);
 }
 
 .glass-card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .glass-card-hover:hover {
-  transform: translateY(-4px);
-  border-color: rgba(211, 170, 84, 0.45);
-  box-shadow: 0 15px 35px -5px rgba(211, 170, 84, 0.2);
+  transform: translateY(-3px);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08);
 }
 
 .glass-pill {
-  background: rgba(22, 28, 47, 0.8);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(211, 170, 84, 0.2);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
-/* Gold Gradient Effects */
+/* Editorial & Brand Gradients */
+.brand-gradient-text {
+  background: linear-gradient(135deg, #0F172A 0%, #2563EB 55%, #0D9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .gold-gradient-text {
-  background: linear-gradient(135deg, #f2db9e 0%, #d3aa54 50%, #b98e3a 100%);
+  background: linear-gradient(135deg, #0F172A 0%, #2563EB 60%, #0D9488 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gold-gradient-bg {
-  background: linear-gradient(135deg, #d3aa54 0%, #b98e3a 100%);
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
 }
 
-.gold-gradient-border {
-  border-image: linear-gradient(135deg, #f2db9e, #d3aa54, #8b6823) 1;
+/* Button & Micro-Interactions */
+.btn-primary {
+  background: #2563EB;
+  color: #FFFFFF;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px -1px rgba(37, 99, 235, 0.35);
 }
 
-/* Leaflet Dark Map Overrides */
+.btn-primary:hover {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px -1px rgba(37, 99, 235, 0.45);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: #FFFFFF;
+  color: #1E293B;
+  border: 1px solid #E2E8F0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-secondary:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #0F172A;
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Leaflet Clean Route Map Overrides */
 .leaflet-container {
   width: 100%;
   height: 100%;
-  background-color: #0b0e19 !important;
+  background-color: #F1F5F9 !important;
   font-family: inherit;
-  border-radius: 0.75rem;
+  border-radius: 1.25rem;
+}
+
+.clean-tiles {
+  filter: saturate(0.95) contrast(1.05);
 }
 
 .dark-tiles {
-  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+  filter: saturate(0.95) contrast(1.02);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #0b0e19;
+  background: #F1F5F9;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #252e49;
+  background: #CBD5E1;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #d3aa54;
+  background: #94A3B8;
+}
+
+/* Accessibility: Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

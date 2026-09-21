@@ -6,13 +6,13 @@ interface GenerationOverlayProps {
 }
 
 const steps = [
-  'Reading your travel brief...',
-  'Shaping the perfect route...',
-  'Grouping places so your days flow naturally...',
-  'Balancing your time & budget...',
-  'Keeping the itinerary practical and comfortable...',
-  'Polishing your EasyTrip...',
-  'Your premium travel plan is almost ready...'
+  'Understanding your preferences...',
+  'Finding authentic local places & sights...',
+  'Checking verified travel & transit options...',
+  'Curating authentic dining & signature dishes...',
+  'Balancing daily pace & realistic INR budget...',
+  'Building your verified itinerary...',
+  'Your EasyTrip plan is ready.'
 ];
 
 export const GenerationOverlay: React.FC<GenerationOverlayProps> = ({ destination }) => {
@@ -21,37 +21,38 @@ export const GenerationOverlay: React.FC<GenerationOverlayProps> = ({ destinatio
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentStepIndex(prev => (prev < steps.length - 1 ? prev + 1 : prev));
-    }, 900);
+    }, 850);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/90 backdrop-blur-2xl p-4">
-      <div className="max-w-md w-full glass-card p-8 rounded-3xl border border-gold-500/30 text-center relative overflow-hidden shadow-gold-glow-lg">
-        {/* Background glow circle */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-midnight-950/70 backdrop-blur-xl p-4">
+      <div className="max-w-md w-full bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/90 text-center relative overflow-hidden shadow-2xl">
+        
+        {/* Subtle Background Accent */}
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand-100/50 rounded-full blur-3xl pointer-events-none" />
 
         {/* Brand Icon with Pulse Animation */}
-        <div className="relative mx-auto w-24 h-24 mb-6">
-          <div className="absolute inset-0 rounded-3xl bg-gold-500/20 blur-xl animate-pulse" />
-          <div className="relative w-full h-full rounded-3xl bg-navy-800 border-2 border-gold-500/40 flex items-center justify-center p-3 shadow-2xl">
+        <div className="relative mx-auto w-20 h-20 mb-6">
+          <div className="absolute inset-0 rounded-3xl bg-brand-500/15 blur-lg animate-pulse" />
+          <div className="relative w-full h-full rounded-2xl bg-midnight-900 border border-slate-200 flex items-center justify-center p-3 shadow-md">
             <img 
               src="/assets/easytrip_logo.png" 
               alt="EasyTrip Logo" 
-              className="w-full h-full object-contain animate-bounce"
+              className="w-full h-full object-contain"
             />
           </div>
-          <div className="absolute -bottom-2 -right-2 p-1.5 rounded-full bg-gold-500 text-navy-950 shadow-md">
-            <Sparkles className="w-4 h-4 animate-spin-slow" />
+          <div className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-brand-600 text-white shadow">
+            <Sparkles className="w-3.5 h-3.5 animate-spin" />
           </div>
         </div>
 
         {/* Title */}
-        <h3 className="text-2xl font-bold text-white mb-1">
-          Designing Your <span className="gold-gradient-text">{destination}</span> Escape
+        <h3 className="text-2xl font-black text-midnight-900 mb-1.5 tracking-tight">
+          Curating Your <span className="text-brand-600">{destination}</span> Journey
         </h3>
-        <p className="text-xs text-slate-400 mb-8 font-medium">
-          EasyTrip AI is curating a personalized day-by-day plan
+        <p className="text-xs text-charcoal-500 mb-8 font-medium">
+          EasyTrip AI is assembling verified routes, dining, and hotel stays
         </p>
 
         {/* Steps Progress List */}
@@ -65,18 +66,18 @@ export const GenerationOverlay: React.FC<GenerationOverlayProps> = ({ destinatio
                 key={step} 
                 className={`flex items-center gap-3 text-xs transition-all duration-300 ${
                   isCurrent 
-                    ? 'text-gold-300 font-semibold scale-105 pl-1' 
+                    ? 'text-midnight-900 font-bold scale-[1.02] pl-0.5' 
                     : isDone 
-                      ? 'text-slate-400 opacity-80' 
-                      : 'text-slate-600 opacity-40'
+                      ? 'text-charcoal-500 opacity-90' 
+                      : 'text-charcoal-300 opacity-40'
                 }`}
               >
                 {isDone ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                 ) : isCurrent ? (
-                  <div className="w-4 h-4 rounded-full border-2 border-gold-400 border-t-transparent animate-spin shrink-0" />
+                  <div className="w-4 h-4 rounded-full border-2 border-brand-600 border-t-transparent animate-spin shrink-0" />
                 ) : (
-                  <div className="w-4 h-4 rounded-full border border-slate-700 shrink-0" />
+                  <div className="w-4 h-4 rounded-full border border-slate-300 shrink-0" />
                 )}
                 <span>{step}</span>
               </div>
@@ -85,9 +86,9 @@ export const GenerationOverlay: React.FC<GenerationOverlayProps> = ({ destinatio
         </div>
 
         {/* Bottom Loading Bar */}
-        <div className="w-full bg-navy-800 h-1.5 rounded-full overflow-hidden border border-navy-700">
+        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
           <div 
-            className="h-full gold-gradient-bg transition-all duration-500 rounded-full"
+            className="h-full bg-brand-600 transition-all duration-500 rounded-full"
             style={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
           />
         </div>

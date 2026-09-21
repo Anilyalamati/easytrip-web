@@ -62,31 +62,31 @@ export const RouteMap: React.FC = () => {
   return (
     <div className="my-8 space-y-6">
       {/* Header bar */}
-      <div className="glass-card rounded-3xl p-6 sm:p-8 border border-navy-750 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="surface-card rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <div className="flex items-center gap-2 text-gold-400 text-xs uppercase font-bold tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-brand-600 text-xs uppercase font-bold tracking-wider mb-1">
             <Compass className="w-3.5 h-3.5" />
             <span>Road Route Guidance & Navigation</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-charcoal-900 tracking-tight">
             {currentTrip ? `${currentTrip.origin} → ${currentTrip.destination} Route` : 'Interactive Destination Route'}
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-charcoal-500 mt-1">
             Real road geometry powered by OSRM with direct navigation sync
           </p>
         </div>
 
         {/* Stats & Actions */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="px-4 py-2 rounded-2xl bg-navy-900 border border-navy-700 flex items-center gap-3">
+          <div className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
             <div>
-              <span className="block text-[10px] text-slate-400 uppercase font-bold">Estimated Distance</span>
-              <span className="text-sm font-extrabold text-gold-300">{distanceKm} km</span>
+              <span className="block text-[10px] text-charcoal-400 uppercase font-bold">Estimated Distance</span>
+              <span className="text-sm font-bold text-brand-700">{distanceKm} km</span>
             </div>
-            <div className="w-px h-6 bg-navy-750" />
+            <div className="w-px h-6 bg-slate-200" />
             <div>
-              <span className="block text-[10px] text-slate-400 uppercase font-bold">Travel Time</span>
-              <span className="text-sm font-extrabold text-slate-200">
+              <span className="block text-[10px] text-charcoal-400 uppercase font-bold">Travel Time</span>
+              <span className="text-sm font-bold text-charcoal-800">
                 {Math.floor(durationMins / 60)}h {durationMins % 60}m
               </span>
             </div>
@@ -96,7 +96,7 @@ export const RouteMap: React.FC = () => {
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-3 rounded-2xl gold-gradient-bg text-navy-950 font-bold text-xs tracking-wide shadow-gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+            className="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs tracking-wide shadow-sm hover:shadow transition-all flex items-center gap-2"
           >
             <Navigation className="w-3.5 h-3.5" />
             <span>Open in Google Maps</span>
@@ -106,7 +106,7 @@ export const RouteMap: React.FC = () => {
       </div>
 
       {/* Map Viewer Container */}
-      <div className="h-[560px] w-full rounded-3xl overflow-hidden glass-card border border-gold-500/30 relative shadow-navy-card">
+      <div className="h-[560px] w-full rounded-2xl overflow-hidden bg-white border border-slate-200 relative shadow-card">
         <MapContainer
           center={centerPoint}
           zoom={10}
@@ -118,7 +118,6 @@ export const RouteMap: React.FC = () => {
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            className="dark-tiles"
           />
 
           {/* Polyline Route */}
@@ -126,9 +125,9 @@ export const RouteMap: React.FC = () => {
             <Polyline
               positions={routeCoords}
               pathOptions={{
-                color: '#d3aa54',
+                color: '#2563eb',
                 weight: 5,
-                opacity: 0.85,
+                opacity: 0.9,
                 lineCap: 'round',
                 lineJoin: 'round',
                 dashArray: undefined
@@ -139,14 +138,14 @@ export const RouteMap: React.FC = () => {
           {/* Destination Marker */}
           <Marker position={[destCoords.lat, destCoords.lng]} icon={customGoldPin}>
             <Popup className="custom-popup">
-              <div className="p-2 text-navy-950">
+              <div className="p-2 text-charcoal-900">
                 <div className="font-bold text-sm">
                   {currentTrip?.destination || 'Destination Point'}
                 </div>
-                <div className="text-xs text-slate-600">
+                <div className="text-xs text-charcoal-500">
                   {currentTrip?.country || 'Primary Location'}
                 </div>
-                <div className="mt-1 text-[11px] font-semibold text-amber-700">
+                <div className="mt-1 text-[11px] font-semibold text-brand-600">
                   EasyTrip Hub Destination
                 </div>
               </div>
@@ -162,12 +161,12 @@ export const RouteMap: React.FC = () => {
                 icon={customGoldPin}
               >
                 <Popup>
-                  <div className="p-2 text-navy-950">
-                    <span className="text-[10px] uppercase font-bold text-amber-700">
+                  <div className="p-2 text-charcoal-900">
+                    <span className="text-[10px] uppercase font-bold text-brand-600">
                       Day {d.dayNumber} • {s.period}
                     </span>
                     <h5 className="font-bold text-xs">{s.title}</h5>
-                    <p className="text-[11px] text-slate-600">{s.location}</p>
+                    <p className="text-[11px] text-charcoal-500">{s.location}</p>
                   </div>
                 </Popup>
               </Marker>
@@ -176,13 +175,13 @@ export const RouteMap: React.FC = () => {
         </MapContainer>
 
         {/* Floating Route Info Overlay */}
-        <div className="absolute bottom-4 left-4 z-[1000] p-4 rounded-2xl bg-navy-900/90 backdrop-blur-md border border-navy-700/90 text-xs space-y-1 shadow-xl max-w-xs">
-          <div className="flex items-center gap-1.5 font-bold text-white">
-            <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+        <div className="absolute bottom-4 left-4 z-[1000] p-4 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200 text-xs space-y-1 shadow-elevated max-w-xs text-charcoal-800">
+          <div className="flex items-center gap-1.5 font-bold text-charcoal-900">
+            <Sparkles className="w-3.5 h-3.5 text-brand-600" />
             <span>{currentTrip?.destination || 'EasyTrip'} Scenic Route</span>
           </div>
-          <p className="text-slate-400 text-[11px]">
-            Route geometry verified via {routingSource}. Click any golden pin to view scheduled activity and timing.
+          <p className="text-charcoal-500 text-[11px]">
+            Route geometry verified via {routingSource}. Click any pin to view scheduled activity and timing.
           </p>
         </div>
       </div>

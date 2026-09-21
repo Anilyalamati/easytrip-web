@@ -5,6 +5,8 @@ import { Footer } from './components/common/Footer';
 import { HeroBanner } from './components/dashboard/HeroBanner';
 import { QuickPlannerBar } from './components/dashboard/QuickPlannerBar';
 import { FeaturedDestinations } from './components/dashboard/FeaturedDestinations';
+import { SafeNavigationSection } from './components/dashboard/SafeNavigationSection';
+import { AiAssistantSection } from './components/dashboard/AiAssistantSection';
 import { TripStats } from './components/dashboard/TripStats';
 import { SafetySosWidget } from './components/dashboard/SafetySosWidget';
 import { ItineraryView } from './components/itinerary/ItineraryView';
@@ -19,7 +21,7 @@ export const App: React.FC = () => {
   const { activeView } = useTrip();
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-slate-100 font-sans selection:bg-gold-500/30 selection:text-gold-200">
+    <div className="min-h-screen flex flex-col bg-canvas text-charcoal-900 font-sans selection:bg-brand-500/20 selection:text-brand-900">
       {/* Navigation */}
       <Navbar />
 
@@ -31,6 +33,8 @@ export const App: React.FC = () => {
             <QuickPlannerBar />
             <TripStats />
             <FeaturedDestinations />
+            <SafeNavigationSection />
+            <AiAssistantSection />
             <SafetySosWidget />
           </>
         )}

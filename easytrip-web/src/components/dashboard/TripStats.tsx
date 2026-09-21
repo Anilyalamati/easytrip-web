@@ -30,22 +30,22 @@ export const TripStats: React.FC = () => {
   ];
 
   return (
-    <section className="my-12 py-10 px-6 sm:px-10 rounded-3xl glass-card border border-navy-750">
+    <section className="my-12 py-8 px-6 sm:px-10 rounded-2xl bg-white border border-slate-200/80 shadow-card">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((s, idx) => {
           const Icon = s.icon;
           return (
             <div key={idx} className="flex flex-col space-y-2">
-              <div className="w-12 h-12 rounded-2xl bg-navy-800 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-2">
+              <div className="w-12 h-12 rounded-xl bg-brand-50 border border-brand-200/60 flex items-center justify-center text-brand-600 mb-1">
                 <Icon className="w-6 h-6" />
               </div>
-              <div className="text-xl font-extrabold text-white tracking-tight">
+              <div className="text-xl font-bold text-charcoal-900 tracking-tight">
                 {s.value}
               </div>
-              <div className="text-xs uppercase font-bold text-gold-400/90 tracking-wider">
+              <div className="text-xs uppercase font-bold text-brand-600 tracking-wider">
                 {s.label}
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-charcoal-500 leading-relaxed">
                 {s.desc}
               </p>
             </div>
