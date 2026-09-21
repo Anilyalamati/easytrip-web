@@ -8,110 +8,131 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Primary: Deep Navy / Midnight Blue
-        midnight: {
-          950: '#060B18',
-          900: '#0B132B',
-          850: '#0F1A3A',
-          800: '#152248',
-          750: '#1C2E5C',
-          700: '#23376E',
-          600: '#334E96',
-        },
-        // Secondary: Cool Blue
-        brand: {
-          50: '#EFF6FF',
-          100: '#DBEAFE',
-          200: '#BFDBFE',
-          300: '#93C5FD',
-          400: '#60A5FA',
-          500: '#3B82F6',
-          600: '#2563EB', // Primary Brand Blue
-          700: '#1D4ED8',
-          800: '#1E40AF',
-          900: '#1E3A8A',
-        },
-        // Accent: Teal / Cyan
-        teal: {
-          50: '#F0FDFA',
-          100: '#CCFBF1',
-          200: '#99F6E4',
-          300: '#5EEAD4',
-          400: '#2DD4BF',
-          500: '#14B8A6',
-          600: '#0D9488', // Refined Teal
-          700: '#0F766E',
-          800: '#115E59',
-          900: '#134E4A',
-        },
-        // Text: Dark Charcoal
-        charcoal: {
-          950: '#090D16',
-          900: '#0F172A', // Main headline text
-          800: '#1E293B', // Primary body
-          700: '#334155', // Secondary body
-          600: '#475569', // Muted text
-          500: '#64748B', // Subdued labels
-          400: '#94A3B8',
-          300: '#CBD5E1',
-          200: '#E2E8F0', // Card borders
-          100: '#F1F5F9', // Elevated surface
-          50: '#F8FAFC',  // Canvas background
-        },
-        // Canvas / Surfaces
+        // Background Canvas: Pure Obsidian Black
         canvas: {
-          DEFAULT: '#F8FAFC',
-          warm: '#FAFAFB',
-          pure: '#FFFFFF',
-          subtle: '#F1F5F9',
+          DEFAULT: '#0b0e14',
+          obsidian: '#0b0e14',
+          pure: '#08090c',
+          subtle: '#121924',
+          surface: '#141b26',
+          elevated: '#182232',
+          border: '#222d3d',
+        },
+        // Deep Midnight Navy surfaces
+        midnight: {
+          950: '#08090c',
+          900: '#0b0e14',
+          850: '#121924',
+          800: '#141b26',
+          750: '#182232',
+          700: '#222d3d',
+          600: '#2d3b4e',
+        },
+        navy: {
+          950: '#08090c',
+          900: '#0b0e14',
+          850: '#121924',
+          800: '#141b26',
+          750: '#182232',
+          700: '#222d3d',
+          600: '#2d3b4e',
+        },
+        // Primary Accent: Warm Golden Amber / Marigold
+        gold: {
+          DEFAULT: '#f3b740',
+          light: '#f7d56e',
+          dark: '#e5a83b',
+          contrast: '#0e131f',
+          50: '#fffdf5',
+          100: '#fef9ee',
+          200: '#fae1ab',
+          300: '#f7d56e',
+          400: '#f5bf47',
+          500: '#f3b740', // Warm Golden Amber
+          600: '#e5a83b',
+          700: '#c28424',
+          800: '#9a6620',
+          900: '#7e531e',
+        },
+        // Brand mapped to Warm Golden Amber
+        brand: {
+          50: '#fffdf5',
+          100: '#fef9ee',
+          200: '#fae1ab',
+          300: '#f7d56e',
+          400: '#f5bf47',
+          500: '#f3b740',
+          600: '#e5a83b',
+          700: '#c28424',
+          800: '#9a6620',
+          900: '#7e531e',
+        },
+        // Price & Currency Badges: Forest Emerald / Jade Green
+        emerald: {
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',
+          600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
+          950: '#062c20', // Dark green background for badge chips
+        },
+        // Accent Teal / Cyan
+        teal: {
+          50: '#062c20',
+          100: '#064e3b',
+          200: '#047857',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',
+          600: '#059669',
+          700: '#34d399',
+          800: '#10b981',
+          900: '#059669',
+        },
+        // Typography & Neutral Scales
+        charcoal: {
+          950: '#08090c',
+          900: '#f1f5f9', // Clean off-white for headings
+          800: '#e2e8f0', // Primary body text
+          700: '#cbd5e1', // Secondary body
+          600: '#94a3b8', // Muted silver descriptions
+          500: '#64748b', // Subdued labels
+          400: '#475569',
+          300: '#334155',
+          200: '#222d3d', // Card & container borders
+          100: '#182232', // Elevated surface
+          50: '#141b26',  // Container surface
         },
         // Safety: Restrained Emergency Red
         safety: {
-          50: '#FEF2F2',
-          100: '#FEE2E2',
-          200: '#FECACA',
-          300: '#FCA5A5',
-          400: '#F87171',
-          500: '#EF4444',
-          600: '#DC2626',
-          700: '#B91C1C',
-        },
-        // Compatibility Aliases for smoothly supporting components
-        navy: {
-          950: '#060B18',
-          900: '#0B132B',
-          850: '#0F1A3A',
-          800: '#152248',
-          750: '#1E293B',
-          700: '#334155',
-          600: '#475569',
-        },
-        gold: {
-          50: '#EFF6FF',
-          100: '#DBEAFE',
-          200: '#BFDBFE',
-          300: '#93C5FD',
-          400: '#38BDF8',
-          500: '#2563EB', // Remapped to Cool Brand Blue
-          600: '#1D4ED8',
-          700: '#1E40AF',
-          800: '#1E3A8A',
-          900: '#172554',
+          50: '#200c10',
+          100: '#331218',
+          200: '#5c1d24',
+          300: '#8b2630',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#fca5a5',
         }
       },
       fontFamily: {
         sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       boxShadow: {
-        'card': '0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 4px 16px -2px rgba(15, 23, 42, 0.06)',
-        'elevated': '0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04)',
-        'elevated-hover': '0 20px 40px -6px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.06)',
-        'button': '0 2px 8px -1px rgba(37, 99, 235, 0.35)',
-        'teal-glow': '0 0 24px -4px rgba(13, 148, 136, 0.3)',
-        'blue-glow': '0 0 24px -4px rgba(37, 99, 235, 0.3)',
-        'gold-glow': '0 0 20px -4px rgba(37, 99, 235, 0.25)',
-        'gold-glow-lg': '0 0 35px -5px rgba(37, 99, 235, 0.35)',
-        'navy-card': '0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 6px 20px -2px rgba(15, 23, 42, 0.08)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 4px 16px -2px rgba(0, 0, 0, 0.5)',
+        'elevated': '0 10px 30px -4px rgba(0, 0, 0, 0.6), 0 4px 12px -2px rgba(0, 0, 0, 0.4)',
+        'elevated-hover': '0 20px 40px -6px rgba(0, 0, 0, 0.8), 0 8px 16px -4px rgba(0, 0, 0, 0.5)',
+        'button': '0 2px 10px -1px rgba(243, 183, 64, 0.35)',
+        'teal-glow': '0 0 24px -4px rgba(16, 185, 129, 0.3)',
+        'blue-glow': '0 0 24px -4px rgba(243, 183, 64, 0.3)',
+        'gold-glow': '0 0 20px -2px rgba(243, 183, 64, 0.35)',
+        'gold-glow-lg': '0 0 35px -4px rgba(243, 183, 64, 0.45)',
+        'navy-card': '0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 6px 20px -2px rgba(0, 0, 0, 0.6)',
       },
       transitionTimingFunction: {
         'spring-overshoot': 'cubic-bezier(0.34, 1.56, 0.64, 1)',

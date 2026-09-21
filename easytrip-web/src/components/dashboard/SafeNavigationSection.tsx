@@ -84,24 +84,24 @@ export const SafeNavigationSection: React.FC = () => {
     <section id="navigation-section" className="my-16 sm:my-20 scroll-mt-24">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3 mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-teal-50 text-teal-700 text-xs font-bold border border-teal-200">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-[#182232] text-[#f3b740] text-xs font-bold border border-[#f3b740]/30">
           <Route className="w-3.5 h-3.5" />
           <span>SECTION 03 — SAFE NAVIGATION</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-midnight-900 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#f1f5f9] tracking-tight">
           Navigate with confidence, every kilometer.
         </h2>
-        <p className="text-sm text-charcoal-600 leading-relaxed">
+        <p className="text-sm text-[#94a3b8] leading-relaxed">
           Real road and transit geometry with live distance calculation, highway codes, verified emergency checkpoints, and direct Google Maps sync.
         </p>
       </div>
 
       {/* Main Navigation Card Container */}
-      <div className="surface-elevated rounded-md p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto space-y-6">
+      <div className="surface-elevated rounded-md p-6 sm:p-8 border border-[#222d3d] shadow-2xl max-w-5xl mx-auto space-y-6 bg-[#141b26]">
         
         {/* Top Corridor Selector Tabs */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
-          <span className="text-xs font-bold text-charcoal-500 uppercase tracking-wider">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#222d3d]">
+          <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">
             Select Transit Corridor:
           </span>
           <div className="flex flex-wrap gap-2">
@@ -111,8 +111,8 @@ export const SafeNavigationSection: React.FC = () => {
                 onClick={() => setActiveCorridor(c)}
                 className={`px-3 py-1.5 rounded-sm text-xs font-bold transition-all ${
                   activeCorridor.id === c.id
-                    ? 'bg-midnight-900 text-white shadow-sm'
-                    : 'bg-slate-100 text-charcoal-700 hover:bg-slate-200 border border-slate-200'
+                    ? 'bg-[#f3b740] text-[#0e131f] shadow-[0_0_12px_rgba(243,183,64,0.3)]'
+                    : 'bg-[#182232] text-[#cbd5e1] hover:bg-[#222d3d] border border-[#222d3d]'
                 }`}
               >
                 {c.origin} → {c.destination.split(' ')[0]}
@@ -128,50 +128,50 @@ export const SafeNavigationSection: React.FC = () => {
           <div className="lg:col-span-6 space-y-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="px-2.5 py-0.5 rounded-sm bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-black uppercase">
+                <span className="px-2.5 py-0.5 rounded-sm bg-[#062c20] text-[#34d399] border border-[#059669]/40 text-[10px] font-black uppercase">
                   {activeCorridor.safetyStatus}
                 </span>
-                <span className="text-xs font-bold text-charcoal-500 flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-teal-600" />
+                <span className="text-xs font-bold text-[#94a3b8] flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#34d399]" />
                   {activeCorridor.safetyScore} Safety Index
                 </span>
               </div>
-              <h3 className="text-2xl font-black text-midnight-900 tracking-tight">
-                {activeCorridor.origin} <span className="text-brand-600">→</span> {activeCorridor.destination}
+              <h3 className="text-2xl font-black text-[#f1f5f9] tracking-tight">
+                {activeCorridor.origin} <span className="text-[#f3b740]">→</span> {activeCorridor.destination}
               </h3>
-              <p className="text-xs font-semibold text-brand-700 mt-0.5">
+              <p className="text-xs font-semibold text-[#f3b740] mt-0.5">
                 {activeCorridor.highway}
               </p>
             </div>
 
             {/* Travel Specs Card */}
-            <div className="grid grid-cols-2 gap-3 p-4 rounded-md bg-slate-50 border border-slate-200/80 text-xs">
+            <div className="grid grid-cols-2 gap-3 p-4 rounded-md bg-[#182232] border border-[#222d3d] text-xs">
               <div>
-                <span className="text-[10px] uppercase font-bold text-charcoal-400 block mb-0.5">
+                <span className="text-[10px] uppercase font-bold text-[#94a3b8] block mb-0.5">
                   Direct Corridor Distance
                 </span>
-                <span className="text-base font-black text-midnight-900">
+                <span className="text-base font-black text-[#f3b740]">
                   {activeCorridor.distance}
                 </span>
               </div>
               <div>
-                <span className="text-[10px] uppercase font-bold text-charcoal-400 block mb-0.5">
+                <span className="text-[10px] uppercase font-bold text-[#94a3b8] block mb-0.5">
                   Estimated Travel Duration
                 </span>
-                <span className="text-xs font-bold text-charcoal-700">
+                <span className="text-xs font-bold text-[#f1f5f9]">
                   {activeCorridor.duration}
                 </span>
               </div>
             </div>
 
             {/* Safety & Road Amenities */}
-            <div className="space-y-2 text-xs text-charcoal-600">
+            <div className="space-y-2 text-xs text-[#94a3b8]">
               <div className="flex items-start gap-2">
-                <ShieldCheck className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
+                <ShieldCheck className="w-4 h-4 text-[#34d399] shrink-0 mt-0.5" />
                 <span>{activeCorridor.patrolCoverage}</span>
               </div>
               <div className="flex items-start gap-2">
-                <Fuel className="w-4 h-4 text-brand-600 shrink-0 mt-0.5" />
+                <Fuel className="w-4 h-4 text-[#f3b740] shrink-0 mt-0.5" />
                 <span>{activeCorridor.restStops}</span>
               </div>
             </div>
@@ -182,39 +182,39 @@ export const SafeNavigationSection: React.FC = () => {
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-sm bg-midnight-900 hover:bg-black text-white font-bold text-xs tracking-normal shadow-sm transition-all flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-sm bg-[#f3b740] hover:bg-[#e5a83b] text-[#0e131f] font-bold text-xs tracking-normal shadow-[0_2px_12px_rgba(243,183,64,0.3)] transition-all flex items-center gap-1.5"
               >
-                <Navigation className="w-3.5 h-3.5 text-teal-400" />
+                <Navigation className="w-3.5 h-3.5 text-[#0e131f]" />
                 <span>Open in Google Maps</span>
                 <ExternalLink className="w-3 h-3 ml-0.5" />
               </a>
 
               <button
                 onClick={() => setActiveView('map')}
-                className="px-4 py-2.5 rounded-sm bg-white hover:bg-slate-50 text-midnight-900 border border-slate-200 font-bold text-xs tracking-normal transition-all flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-sm bg-[#182232] hover:bg-[#222d3d] text-[#f1f5f9] border border-[#222d3d] font-bold text-xs tracking-normal transition-all flex items-center gap-1.5"
               >
                 <span>Interactive Route Viewer</span>
-                <ArrowRight className="w-3.5 h-3.5 text-brand-600" />
+                <ArrowRight className="w-3.5 h-3.5 text-[#f3b740]" />
               </button>
             </div>
           </div>
 
           {/* Right 6 Cols: Graphical Corridor Route Diagram */}
-          <div className="lg:col-span-6 bg-slate-50 rounded-md p-5 border border-slate-200/80 space-y-4">
+          <div className="lg:col-span-6 bg-[#182232] rounded-md p-5 border border-[#222d3d] space-y-4">
             
             {/* Diagram Header */}
-            <div className="flex items-center justify-between text-xs font-bold text-midnight-900">
+            <div className="flex items-center justify-between text-xs font-bold text-[#f1f5f9]">
               <span className="flex items-center gap-1.5">
-                <Route className="w-4 h-4 text-brand-600" />
+                <Route className="w-4 h-4 text-[#f3b740]" />
                 Live Animated Corridor Schematic
               </span>
-              <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-sm border border-teal-200">
+              <span className="text-[10px] font-bold text-[#34d399] bg-[#062c20] px-2 py-0.5 rounded-sm border border-[#059669]/40">
                 OSRM Routing Synced
               </span>
             </div>
 
             {/* Interactive Animated SVG Corridor Canvas */}
-            <div className="relative h-28 w-full bg-white rounded-sm border border-slate-200 p-2 overflow-hidden flex items-center justify-center">
+            <div className="relative h-28 w-full bg-[#0b0e14] rounded-sm border border-[#222d3d] p-2 overflow-hidden flex items-center justify-center">
               <svg 
                 key={activeCorridor.id}
                 viewBox="0 0 400 80" 
@@ -222,9 +222,9 @@ export const SafeNavigationSection: React.FC = () => {
               >
                 <defs>
                   <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#2563EB" />
-                    <stop offset="50%" stopColor="#0D9488" />
-                    <stop offset="100%" stopColor="#10B981" />
+                    <stop offset="0%" stopColor="#f7d56e" />
+                    <stop offset="50%" stopColor="#f3b740" />
+                    <stop offset="100%" stopColor="#10b981" />
                   </linearGradient>
                 </defs>
 
@@ -232,7 +232,7 @@ export const SafeNavigationSection: React.FC = () => {
                 <path
                   d="M 40 40 Q 120 15, 200 40 T 360 40"
                   fill="none"
-                  stroke="#E2E8F0"
+                  stroke="#222d3d"
                   strokeWidth="6"
                   strokeLinecap="round"
                 />
@@ -248,62 +248,62 @@ export const SafeNavigationSection: React.FC = () => {
                 />
 
                 {/* Origin Pin with Pulse */}
-                <circle cx="40" cy="40" r="7" fill="#2563EB" className="animate-pulse" />
-                <circle cx="40" cy="40" r="3" fill="#FFFFFF" />
-                <text x="35" y="65" fontSize="10" fontWeight="bold" fill="#0F172A">
+                <circle cx="40" cy="40" r="7" fill="#f3b740" className="animate-pulse" />
+                <circle cx="40" cy="40" r="3" fill="#0e131f" />
+                <text x="35" y="65" fontSize="10" fontWeight="bold" fill="#f1f5f9">
                   {activeCorridor.origin.split(' ')[0]}
                 </text>
 
                 {/* Midway Checkpoint */}
-                <circle cx="200" cy="40" r="5" fill="#0D9488" />
-                <circle cx="200" cy="40" r="2" fill="#FFFFFF" />
-                <text x="180" y="24" fontSize="9" fontWeight="600" fill="#64748B">
+                <circle cx="200" cy="40" r="5" fill="#e5a83b" />
+                <circle cx="200" cy="40" r="2" fill="#0e131f" />
+                <text x="180" y="24" fontSize="9" fontWeight="600" fill="#94a3b8">
                   Rest Plaza
                 </text>
 
                 {/* Destination Pin with Spring Radar */}
-                <circle cx="360" cy="40" r="7" fill="#10B981" className="animate-ping" opacity="0.4" />
-                <circle cx="360" cy="40" r="7" fill="#10B981" />
-                <circle cx="360" cy="40" r="3" fill="#FFFFFF" />
-                <text x="330" y="65" fontSize="10" fontWeight="bold" fill="#0F172A">
+                <circle cx="360" cy="40" r="7" fill="#10b981" className="animate-ping" opacity="0.4" />
+                <circle cx="360" cy="40" r="7" fill="#10b981" />
+                <circle cx="360" cy="40" r="3" fill="#ffffff" />
+                <text x="330" y="65" fontSize="10" fontWeight="bold" fill="#f1f5f9">
                   {activeCorridor.destination.split(' ')[0]}
                 </text>
               </svg>
             </div>
 
             {/* Visual Waypoint Track with Spring Nodes */}
-            <div className="relative pl-6 space-y-5 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-brand-600 before:via-teal-500 before:to-emerald-600">
+            <div className="relative pl-6 space-y-5 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-[#f3b740] before:via-[#e5a83b] before:to-[#10b981]">
               
               {/* Departure Node */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-sm bg-brand-600 ring-4 ring-brand-100 animate-pulse" />
-                <div className="text-xs font-bold text-midnight-900">{activeCorridor.origin} Hub Departure</div>
-                <div className="text-[11px] text-charcoal-500">Terminal & Highway Interchange Hub</div>
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-[#f3b740] ring-4 ring-[#f3b740]/20 animate-pulse" />
+                <div className="text-xs font-bold text-[#f1f5f9]">{activeCorridor.origin} Hub Departure</div>
+                <div className="text-[11px] text-[#94a3b8]">Terminal & Highway Interchange Hub</div>
               </div>
 
               {/* En-Route Checkpoint */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-sm bg-teal-500 ring-4 ring-teal-100" />
-                <div className="text-xs font-bold text-teal-900">Midway Rest & Safety Checkpoint</div>
-                <div className="text-[11px] text-charcoal-500">{activeCorridor.restStops}</div>
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-[#e5a83b] ring-4 ring-[#e5a83b]/20" />
+                <div className="text-xs font-bold text-[#f7d56e]">Midway Rest & Safety Checkpoint</div>
+                <div className="text-[11px] text-[#94a3b8]">{activeCorridor.restStops}</div>
               </div>
 
               {/* Destination Node */}
               <div className="relative">
-                <span className="absolute -left-6 top-1 w-3 h-3 rounded-sm bg-emerald-600 ring-4 ring-emerald-100 animate-pulse" />
-                <div className="text-xs font-bold text-midnight-900">{activeCorridor.destination} Arrival</div>
-                <div className="text-[11px] text-charcoal-500">24/7 Regulated Prepaid Cabs & Hotel Links</div>
+                <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-[#10b981] ring-4 ring-[#10b981]/20 animate-pulse" />
+                <div className="text-xs font-bold text-[#f1f5f9]">{activeCorridor.destination} Arrival</div>
+                <div className="text-[11px] text-[#94a3b8]">24/7 Regulated Prepaid Cabs & Hotel Links</div>
               </div>
 
             </div>
 
             {/* Emergency Hotline Banner inside diagram */}
-            <div className="p-3 rounded-sm bg-white border border-slate-200 text-xs flex items-center justify-between shadow-sm">
+            <div className="p-3 rounded-sm bg-[#141b26] border border-[#222d3d] text-xs flex items-center justify-between shadow-sm">
               <div className="flex items-center gap-2">
                 <Hospital className="w-4 h-4 text-rose-500" />
-                <span className="font-semibold text-charcoal-700">En-route Emergency Dispatch:</span>
+                <span className="font-semibold text-[#cbd5e1]">En-route Emergency Dispatch:</span>
               </div>
-              <span className="font-bold text-rose-600 font-mono">112 / 108</span>
+              <span className="font-bold text-rose-400 font-mono">112 / 108</span>
             </div>
 
           </div>

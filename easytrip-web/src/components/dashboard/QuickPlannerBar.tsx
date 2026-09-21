@@ -116,36 +116,36 @@ export const QuickPlannerBar: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-brand-50 text-brand-700 text-xs font-bold border border-brand-200">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-[#182232] text-[#f3b740] text-xs font-bold border border-[#f3b740]/30">
             <Sparkles className="w-3.5 h-3.5" />
             <span>SECTION 01 — PLAN</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-midnight-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#f1f5f9] tracking-tight">
             Start with where you want to go.
           </h2>
-          <p className="text-sm text-charcoal-600 leading-relaxed">
+          <p className="text-sm text-[#94a3b8] leading-relaxed">
             Select your destination, schedule, and preferred style. EasyTrip builds verified transit corridors, stays, and authentic daily stops.
           </p>
         </div>
 
         {/* Interactive Planner Canvas */}
-        <div className="surface-elevated rounded-md p-6 sm:p-8 border border-slate-200/90 shadow-elevated max-w-5xl mx-auto">
+        <div className="surface-elevated rounded-md p-6 sm:p-8 border border-[#222d3d] shadow-2xl max-w-5xl mx-auto bg-[#141b26]">
           <form onSubmit={handleGenerate} className="space-y-6">
             
             {/* Top Grid: Departure & Destination */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Departure Input */}
               <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs font-bold text-charcoal-700">
+                <div className="flex items-center justify-between text-xs font-bold text-[#cbd5e1]">
                   <label className="flex items-center gap-1.5">
-                    <Compass className="w-3.5 h-3.5 text-brand-600" />
+                    <Compass className="w-3.5 h-3.5 text-[#f3b740]" />
                     Departure From
                   </label>
                   <button
                     type="button"
                     onClick={detectLocation}
                     disabled={isLocating}
-                    className="text-[11px] font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1 transition-colors"
+                    className="text-[11px] font-semibold text-[#f3b740] hover:text-[#f7d56e] flex items-center gap-1 transition-colors"
                   >
                     {isLocating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Locate className="w-3 h-3" />}
                     <span>{locationStatus || 'Auto-Detect GPS'}</span>
@@ -157,15 +157,15 @@ export const QuickPlannerBar: React.FC = () => {
                     value={origin}
                     onChange={e => setOrigin(e.target.value)}
                     placeholder="e.g. Hyderabad, Bengaluru, Delhi"
-                    className="w-full px-4 py-3 rounded-sm bg-slate-50 border border-slate-200 text-sm font-medium text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
+                    className="w-full px-4 py-3 rounded-sm bg-[#161e2b] border border-[#222d3d] text-sm font-medium text-[#f1f5f9] placeholder-[#64748b] focus:bg-[#182232] focus:outline-none focus:border-[#f3b740] focus:ring-2 focus:ring-[#f3b740]/20 transition-all"
                   />
                 </div>
               </div>
 
               {/* Destination Input */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-charcoal-700 flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-teal-600" />
+                <label className="block text-xs font-bold text-[#cbd5e1] flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#34d399]" />
                   Destination City or Region
                 </label>
                 <div className="relative">
@@ -175,7 +175,7 @@ export const QuickPlannerBar: React.FC = () => {
                     onChange={e => setDestination(e.target.value)}
                     placeholder="e.g. Vizag, Rajahmundry, Ooty, Paris, Manali"
                     required
-                    className="w-full px-4 py-3 rounded-sm bg-slate-50 border border-slate-200 text-sm font-semibold text-midnight-900 placeholder-charcoal-400 focus:bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition-all"
+                    className="w-full px-4 py-3 rounded-sm bg-[#161e2b] border border-[#222d3d] text-sm font-semibold text-[#f1f5f9] placeholder-[#64748b] focus:bg-[#182232] focus:outline-none focus:border-[#f3b740] focus:ring-2 focus:ring-[#f3b740]/20 transition-all"
                   />
                 </div>
               </div>
@@ -183,7 +183,7 @@ export const QuickPlannerBar: React.FC = () => {
 
             {/* Quick Destination Recommendation Chips */}
             <div className="flex flex-wrap items-center gap-2 pt-1">
-              <span className="text-xs font-bold text-charcoal-500 mr-1">Popular Escapes:</span>
+              <span className="text-xs font-bold text-[#94a3b8] mr-1">Popular Escapes:</span>
               {quickCities.map(city => (
                 <button
                   key={city}
@@ -191,8 +191,8 @@ export const QuickPlannerBar: React.FC = () => {
                   onClick={() => setDestination(city)}
                   className={`text-xs px-3 py-1.5 rounded-sm border transition-all ${
                     destination.toLowerCase() === city.toLowerCase()
-                      ? 'bg-brand-600 text-white border-brand-600 font-bold shadow-sm'
-                      : 'bg-white text-charcoal-700 border-slate-200 hover:border-brand-300 hover:text-brand-600'
+                      ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] font-bold shadow-[0_0_12px_rgba(243,183,64,0.3)]'
+                      : 'bg-[#161e2b] text-[#cbd5e1] border-[#222d3d] hover:border-[#f3b740]/40 hover:text-[#f3b740]'
                   }`}
                 >
                   {city}
@@ -201,12 +201,12 @@ export const QuickPlannerBar: React.FC = () => {
             </div>
 
             {/* Middle Grid: Duration, Budget, Transport */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2 border-t border-slate-100">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2 border-t border-[#222d3d]">
               
               {/* Duration Pills */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold text-charcoal-700 flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-brand-600" />
+                <label className="block text-xs font-bold text-[#cbd5e1] flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 text-[#f3b740]" />
                   Duration
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
@@ -217,8 +217,8 @@ export const QuickPlannerBar: React.FC = () => {
                       onClick={() => setDays(num)}
                       className={`py-2 rounded-sm text-xs font-bold border transition-all ${
                         days === num
-                          ? 'bg-midnight-900 text-white border-midnight-900 shadow-sm'
-                          : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-slate-300'
+                          ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] shadow-[0_0_12px_rgba(243,183,64,0.3)]'
+                          : 'bg-[#161e2b] text-[#cbd5e1] border-[#222d3d] hover:border-[#f3b740]/40'
                       }`}
                     >
                       {num} Days
@@ -229,8 +229,8 @@ export const QuickPlannerBar: React.FC = () => {
 
               {/* Budget Tier */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold text-charcoal-700 flex items-center gap-1.5">
-                  <DollarSign className="w-3.5 h-3.5 text-teal-600" />
+                <label className="block text-xs font-bold text-[#cbd5e1] flex items-center gap-1.5">
+                  <DollarSign className="w-3.5 h-3.5 text-[#34d399]" />
                   Budget Tier (INR ₹)
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
@@ -245,8 +245,8 @@ export const QuickPlannerBar: React.FC = () => {
                       onClick={() => setBudget(b.key as any)}
                       className={`py-2 px-1 text-center rounded-sm text-xs font-bold border transition-all capitalize ${
                         budget === b.key
-                          ? 'bg-midnight-900 text-white border-midnight-900 shadow-sm'
-                          : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-slate-300'
+                          ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] shadow-[0_0_12px_rgba(243,183,64,0.3)]'
+                          : 'bg-[#161e2b] text-[#cbd5e1] border-[#222d3d] hover:border-[#f3b740]/40'
                       }`}
                     >
                       {b.label}
@@ -257,8 +257,8 @@ export const QuickPlannerBar: React.FC = () => {
 
               {/* Preferred Transport */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold text-charcoal-700 flex items-center gap-1.5">
-                  <Car className="w-3.5 h-3.5 text-brand-600" />
+                <label className="block text-xs font-bold text-[#cbd5e1] flex items-center gap-1.5">
+                  <Car className="w-3.5 h-3.5 text-[#f3b740]" />
                   Preferred Transport
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
@@ -276,8 +276,8 @@ export const QuickPlannerBar: React.FC = () => {
                         onClick={() => setTransport(t.id)}
                         className={`py-2 text-center rounded-sm text-xs font-bold border flex items-center justify-center gap-1 transition-all ${
                           transport === t.id
-                            ? 'bg-midnight-900 text-white border-midnight-900 shadow-sm'
-                            : 'bg-slate-50 text-charcoal-700 border-slate-200 hover:border-slate-300'
+                            ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] shadow-[0_0_12px_rgba(243,183,64,0.3)]'
+                            : 'bg-[#161e2b] text-[#cbd5e1] border-[#222d3d] hover:border-[#f3b740]/40'
                         }`}
                         title={t.label}
                       >
@@ -295,9 +295,9 @@ export const QuickPlannerBar: React.FC = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full py-4 rounded-md bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm tracking-normal shadow-button hover:shadow-lg active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-md bg-[#f3b740] hover:bg-[#e5a83b] text-[#0e131f] font-extrabold text-sm tracking-normal shadow-[0_2px_14px_rgba(243,183,64,0.35)] active:scale-[0.99] transition-all flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-[#0e131f]" />
                 <span>Generate Verified {days}-Day Itinerary for {destination}</span>
                 <ArrowRight className="w-4 h-4 ml-1" />
               </button>

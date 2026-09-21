@@ -6,9 +6,12 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
   const PeriodIcon = period === 'Morning' ? Sun : period === 'Afternoon' ? Sunset : Moon;
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 p-4 rounded-md bg-navy-850/90 border border-navy-700/80 hover:border-gold-500/40 transition-all duration-300 group">
+    <div className="relative flex flex-col sm:flex-row gap-4 p-4 rounded-md bg-[#141b26] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all duration-300 group">
+      {/* Timeline Node Dot */}
+      <span className="absolute -left-6 sm:-left-8 top-5 w-3.5 h-3.5 rounded-full bg-[#f3b740] ring-4 ring-[#141b26] border-2 border-[#f3b740] shadow-[0_0_10px_rgba(243,183,64,0.5)] z-10" />
+
       {/* Image Thumbnail */}
-      <div className="sm:w-44 h-32 rounded-sm overflow-hidden relative shrink-0 border border-navy-700">
+      <div className="sm:w-44 h-32 rounded-sm overflow-hidden relative shrink-0 border border-[#222d3d]">
         <img
           src={slot.image}
           alt={slot.title}
@@ -17,11 +20,11 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
           }}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/85 via-transparent to-transparent" />
         
         {/* Period Badge */}
-        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-sm bg-navy-900/90 backdrop-blur-md border border-gold-500/30 text-[10px] font-bold text-gold-300 flex items-center gap-1">
-          <PeriodIcon className="w-3 h-3 text-gold-400" />
+        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-sm bg-[#0b0e14]/90 backdrop-blur-md border border-[#f3b740]/30 text-[10px] font-bold text-[#f3b740] flex items-center gap-1">
+          <PeriodIcon className="w-3 h-3 text-[#f3b740]" />
           {slot.period}
         </span>
 
@@ -32,15 +35,15 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
             target="_blank"
             rel="noopener noreferrer"
             title={`View verified photos of ${slot.photoQuery || slot.title} on Unsplash`}
-            className="absolute top-2 right-2 px-1.5 py-0.5 rounded-sm bg-black/75 hover:bg-black text-[9px] font-medium text-slate-200 backdrop-blur-sm flex items-center gap-1 transition-all border border-white/20 hover:border-gold-500/60 z-10"
+            className="absolute top-2 right-2 px-1.5 py-0.5 rounded-sm bg-[#0b0e14]/85 hover:bg-[#0b0e14] text-[9px] font-medium text-[#cbd5e1] backdrop-blur-sm flex items-center gap-1 transition-all border border-[#222d3d] hover:border-[#f3b740]/60 z-10"
           >
-            <Camera className="w-2.5 h-2.5 text-gold-400" />
+            <Camera className="w-2.5 h-2.5 text-[#f3b740]" />
             Unsplash
           </a>
         )}
 
         {/* Category Badge */}
-        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-sm bg-navy-900/80 text-[10px] font-semibold text-slate-300">
+        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded-sm bg-[#182232]/90 border border-[#222d3d] text-[10px] font-semibold text-[#cbd5e1]">
           {slot.category}
         </span>
       </div>
@@ -49,39 +52,40 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
       <div className="flex-1 flex flex-col justify-between space-y-2">
         <div>
           {/* Time & Cost Header */}
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
-            <span className="flex items-center gap-1 font-semibold text-gold-400">
+          <div className="flex items-center justify-between text-xs text-[#94a3b8] mb-1">
+            <span className="flex items-center gap-1 font-semibold text-[#f3b740]">
               <Clock className="w-3.5 h-3.5" />
               {slot.time}
             </span>
-            <span className="font-bold text-slate-200 flex items-center gap-0.5 bg-navy-800 px-2 py-0.5 rounded-sm border border-navy-700">
-              <IndianRupee className="w-3 h-3 text-gold-400" />
+            {/* Price & Currency Badges: Forest Emerald / Jade Green */}
+            <span className="font-bold px-2.5 py-0.5 rounded-sm bg-[#062c20] text-[#34d399] border border-[#059669]/40 flex items-center gap-0.5">
+              <IndianRupee className="w-3 h-3" />
               Est. ₹{slot.cost.toLocaleString('en-IN')}
             </span>
           </div>
 
           {/* Title */}
-          <h4 className="text-base font-bold text-white group-hover:text-gold-300 transition-colors">
+          <h4 className="text-base font-bold text-[#f1f5f9] group-hover:text-[#f3b740] transition-colors">
             {slot.title}
           </h4>
 
           {/* Location */}
-          <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5 font-medium">
-            <MapPin className="w-3.5 h-3.5 text-gold-500 shrink-0" />
+          <p className="text-xs text-[#94a3b8] flex items-center gap-1 mt-0.5 font-medium">
+            <MapPin className="w-3.5 h-3.5 text-[#f3b740] shrink-0" />
             {slot.location}
           </p>
 
           {/* Description */}
-          <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+          <p className="text-xs text-[#cbd5e1] mt-2 leading-relaxed">
             {slot.description}
           </p>
         </div>
 
         {/* Local Tip Box */}
         {slot.tips && (
-          <div className="flex items-start gap-2 p-2 rounded-sm bg-navy-900/90 border border-navy-750 text-[11px] text-slate-300">
-            <Lightbulb className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
-            <span><strong className="text-gold-400">Insider Tip:</strong> {slot.tips}</span>
+          <div className="flex items-start gap-2 p-2 rounded-sm bg-[#182232] border border-[#222d3d] text-[11px] text-[#cbd5e1]">
+            <Lightbulb className="w-3.5 h-3.5 text-[#f3b740] shrink-0 mt-0.5" />
+            <span><strong className="text-[#f3b740]">Insider Tip:</strong> {slot.tips}</span>
           </div>
         )}
       </div>

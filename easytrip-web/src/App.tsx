@@ -21,7 +21,7 @@ export const App: React.FC = () => {
   const { activeView } = useTrip();
 
   return (
-    <div className="min-h-screen flex flex-col bg-canvas text-charcoal-900 font-sans selection:bg-brand-500/20 selection:text-brand-900">
+    <div className="min-h-screen flex flex-col bg-[#0b0e14] text-[#f1f5f9] font-sans selection:bg-[#f3b740]/30 selection:text-[#f7d56e]">
       {/* Navigation */}
       <Navbar />
 
