@@ -431,7 +431,7 @@ export const TripPlannerModal: React.FC = () => {
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 rounded-full border-2 border-[#0e131f] border-t-transparent animate-spin" />
-                    <span>Contacting Grok Intelligence & Mapping Itinerary...</span>
+                    <span>Contacting Google Gemini Intelligence & Mapping Itinerary...</span>
                   </>
                 ) : (
                   <>

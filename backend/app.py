@@ -20,6 +20,11 @@ from pydantic import BaseModel, Field
 import requests
 
 try:
+    import google.generativeai as genai
+except ImportError:
+    genai = None
+
+try:
     from openai import OpenAI
 except ImportError:
     OpenAI = None
@@ -29,22 +34,18 @@ try:
 except ImportError:
     httpx = None
 
-# xAI Grok API Configuration
-XAI_API_BASE_URL = "https://api.x.ai/v1"
-XAI_API_KEY = os.getenv("XAI_API_KEY", "").strip()
+# Google Gemini API Configuration
+GEMINI_API_KEY = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
 
-def get_xai_client() -> Optional[Any]:
-    api_key = os.getenv("XAI_API_KEY", "").strip()
-    if not api_key or not OpenAI:
+def get_gemini_client() -> Optional[Any]:
+    api_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
+    if not api_key or not genai:
         return None
     try:
-        return OpenAI(
-            base_url=XAI_API_BASE_URL,
-            api_key=api_key,
-            timeout=30.0
-        )
+        genai.configure(api_key=api_key)
+        return genai
     except Exception as e:
-        print(f"Error initializing OpenAI client for xAI: {e}")
+        print(f"GEMINI API CRITICAL ERROR: Error configuring Google Generative AI: {e}")
         return None
 
 app = FastAPI(
@@ -1915,19 +1916,19 @@ def get_landmark_photo_endpoint(query: str = Query(..., description="Landmark or
         "source": source
     }
 
-def generate_itinerary_with_grok(
+def generate_itinerary_with_gemini(
     req: PlanTripRequest,
     dest_info: dict,
     num_days: int,
     start_date: datetime
 ) -> Optional[dict]:
     """
-    Connects to the xAI Grok API (https://api.x.ai/v1) using model grok-2 (fallback: grok-beta)
+    Connects to the Google Gemini API using model gemini-1.5-flash (fallback: gemini-1.5-pro)
     to dynamically generate a live, authentic, structured travel itinerary.
     """
-    xai_api_key = os.getenv("XAI_API_KEY")
-    if not xai_api_key or not xai_api_key.strip():
-        print("GROK API NOTICE: XAI_API_KEY is not set in environment. Falling back to verified catalog.")
+    gemini_api_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
+    if not gemini_api_key:
+        print("GEMINI API NOTICE: GEMINI_API_KEY (or GOOGLE_API_KEY) is not set in environment. Falling back to verified catalog.")
         return None
 
     dest_name = dest_info.get("name", req.destination)
@@ -2120,76 +2121,69 @@ Return a single JSON object strictly matching this schema:
 """
 
     raw_content = None
-    client = None
-    if OpenAI:
+    models_to_try = ["gemini-1.5-flash", "gemini-1.5-pro"]
+
+    # 1. Try Google Generative AI SDK
+    if genai:
         try:
-            client = OpenAI(
-                api_key=xai_api_key,
-                base_url="https://api.x.ai/v1"
-            )
+            genai.configure(api_key=gemini_api_key)
         except Exception as e:
-            print(f"GROK API CRITICAL ERROR: {type(e).__name__} - {e}")
+            print(f"GEMINI API CRITICAL ERROR: genai.configure failed - {type(e).__name__}: {e}")
 
-    # Primary model: "grok-2" (fallback to "grok-beta" if grok-2 returns a 404/model_not_found error)
-    models_to_try = ["grok-2", "grok-beta"]
-
-    # 1. Try OpenAI client
-    if client:
         for model_name in models_to_try:
             try:
-                chat_completion = client.chat.completions.create(
-                    model=model_name,
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt}
-                    ],
-                    temperature=0.3
+                model = genai.GenerativeModel(
+                    model_name=model_name,
+                    generation_config={
+                        "temperature": 0.3,
+                        "response_mime_type": "application/json",
+                    },
+                    system_instruction=system_prompt,
                 )
-                if chat_completion.choices and chat_completion.choices[0].message:
-                    raw_content = chat_completion.choices[0].message.content
-                    if raw_content:
-                        print(f"GROK API SUCCESS: Generated live itinerary using model '{model_name}'.")
-                        break
+                response = model.generate_content(user_prompt)
+                if response and response.text:
+                    raw_content = response.text
+                    print(f"GEMINI API SUCCESS: Generated live itinerary using model '{model_name}'.")
+                    break
             except Exception as e:
-                print(f"GROK API CRITICAL ERROR: {type(e).__name__} - {e}")
+                print(f"GEMINI API CRITICAL ERROR: {type(e).__name__} - {e}")
                 continue
 
-    # 2. Fallback to direct HTTP via requests if client wasn't used or failed
+    # 2. Fallback to direct HTTP via requests if SDK wasn't used or failed
     if not raw_content:
         for model_name in models_to_try:
             try:
-                resp = requests.post(
-                    "https://api.x.ai/v1/chat/completions",
-                    headers={
-                        "Authorization": f"Bearer {xai_api_key}",
-                        "Content-Type": "application/json"
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={gemini_api_key}"
+                payload = {
+                    "system_instruction": {
+                        "parts": [{"text": system_prompt}]
                     },
-                    json={
-                        "model": model_name,
-                        "messages": [
-                            {"role": "system", "content": system_prompt},
-                            {"role": "user", "content": user_prompt}
-                        ],
-                        "temperature": 0.3
-                    },
-                    timeout=30
-                )
+                    "contents": [
+                        {"parts": [{"text": user_prompt}]}
+                    ],
+                    "generationConfig": {
+                        "temperature": 0.3,
+                        "responseMimeType": "application/json"
+                    }
+                }
+                resp = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=30)
                 if resp.status_code == 200:
                     data = resp.json()
-                    choices = data.get("choices", [])
-                    if choices and choices[0].get("message"):
-                        raw_content = choices[0]["message"].get("content")
-                        if raw_content:
-                            print(f"GROK API SUCCESS: Direct HTTP generated live itinerary using model '{model_name}'.")
+                    candidates = data.get("candidates", [])
+                    if candidates:
+                        parts = candidates[0].get("content", {}).get("parts", [])
+                        if parts and parts[0].get("text"):
+                            raw_content = parts[0]["text"]
+                            print(f"GEMINI API SUCCESS: Direct HTTP generated live itinerary using model '{model_name}'.")
                             break
                 else:
-                    print(f"GROK API CRITICAL ERROR: HTTP {resp.status_code} - {resp.text[:300]}")
+                    print(f"GEMINI API CRITICAL ERROR: HTTP {resp.status_code} - {resp.text[:300]}")
             except Exception as e:
-                print(f"GROK API CRITICAL ERROR: {type(e).__name__} - {e}")
+                print(f"GEMINI API CRITICAL ERROR: Direct HTTP {type(e).__name__} - {e}")
                 continue
 
     if not raw_content:
-        print("GROK API CRITICAL ERROR: No response content received from Grok-2 or Grok-beta. Falling back to catalog engine.")
+        print("GEMINI API CRITICAL ERROR: No response content received from Gemini 1.5 Flash or Pro. Falling back to catalog engine.")
         return None
 
     # Parse and clean JSON content
@@ -2202,7 +2196,11 @@ Return a single JSON object strictly matching this schema:
         clean_json = clean_json[:-3]
     clean_json = clean_json.strip()
 
-    parsed = json.loads(clean_json)
+    try:
+        parsed = json.loads(clean_json)
+    except Exception as e:
+        print(f"GEMINI API CRITICAL ERROR: Failed to parse Gemini JSON output: {e}")
+        return None
 
     # Validate and enrich into complete TripItinerary schema
     center_coords = dest_info.get("coordinates", {"lat": 17.6868, "lng": 83.2185})
@@ -2352,7 +2350,7 @@ Return a single JSON object strictly matching this schema:
         "hotelRecommendations": hotels,
         "itineraryDays": itinerary_days,
         "aiNotes": parsed.get("aiNotes") or [
-            f"Live verified itinerary powered by xAI Grok for {dest_name} ({country}).",
+            f"Live verified itinerary powered by Google Gemini 1.5 Flash for {dest_name} ({country}).",
             f"Tailored for {travel_style} travel with {interests_str} experiences.",
             "Smart transit sequencing minimizes travel fatigue between consecutive activity stops.",
             "Weather-aware morning and evening outdoor timings for optimal comfort."
@@ -2367,18 +2365,19 @@ def plan_trip(req: PlanTripRequest):
     dest_info = resolve_destination(req.destination)
     start_date = datetime.strptime(req.startDate, "%Y-%m-%d") if req.startDate else datetime.utcnow()
 
-    # 1. Attempt dynamic live itinerary generation via xAI Grok (grok-2 / grok-beta)
-    if os.getenv("XAI_API_KEY", "").strip():
+    # 1. Attempt dynamic live itinerary generation via Google Gemini (gemini-1.5-flash / gemini-1.5-pro)
+    gemini_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
+    if gemini_key:
         try:
-            grok_plan = generate_itinerary_with_grok(req, dest_info, num_days, start_date)
-            if grok_plan:
+            gemini_plan = generate_itinerary_with_gemini(req, dest_info, num_days, start_date)
+            if gemini_plan:
                 return {
                     "success": True,
-                    "engine": "xai-grok",
-                    "data": grok_plan
+                    "engine": "google-gemini",
+                    "data": gemini_plan
                 }
-        except Exception as grok_err:
-            print(f"GROK API CRITICAL ERROR: {type(grok_err).__name__} - {grok_err}")
+        except Exception as gemini_err:
+            print(f"GEMINI API CRITICAL ERROR: {type(gemini_err).__name__} - {gemini_err}")
 
     # 2. Existing robust verified catalog & procedural engine fallback
     dest_name = dest_info["name"]
