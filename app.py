@@ -18,6 +18,34 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import requests
 
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
+
+try:
+    import httpx
+except ImportError:
+    httpx = None
+
+# xAI Grok API Configuration
+XAI_API_BASE_URL = "https://api.x.ai/v1"
+XAI_API_KEY = os.getenv("XAI_API_KEY", "").strip()
+
+def get_xai_client() -> Optional[Any]:
+    api_key = os.getenv("XAI_API_KEY", "").strip()
+    if not api_key or not OpenAI:
+        return None
+    try:
+        return OpenAI(
+            base_url=XAI_API_BASE_URL,
+            api_key=api_key,
+            timeout=30.0
+        )
+    except Exception as e:
+        print(f"Error initializing OpenAI client for xAI: {e}")
+        return None
+
 app = FastAPI(
     title="EasyTrip AI Core API",
     description="Travel smarter. Travel safer. Full backend service powering EasyTrip.",
@@ -1746,20 +1774,464 @@ def get_destination(dest_id: str):
     dest_info = resolve_destination(dest_id)
     return {"success": True, "data": dest_info}
 
+def generate_itinerary_with_grok(
+    req: PlanTripRequest,
+    dest_info: dict,
+    num_days: int,
+    start_date: datetime
+) -> Optional[dict]:
+    """
+    Connects to the xAI Grok API (https://api.x.ai/v1) using model grok-2 (fallback: grok-beta)
+    to dynamically generate a live, authentic, structured travel itinerary.
+    """
+    api_key = os.getenv("XAI_API_KEY", "").strip()
+    if not api_key:
+        return None
+
+    dest_name = dest_info.get("name", req.destination)
+    country = dest_info.get("country", "Global")
+    origin = req.origin.strip() if req.origin and req.origin.lower() != "current location" else "Hyderabad"
+    budget_tier = req.budget or "moderate"
+    travel_style = req.travelStyle or "Couple"
+    interests_str = ", ".join(req.interests) if req.interests else "Culture, Sightseeing, Regional Food"
+    preferred_transport = req.transport or "flight"
+
+    system_prompt = (
+        "You are EasyTrip AI, an elite travel technology concierge and verified trip planner. "
+        "Generate a verified, authentic, realistic day-by-day travel itinerary strictly formatted in JSON. "
+        "CRITICAL REQUIREMENTS:\n"
+        "1. Authentic Sightseeing Spots: Only include real, verified, existing tourist attractions, heritage monuments, beaches, or cultural sights located in the exact destination. Never invent fictional places or use generic boilerplate descriptions.\n"
+        "2. Authentic Regional Dining: Provide genuine local restaurants and exact regional specialty dishes for each day.\n"
+        "3. Transit Breakdown: Provide genuine transit details (real airport codes like VTZ/HYD/CDG, real railway station names, or major National Highway corridors like NH16/NH48).\n"
+        "4. Costs in INR (₹): Calculate all budgets, ticket prices, and activity costs strictly in Indian Rupees (₹), calibrated realistically for the chosen budget tier.\n"
+        "5. Clean Photo Search Keywords: Provide concise, clean photography search queries per landmark for Unsplash matching (e.g., 'visakhapatnam submarine museum', 'godavari arch bridge rajahmundry').\n"
+        "6. Valid JSON Only: Return ONLY a valid JSON object without markdown code blocks, backticks, or conversational filler."
+    )
+
+    user_prompt = f"""Plan a realistic {num_days}-day travel itinerary for:
+- Destination: {dest_name}, {country}
+- Departure From: {origin}
+- Travel Start Date: {start_date.strftime("%Y-%m-%d")} ({num_days} days)
+- Budget Tier: {budget_tier} (budget, moderate, or luxury)
+- Traveling With: {travel_style}
+- Vibe & Interests: {interests_str}
+- Preferred Transport Mode: {preferred_transport} (flight, train, drive, or cab)
+
+Return a single JSON object strictly matching this schema:
+{{
+  "destination": "{dest_name}",
+  "country": "{country}",
+  "tagline": "An evocative tagline summarizing the allure of {dest_name}",
+  "heroKeyword": "{dest_name} landmark",
+  "aiNotes": [
+    "3-4 actionable tips and curator insights on route pacing, best timing, dress codes, or local etiquette in {dest_name}."
+  ],
+  "journeyTransit": {{
+    "preferredMode": "{preferred_transport}",
+    "origin": "{origin}",
+    "destination": "{dest_name}",
+    "distanceKm": 550,
+    "primaryOption": {{
+      "mode": "{preferred_transport}",
+      "title": "Title of route via {preferred_transport}",
+      "duration": "Travel duration (e.g. 1h 15m or 8h 30m)",
+      "estimatedCost": 3500,
+      "routeOverview": "Realistic transit description with specific stations, airport codes, or highway corridors",
+      "highlights": [
+        "Key transit highlight 1",
+        "Key transit highlight 2",
+        "Key transit highlight 3"
+      ],
+      "terminalDetails": {{
+        "departureTerminal": "Departure airport/station",
+        "arrivalTerminal": "Arrival airport/station"
+      }}
+    }},
+    "alternativeOptions": [
+      {{
+        "mode": "train",
+        "title": "Superfast / Vande Bharat Express",
+        "duration": "7h 45m",
+        "estimatedCost": 980,
+        "routeOverview": "Railway route overview",
+        "highlights": ["Punctual and scenic rail connection"],
+        "terminalDetails": {{
+          "departureTerminal": "Origin Station",
+          "arrivalTerminal": "Destination Station"
+        }}
+      }},
+      {{
+        "mode": "drive",
+        "title": "Highway Road Trip",
+        "duration": "10h 00m",
+        "estimatedCost": 2600,
+        "routeOverview": "Driving route via National Highways",
+        "highlights": ["Flexible road travel with scenic rest stops"]
+      }},
+      {{
+        "mode": "cab",
+        "title": "Outstation AC Chauffeur Cab",
+        "duration": "10h 00m",
+        "estimatedCost": 4800,
+        "routeOverview": "Door-to-door private AC cab transfer",
+        "highlights": ["Direct door-to-door convenience"]
+      }}
+    ],
+    "travelTips": [
+      "2-3 local transit tips for getting around {dest_name}"
+    ]
+  }},
+  "hotelRecommendations": [
+    {{
+      "name": "Luxury Hotel Name",
+      "tier": "luxury",
+      "location": "Central / Waterfront area, {dest_name}",
+      "pricePerNight": 11500,
+      "rating": 4.9,
+      "amenities": ["Infinity Pool", "Fine Dining", "Spa", "Ocean Views"],
+      "badge": "5-Star Luxury"
+    }},
+    {{
+      "name": "Moderate Hotel Name",
+      "tier": "moderate",
+      "location": "Historic District, {dest_name}",
+      "pricePerNight": 4500,
+      "rating": 4.7,
+      "amenities": ["Pool", "Breakfast", "WiFi"],
+      "badge": "Top Rated Pick"
+    }},
+    {{
+      "name": "Budget Hotel Name",
+      "tier": "budget",
+      "location": "Transit Center, {dest_name}",
+      "pricePerNight": 1800,
+      "rating": 4.5,
+      "amenities": ["AC", "Free WiFi", "Travel Desk"],
+      "badge": "Smart Economy"
+    }}
+  ],
+  "itineraryDays": [
+    {{
+      "dayNumber": 1,
+      "title": "Day 1 Title",
+      "theme": "Day 1 Theme",
+      "weather": {{
+        "temp": 28,
+        "condition": "Sunny & Coastal Breeze",
+        "icon": "Sun"
+      }},
+      "slots": [
+        {{
+          "period": "Morning",
+          "time": "09:00 AM - 12:30 PM",
+          "title": "Exact Real Landmark Name",
+          "location": "Neighborhood / Street, {dest_name}",
+          "description": "Authentic description of this site and activities.",
+          "category": "Historical Heritage / Scenic Beach / Sacred Architecture",
+          "cost": 250,
+          "duration": "3.5 hrs",
+          "tips": "Practical tip for timing or footwear",
+          "photoQuery": "{dest_name} landmark name"
+        }},
+        {{
+          "period": "Afternoon",
+          "time": "01:30 PM - 04:30 PM",
+          "title": "Exact Real Sights / Museum / Park",
+          "location": "Location, {dest_name}",
+          "description": "Engaging description of the afternoon sight.",
+          "category": "Museum / Culture / Nature Walk",
+          "cost": 300,
+          "duration": "3 hrs",
+          "tips": "Practical tip",
+          "photoQuery": "{dest_name} sight name"
+        }},
+        {{
+          "period": "Evening",
+          "time": "05:30 PM - 09:00 PM",
+          "title": "Exact Real Sunset Spot / Waterfront Promenade / Night Bazaar",
+          "location": "Location, {dest_name}",
+          "description": "Atmospheric description of evening golden hour and dusk experience.",
+          "category": "Sunset Vista / Evening Promenade / Night Bazaar",
+          "cost": 400,
+          "duration": "3.5 hrs",
+          "tips": "Practical tip",
+          "photoQuery": "{dest_name} evening spot"
+        }}
+      ],
+      "diningRecommendations": [
+        {{
+          "name": "Real Restaurant Name 1",
+          "cuisine": "Regional Cuisine Style",
+          "specialty": "Exact Signature Dish",
+          "location": "Area, {dest_name}",
+          "priceRange": "₹350 - ₹750",
+          "timing": "Lunch",
+          "rating": 4.8
+        }},
+        {{
+          "name": "Real Restaurant Name 2",
+          "cuisine": "Authentic Dining Style",
+          "specialty": "Exact Signature Dish",
+          "location": "Area, {dest_name}",
+          "priceRange": "₹650 - ₹1,400",
+          "timing": "Dinner",
+          "rating": 4.9
+        }}
+      ]
+    }}
+  ]
+}}
+"""
+
+    raw_content = None
+    client = get_xai_client()
+    models_to_try = ["grok-2", "grok-beta", "grok-2-latest"]
+
+    # 1. Try OpenAI client
+    if client:
+        for model_name in models_to_try:
+            try:
+                chat_completion = client.chat.completions.create(
+                    model=model_name,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    temperature=0.3
+                )
+                if chat_completion.choices and chat_completion.choices[0].message:
+                    raw_content = chat_completion.choices[0].message.content
+                    if raw_content:
+                        break
+            except Exception as e:
+                print(f"xAI Grok model '{model_name}' via client failed: {e}")
+                continue
+
+    # 2. Fallback to direct HTTP via requests if client wasn't used or failed
+    if not raw_content:
+        for model_name in ["grok-2", "grok-beta"]:
+            try:
+                resp = requests.post(
+                    f"{XAI_API_BASE_URL}/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json"
+                    },
+                    json={
+                        "model": model_name,
+                        "messages": [
+                            {"role": "system", "content": system_prompt},
+                            {"role": "user", "content": user_prompt}
+                        ],
+                        "temperature": 0.3
+                    },
+                    timeout=30
+                )
+                if resp.status_code == 200:
+                    data = resp.json()
+                    choices = data.get("choices", [])
+                    if choices and choices[0].get("message"):
+                        raw_content = choices[0]["message"].get("content")
+                        if raw_content:
+                            break
+                else:
+                    print(f"Direct xAI HTTP call failed with status {resp.status_code}: {resp.text[:200]}")
+            except Exception as http_err:
+                print(f"Direct xAI HTTP call error for model {model_name}: {http_err}")
+                continue
+
+    if not raw_content:
+        return None
+
+    # Parse and clean JSON content
+    clean_json = raw_content.strip()
+    if clean_json.startswith("```json"):
+        clean_json = clean_json[7:]
+    elif clean_json.startswith("```"):
+        clean_json = clean_json[3:]
+    if clean_json.endswith("```"):
+        clean_json = clean_json[:-3]
+    clean_json = clean_json.strip()
+
+    parsed = json.loads(clean_json)
+
+    # Validate and enrich into complete TripItinerary schema
+    center_coords = dest_info.get("coordinates", {"lat": 17.6868, "lng": 83.2185})
+    raw_days = parsed.get("itineraryDays", [])
+    if not raw_days:
+        return None
+
+    itinerary_days = []
+    for day_idx, d_data in enumerate(raw_days[:num_days]):
+        day_num = d_data.get("dayNumber", day_idx + 1)
+        day_date = start_date + timedelta(days=day_idx)
+        
+        slots = []
+        raw_slots = d_data.get("slots", [])
+        for slot_idx, s in enumerate(raw_slots):
+            period = s.get("period", ["Morning", "Afternoon", "Evening"][min(slot_idx, 2)])
+            title = s.get("title", f"Attraction in {dest_name}")
+            loc = s.get("location", dest_name)
+            cat = s.get("category", "Sightseeing")
+            
+            angle = (day_idx * 2.0) + (slot_idx * 1.5)
+            slot_coord = {
+                "lat": center_coords["lat"] + (math.sin(angle) * (0.012 + slot_idx * 0.005)),
+                "lng": center_coords["lng"] + (math.cos(angle) * (0.012 + slot_idx * 0.005))
+            }
+            
+            photo_query = s.get("photoQuery") or f"{dest_name} {title}"
+            unsplash_url = f"https://unsplash.com/s/photos/{urllib.parse.quote(photo_query)}"
+            slot_img = resolve_activity_image(
+                title=title,
+                location=loc,
+                category=cat,
+                fallback_img=dest_info.get("image", ""),
+                salt=(day_idx * 3 + slot_idx)
+            )
+
+            cost_val = int(s.get("cost", 350))
+            if cost_val <= 0:
+                cost_val = 300
+
+            slots.append({
+                "id": f"day-{day_num}-{period.lower()}",
+                "period": period,
+                "time": s.get("time", "09:30 AM - 12:30 PM"),
+                "title": title,
+                "location": loc,
+                "description": s.get("description", f"Experience the captivating sights and heritage of {title} in {dest_name}."),
+                "category": cat,
+                "cost": cost_val,
+                "duration": s.get("duration", "3 hrs"),
+                "image": slot_img,
+                "photoQuery": photo_query,
+                "unsplashSearchUrl": unsplash_url,
+                "coordinates": slot_coord,
+                "tips": s.get("tips", "Arrive early to enjoy ideal lighting and relaxed exploration.")
+            })
+
+        dining = d_data.get("diningRecommendations", [])
+        if not dining:
+            dining = get_destination_dining_recommendations(dest_name, day_idx)
+
+        itinerary_days.append({
+            "dayNumber": day_num,
+            "date": day_date.strftime("%a, %b %d"),
+            "title": d_data.get("title", f"Exploring {dest_name}"),
+            "theme": d_data.get("theme", f"Authentic Sights & Flavors of {dest_name}"),
+            "weather": d_data.get("weather", {
+                "temp": 28 - (day_idx % 3),
+                "condition": "Sunny & Clear" if day_idx % 2 == 0 else "Pleasant Breeze",
+                "icon": "Sun"
+            }),
+            "slots": slots,
+            "diningRecommendations": dining
+        })
+
+    # Journey & Transit
+    jt = parsed.get("journeyTransit")
+    if not jt or not isinstance(jt, dict) or not jt.get("primaryOption"):
+        jt = generate_journey_transit_breakdown(
+            origin=origin,
+            destination=dest_name,
+            preferred_mode=preferred_transport,
+            dest_info=dest_info,
+            origin_coords=req.originCoordinates
+        )
+    else:
+        po = jt.get("primaryOption", {})
+        if not po.get("estimatedCost") or po.get("estimatedCost") <= 0:
+            po["estimatedCost"] = 3500
+        jt["preferredMode"] = preferred_transport
+        jt["origin"] = origin
+        jt["destination"] = dest_name
+
+    # Hotel recommendations
+    hotels = parsed.get("hotelRecommendations")
+    if not hotels or not isinstance(hotels, list) or len(hotels) < 2:
+        hotels = get_destination_hotel_recommendations(dest_name, budget_tier, dest_info)
+    else:
+        formatted_hotels = []
+        for idx, h in enumerate(hotels[:4]):
+            h_tier = h.get("tier", "moderate").lower()
+            if h_tier not in ["budget", "moderate", "luxury"]:
+                h_tier = "moderate"
+            h_name = h.get("name", f"{dest_name} Grand Hotel")
+            h_cost = int(h.get("pricePerNight") or h.get("price") or 4500)
+            formatted_hotels.append({
+                "name": h_name,
+                "tier": h_tier,
+                "location": h.get("location", f"Central {dest_name}"),
+                "pricePerNight": h_cost,
+                "rating": float(h.get("rating", 4.8)),
+                "amenities": h.get("amenities", ["AC", "Free WiFi", "Breakfast"]),
+                "image": resolve_activity_image(h_name, dest_name, "hotel", fallback_img=dest_info.get("bannerImage", ""), salt=idx),
+                "badge": h.get("badge", f"{h_tier.capitalize()} Pick")
+            })
+        hotels = formatted_hotels
+
+    tier_order = {"budget": 0, "moderate": 1, "luxury": 2}
+    selected_val = tier_order.get(budget_tier.lower(), 1)
+    hotels.sort(key=lambda h: 0 if tier_order.get(h["tier"], 1) == selected_val else 1)
+
+    total_cost = sum(sum(s["cost"] for s in d["slots"]) for d in itinerary_days)
+
+    return {
+        "id": f"trip-{int(datetime.utcnow().timestamp() * 1000)}",
+        "destination": dest_name,
+        "country": country,
+        "origin": origin,
+        "originCoordinates": req.originCoordinates,
+        "days": len(itinerary_days),
+        "startDate": req.startDate or start_date.strftime("%Y-%m-%d"),
+        "endDate": req.endDate or (start_date + timedelta(days=len(itinerary_days))).strftime("%Y-%m-%d"),
+        "budgetTier": budget_tier,
+        "travelStyle": travel_style,
+        "interests": req.interests,
+        "coordinates": center_coords,
+        "heroImage": dest_info.get("bannerImage") or dest_info.get("image") or "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+        "estimatedTotalCost": total_cost,
+        "currency": "₹",
+        "journeyTransit": jt,
+        "hotelRecommendations": hotels,
+        "itineraryDays": itinerary_days,
+        "aiNotes": parsed.get("aiNotes") or [
+            f"Live verified itinerary powered by xAI Grok for {dest_name} ({country}).",
+            f"Tailored for {travel_style} travel with {interests_str} experiences.",
+            "Smart transit sequencing minimizes travel fatigue between consecutive activity stops.",
+            "Weather-aware morning and evening outdoor timings for optimal comfort."
+        ]
+    }
+
 @app.post("/api/plan-trip")
 def plan_trip(req: PlanTripRequest):
     num_days = max(1, min(req.days, 7))
     
     # Resolve the EXACT destination submitted by the user
     dest_info = resolve_destination(req.destination)
-    
+    start_date = datetime.strptime(req.startDate, "%Y-%m-%d") if req.startDate else datetime.utcnow()
+
+    # 1. Attempt dynamic live itinerary generation via xAI Grok (grok-2 / grok-beta)
+    if os.getenv("XAI_API_KEY", "").strip():
+        try:
+            grok_plan = generate_itinerary_with_grok(req, dest_info, num_days, start_date)
+            if grok_plan:
+                return {
+                    "success": True,
+                    "engine": "xai-grok",
+                    "data": grok_plan
+                }
+        except Exception as grok_err:
+            print(f"[xAI Grok Fallback] Dynamic generation encountered an error: {grok_err}. Reverting to verified catalog engine.")
+
+    # 2. Existing robust verified catalog & procedural engine fallback
     dest_name = dest_info["name"]
     country = dest_info["country"]
     coords = dest_info["coordinates"]
     highlights = dest_info["highlights"]
     cost_multiplier = 2.5 if req.budget == "luxury" else 0.8 if req.budget == "budget" else 1.2
 
-    start_date = datetime.strptime(req.startDate, "%Y-%m-%d") if req.startDate else datetime.utcnow()
     itinerary_days = []
 
     dest_key_match = None
