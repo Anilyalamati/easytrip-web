@@ -8,9 +8,10 @@ import os
 import json
 import math
 import random
+import re
 import string
 from datetime import datetime, timedelta
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 import urllib.parse
 
 from fastapi import FastAPI, Query, HTTPException
@@ -313,6 +314,133 @@ KEYWORD_IMAGE_POOLS = {
         "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
     ]
 }
+
+# In-memory cache for verified Wikipedia and landmark images
+LANDMARK_IMAGE_CACHE: Dict[str, Tuple[str, str]] = {
+    "kailasagiri": ("https://upload.wikimedia.org/wikipedia/commons/7/7a/Kailasagiri.jpg", "wikipedia"),
+    "ins kursura": ("https://upload.wikimedia.org/wikipedia/commons/f/fd/INS_Kursura_%28S20%29_underway.jpg", "wikipedia"),
+    "godavari arch bridge": ("https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG", "wikipedia"),
+    "dowleswaram": ("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Dowleswaram_Barrage.jpg/330px-Dowleswaram_Barrage.jpg", "wikipedia"),
+    "simhachalam": ("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Simhachalam_Temple.jpg/330px-Simhachalam_Temple.jpg", "wikipedia"),
+    "borra caves": ("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Borra_Caves_Inside_View.jpg/330px-Borra_Caves_Inside_View.jpg", "wikipedia"),
+    "ooty lake": ("https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Ooty_Lake%2C_Tamil_Nadu%2C_India.jpg/330px-Ooty_Lake%2C_Tamil_Nadu%2C_India.jpg", "wikipedia"),
+    "nilgiri mountain railway": ("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Nilgiri_Mountain_Railway_steam_locomotive.jpg/330px-Nilgiri_Mountain_Railway_steam_locomotive.jpg", "wikipedia"),
+    "eiffel tower": ("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg/330px-Tour_Eiffel_Wikimedia_Commons.jpg", "wikipedia"),
+    "louvre": ("https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Louvre_Museum_Wikimedia_Commons.jpg/330px-Louvre_Museum_Wikimedia_Commons.jpg", "wikipedia"),
+}
+
+def get_landmark_photo_with_source(place_name: str) -> Tuple[str, str]:
+    """
+    Automated image resolver for exact landmark photos.
+    1. Uses httpx to query the Wikipedia page summary API:
+       https://en.wikipedia.org/api/rest_v1/page/summary/{encoded_place_name}
+    2. Extracts thumbnail.source or originalimage.source.
+    3. If found, caches and returns (verified_url, 'wikipedia').
+    4. Fallback Mechanism: If Wikipedia doesn't have an article for that spot,
+       falls back to a high-relevance query: https://images.unsplash.com/featured/?{place_name_url_encoded}.
+    """
+    if not place_name or not place_name.strip():
+        return ("https://images.unsplash.com/featured/?landmark", "unsplash")
+
+    clean_name = place_name.strip()
+    cache_key = clean_name.lower()
+
+    # 1. Quick cache check
+    if cache_key in LANDMARK_IMAGE_CACHE:
+        return LANDMARK_IMAGE_CACHE[cache_key]
+
+    for k, v in LANDMARK_IMAGE_CACHE.items():
+        if k in cache_key or cache_key in k:
+            LANDMARK_IMAGE_CACHE[cache_key] = v
+            return v
+
+    # 2. Formulate candidate titles to query Wikipedia
+    candidates: List[str] = [clean_name]
+
+    # Remove parenthetical details: e.g. "INS Kursura (S20)" -> "INS Kursura"
+    no_parens = re.sub(r'\(.*?\)', '', clean_name).strip()
+    if no_parens and no_parens not in candidates:
+        candidates.append(no_parens)
+
+    # Split on delimiters like &, -, /, :, comma
+    for delim in ['&', ' - ', ',', '/', ':']:
+        if delim in clean_name:
+            part = clean_name.split(delim)[0].strip()
+            if part and part not in candidates:
+                candidates.append(part)
+
+    # If the name is multi-word (e.g. "Rajahmundry Godavari Arch Bridge"), try dropping the city prefix
+    words = clean_name.split()
+    if len(words) >= 3:
+        cand_suffix = ' '.join(words[1:])
+        if cand_suffix not in candidates:
+            candidates.append(cand_suffix)
+
+    headers = {
+        "User-Agent": "EasyTrip-LandmarkResolver/1.0 (travel-planner@easytrip.travel)"
+    }
+
+    # 3. Query Wikipedia page summary API using httpx (or requests as fallback)
+    if httpx:
+        try:
+            with httpx.Client(timeout=4.0, follow_redirects=True, headers=headers) as client:
+                for cand in candidates:
+                    encoded_candidate = urllib.parse.quote(cand.replace(' ', '_'))
+                    wiki_url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{encoded_candidate}"
+                    try:
+                        resp = client.get(wiki_url)
+                        if resp.status_code == 200:
+                            data = resp.json()
+                            img_src = None
+                            if data.get("thumbnail") and data["thumbnail"].get("source"):
+                                img_src = data["thumbnail"]["source"]
+                            elif data.get("originalimage") and data["originalimage"].get("source"):
+                                img_src = data["originalimage"]["source"]
+
+                            if img_src:
+                                result = (img_src, "wikipedia")
+                                LANDMARK_IMAGE_CACHE[cache_key] = result
+                                return result
+                    except Exception:
+                        continue
+        except Exception as http_err:
+            print(f"[Wikipedia Lookup] Error querying for '{clean_name}': {http_err}")
+    else:
+        try:
+            for cand in candidates:
+                encoded_candidate = urllib.parse.quote(cand.replace(' ', '_'))
+                wiki_url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{encoded_candidate}"
+                try:
+                    resp = requests.get(wiki_url, headers=headers, timeout=4.0)
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        img_src = None
+                        if data.get("thumbnail") and data["thumbnail"].get("source"):
+                            img_src = data["thumbnail"]["source"]
+                        elif data.get("originalimage") and data["originalimage"].get("source"):
+                            img_src = data["originalimage"]["source"]
+
+                        if img_src:
+                            result = (img_src, "wikipedia")
+                            LANDMARK_IMAGE_CACHE[cache_key] = result
+                            return result
+                except Exception:
+                    continue
+        except Exception:
+            pass
+
+    # 4. Fallback Mechanism: high-relevance query
+    fallback_url = f"https://images.unsplash.com/featured/?{urllib.parse.quote_plus(clean_name)}"
+    result = (fallback_url, "unsplash")
+    LANDMARK_IMAGE_CACHE[cache_key] = result
+    return result
+
+def get_landmark_photo(place_name: str) -> str:
+    """
+    Convenience helper returning the resolved landmark photo URL.
+    """
+    url, _ = get_landmark_photo_with_source(place_name)
+    return url
 
 def resolve_activity_image(title: str, location: str, category: str, fallback_img: str = "", salt: int = 0) -> str:
     """
@@ -1774,6 +1902,19 @@ def get_destination(dest_id: str):
     dest_info = resolve_destination(dest_id)
     return {"success": True, "data": dest_info}
 
+@app.get("/api/landmark-photo")
+def get_landmark_photo_endpoint(query: str = Query(..., description="Landmark or attraction name")):
+    """
+    Automated image lookup endpoint for exact landmark photos using Wikipedia API with fallback.
+    """
+    url, source = get_landmark_photo_with_source(query)
+    return {
+        "success": True,
+        "query": query,
+        "imageUrl": url,
+        "source": source
+    }
+
 def generate_itinerary_with_grok(
     req: PlanTripRequest,
     dest_info: dict,
@@ -2082,13 +2223,15 @@ Return a single JSON object strictly matching this schema:
             
             photo_query = s.get("photoQuery") or f"{dest_name} {title}"
             unsplash_url = f"https://unsplash.com/s/photos/{urllib.parse.quote(photo_query)}"
-            slot_img = resolve_activity_image(
-                title=title,
-                location=loc,
-                category=cat,
-                fallback_img=dest_info.get("image", ""),
-                salt=(day_idx * 3 + slot_idx)
-            )
+            landmark_img = get_landmark_photo(title)
+            if not landmark_img:
+                landmark_img = resolve_activity_image(
+                    title=title,
+                    location=loc,
+                    category=cat,
+                    fallback_img=dest_info.get("image", ""),
+                    salt=(day_idx * 3 + slot_idx)
+                )
 
             cost_val = int(s.get("cost", 350))
             if cost_val <= 0:
@@ -2104,7 +2247,8 @@ Return a single JSON object strictly matching this schema:
                 "category": cat,
                 "cost": cost_val,
                 "duration": s.get("duration", "3 hrs"),
-                "image": slot_img,
+                "image": landmark_img,
+                "imageUrl": landmark_img,
                 "photoQuery": photo_query,
                 "unsplashSearchUrl": unsplash_url,
                 "coordinates": slot_coord,
@@ -2115,11 +2259,14 @@ Return a single JSON object strictly matching this schema:
         if not dining:
             dining = get_destination_dining_recommendations(dest_name, day_idx)
 
+        day_cover_img = slots[0]["imageUrl"] if slots else dest_info.get("bannerImage", "")
         itinerary_days.append({
             "dayNumber": day_num,
             "date": day_date.strftime("%a, %b %d"),
             "title": d_data.get("title", f"Exploring {dest_name}"),
             "theme": d_data.get("theme", f"Authentic Sights & Flavors of {dest_name}"),
+            "imageUrl": day_cover_img,
+            "image": day_cover_img,
             "weather": d_data.get("weather", {
                 "temp": 28 - (day_idx % 3),
                 "condition": "Sunny & Clear" if day_idx % 2 == 0 else "Pleasant Breeze",
@@ -2303,13 +2450,15 @@ def plan_trip(req: PlanTripRequest):
                 "lat": coords["lat"] + (math.sin(angle) * (0.012 + slot_idx * 0.005)),
                 "lng": coords["lng"] + (math.cos(angle) * (0.012 + slot_idx * 0.005))
             }
-            slot_img = resolve_activity_image(
-                title=s["title"],
-                location=s["location"],
-                category=s["category"],
-                fallback_img=dest_info.get("image", ""),
-                salt=(i * 3 + slot_idx)
-            )
+            landmark_img = get_landmark_photo(s["title"])
+            if not landmark_img:
+                landmark_img = resolve_activity_image(
+                    title=s["title"],
+                    location=s["location"],
+                    category=s["category"],
+                    fallback_img=dest_info.get("image", ""),
+                    salt=(i * 3 + slot_idx)
+                )
 
             photo_query = f"{dest_name} {s['title']}"
             unsplash_search_url = f"https://unsplash.com/s/photos/{urllib.parse.quote(photo_query)}"
@@ -2324,18 +2473,22 @@ def plan_trip(req: PlanTripRequest):
                 "category": s["category"],
                 "cost": round(s["base_cost"] * cost_multiplier),
                 "duration": s["duration"],
-                "image": slot_img,
+                "image": landmark_img,
+                "imageUrl": landmark_img,
                 "photoQuery": photo_query,
                 "unsplashSearchUrl": unsplash_search_url,
                 "coordinates": slot_coord,
                 "tips": s["tips"]
             })
 
+        day_cover_img = slots[0]["imageUrl"] if slots else dest_info.get("bannerImage", "")
         itinerary_days.append({
             "dayNumber": i + 1,
             "date": day_date.strftime("%a, %b %d"),
             "title": day_title,
             "theme": day_theme,
+            "imageUrl": day_cover_img,
+            "image": day_cover_img,
             "weather": {
                 "temp": 28 - (i % 3),
                 "condition": "Sunny & Clear" if i % 2 == 0 else "Gentle Breeze",

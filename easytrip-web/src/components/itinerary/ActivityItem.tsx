@@ -1,26 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivitySlot } from '../../types/trip';
-import { Clock, MapPin, IndianRupee, Lightbulb, Compass, Sun, Moon, Sunset, Camera } from 'lucide-react';
+import { Clock, MapPin, IndianRupee, Lightbulb, Sun, Moon, Sunset, Camera, ImageOff } from 'lucide-react';
 
 export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({ slot, period }) => {
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
   const PeriodIcon = period === 'Morning' ? Sun : period === 'Afternoon' ? Sunset : Moon;
+
+  const fallbackUrl = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80';
+  const initialUrl = slot.imageUrl || slot.image || fallbackUrl;
+  const [imgSrc, setImgSrc] = useState(initialUrl);
+
+  const handleImageError = () => {
+    if (imgSrc !== fallbackUrl) {
+      setImgSrc(fallbackUrl);
+    } else {
+      setImgFailed(true);
+    }
+  };
 
   return (
     <div className="relative flex flex-col sm:flex-row gap-4 p-4 rounded-md bg-[#141b26] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all duration-300 group">
       {/* Timeline Node Dot */}
       <span className="absolute -left-6 sm:-left-8 top-5 w-3.5 h-3.5 rounded-full bg-[#f3b740] ring-4 ring-[#141b26] border-2 border-[#f3b740] shadow-[0_0_10px_rgba(243,183,64,0.5)] z-10" />
 
-      {/* Image Thumbnail */}
-      <div className="sm:w-44 h-32 rounded-sm overflow-hidden relative shrink-0 border border-[#222d3d]">
-        <img
-          src={slot.image}
-          alt={slot.title}
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80';
-          }}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/85 via-transparent to-transparent" />
+      {/* Image Thumbnail with smooth fade-in and graceful placeholder */}
+      <div className="sm:w-44 h-32 rounded-sm overflow-hidden relative shrink-0 border border-[#222d3d] bg-[#101622]">
+        {/* Shimmer skeleton while loading */}
+        {!imgLoaded && !imgFailed && (
+          <div className="absolute inset-0 bg-[#182232] animate-pulse flex items-center justify-center">
+            <Camera className="w-5 h-5 text-[#94a3b8]/30" />
+          </div>
+        )}
+
+        {/* Graceful placeholder if network drops or image fails */}
+        {imgFailed ? (
+          <div className="w-full h-full bg-[#182232] flex flex-col items-center justify-center p-3 text-center">
+            <ImageOff className="w-6 h-6 text-[#f3b740]/60 mb-1" />
+            <span className="text-[10px] font-medium text-[#cbd5e1] line-clamp-1">{slot.title}</span>
+            <span className="text-[9px] text-[#94a3b8]">Preview offline</span>
+          </div>
+        ) : (
+          <img
+            src={imgSrc}
+            alt={slot.title}
+            loading="lazy"
+            onLoad={() => setImgLoaded(true)}
+            onError={handleImageError}
+            className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${
+              imgLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/85 via-transparent to-transparent pointer-events-none" />
         
         {/* Period Badge */}
         <span className="absolute top-2 left-2 px-2 py-0.5 rounded-sm bg-[#0b0e14]/90 backdrop-blur-md border border-[#f3b740]/30 text-[10px] font-bold text-[#f3b740] flex items-center gap-1">

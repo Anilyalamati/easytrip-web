@@ -14,6 +14,7 @@ export interface ActivitySlot {
   cost: number;
   duration: string;
   image: string;
+  imageUrl?: string;
   coordinates: Coordinates;
   tips: string;
   photoQuery?: string;
@@ -42,6 +43,8 @@ export interface DayPlan {
   };
   slots: ActivitySlot[];
   diningRecommendations?: DiningRecommendation[];
+  imageUrl?: string;
+  image?: string;
 }
 
 export interface HotelRecommendation {

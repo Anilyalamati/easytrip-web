@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DayPlan } from '../../types/trip';
 import { ActivityItem } from './ActivityItem';
-import { Sun, Sparkles, UtensilsCrossed, Star, MapPin } from 'lucide-react';
+import { Sun, Sparkles, UtensilsCrossed, Star, MapPin, Camera } from 'lucide-react';
 
 export const DayCard: React.FC<{ day: DayPlan }> = ({ day }) => {
+  const fallbackUrl = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80';
+  const initialDayImage = day.imageUrl || day.image || day.slots[0]?.imageUrl || day.slots[0]?.image || fallbackUrl;
+  const [dayImgSrc, setDayImgSrc] = useState(initialDayImage);
+  const [dayImgLoaded, setDayImgLoaded] = useState(false);
+  const [dayImgFailed, setDayImgFailed] = useState(false);
+
+  const handleDayImageError = () => {
+    if (dayImgSrc !== fallbackUrl) {
+      setDayImgSrc(fallbackUrl);
+    } else {
+      setDayImgFailed(true);
+    }
+  };
+
   return (
     <div className="glass-card rounded-md p-6 sm:p-8 border border-[#222d3d] mb-8 space-y-6 bg-[#141b26]">
       {/* Day Header */}
@@ -28,13 +42,42 @@ export const DayCard: React.FC<{ day: DayPlan }> = ({ day }) => {
           </div>
         </div>
 
-        {/* Weather Forecast Badge */}
-        {day.weather && (
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[#182232] border border-[#222d3d] text-xs text-[#cbd5e1] self-start sm:self-auto">
-            <Sun className="w-4 h-4 text-[#f3b740]" />
-            <span>{day.weather.temp}°C, {day.weather.condition}</span>
+        {/* Header Badges: Day Landmark Preview & Weather */}
+        <div className="flex items-center gap-3 self-start sm:self-auto">
+          {/* Day Primary Landmark Preview */}
+          <div className="relative w-16 h-11 sm:w-20 sm:h-12 rounded-sm overflow-hidden border border-[#222d3d] bg-[#101622] shrink-0 group">
+            {!dayImgLoaded && !dayImgFailed && (
+              <div className="absolute inset-0 bg-[#182232] animate-pulse flex items-center justify-center">
+                <Camera className="w-3.5 h-3.5 text-[#94a3b8]/30" />
+              </div>
+            )}
+            {dayImgFailed ? (
+              <div className="w-full h-full bg-[#182232] flex items-center justify-center">
+                <Camera className="w-3.5 h-3.5 text-[#94a3b8]/40" />
+              </div>
+            ) : (
+              <img
+                src={dayImgSrc}
+                alt={day.title}
+                loading="lazy"
+                onLoad={() => setDayImgLoaded(true)}
+                onError={handleDayImageError}
+                className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
+                  dayImgLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/70 via-transparent to-transparent pointer-events-none" />
           </div>
-        )}
+
+          {/* Weather Forecast Badge */}
+          {day.weather && (
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-sm bg-[#182232] border border-[#222d3d] text-xs text-[#cbd5e1]">
+              <Sun className="w-4 h-4 text-[#f3b740]" />
+              <span>{day.weather.temp}°C, {day.weather.condition}</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Activity Slots with Vertical Connected Amber Timeline */}
