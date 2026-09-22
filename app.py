@@ -20,9 +20,11 @@ from pydantic import BaseModel, Field
 import requests
 
 try:
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types as genai_types
 except ImportError:
     genai = None
+    genai_types = None
 
 try:
     from openai import OpenAI
@@ -42,10 +44,9 @@ def get_gemini_client() -> Optional[Any]:
     if not api_key or not genai:
         return None
     try:
-        genai.configure(api_key=api_key)
-        return genai
+        return genai.Client(api_key=api_key)
     except Exception as e:
-        print(f"GEMINI API CRITICAL ERROR: Error configuring Google Generative AI: {e}")
+        print(f"GEMINI API CRITICAL ERROR: Error creating Google GenAI Client: {e}")
         return None
 
 app = FastAPI(
@@ -1923,7 +1924,7 @@ def generate_itinerary_with_gemini(
     start_date: datetime
 ) -> Optional[dict]:
     """
-    Connects to the Google Gemini API using model gemini-2.5-flash (fallback: gemini-2.0-flash)
+    Connects to the Google Gemini API using model gemini-3.6-flash
     to dynamically generate a live, authentic, structured travel itinerary.
     """
     gemini_api_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
@@ -2121,33 +2122,35 @@ Return a single JSON object strictly matching this schema:
 """
 
     raw_content = None
-    models_to_try = ["gemini-2.5-flash", "gemini-2.0-flash"]
+    models_to_try = ["gemini-3.6-flash"]
 
-    # 1. Try Google Generative AI SDK
-    if genai:
+    # 1. Try new google-genai SDK (Client-based)
+    if genai and genai_types:
         try:
-            genai.configure(api_key=gemini_api_key)
+            client = genai.Client(api_key=gemini_api_key)
         except Exception as e:
-            print(f"GEMINI API CRITICAL ERROR: genai.configure failed - {type(e).__name__}: {e}")
+            client = None
+            print(f"GEMINI API CRITICAL ERROR: Client init failed - {type(e).__name__}: {e}")
 
-        for model_name in models_to_try:
-            try:
-                model = genai.GenerativeModel(
-                    model_name=model_name,
-                    generation_config={
-                        "temperature": 0.3,
-                        "response_mime_type": "application/json",
-                    },
-                    system_instruction=system_prompt,
-                )
-                response = model.generate_content(user_prompt)
-                if response and response.text:
-                    raw_content = response.text
-                    print(f"GEMINI API SUCCESS: Generated live itinerary using model '{model_name}'.")
-                    break
-            except Exception as e:
-                print(f"GEMINI API CRITICAL ERROR: {type(e).__name__} - {e}")
-                continue
+        if client:
+            for model_name in models_to_try:
+                try:
+                    response = client.models.generate_content(
+                        model=model_name,
+                        contents=user_prompt,
+                        config=genai_types.GenerateContentConfig(
+                            system_instruction=system_prompt,
+                            temperature=0.3,
+                            response_mime_type="application/json",
+                        ),
+                    )
+                    if response and response.text:
+                        raw_content = response.text
+                        print(f"GEMINI API SUCCESS: Generated live itinerary using model '{model_name}'.")
+                        break
+                except Exception as e:
+                    print(f"GEMINI API CRITICAL ERROR: {type(e).__name__} - {e}")
+                    continue
 
     # 2. Fallback to direct HTTP via requests if SDK wasn't used or failed
     if not raw_content:
@@ -2166,7 +2169,7 @@ Return a single JSON object strictly matching this schema:
                         "responseMimeType": "application/json"
                     }
                 }
-                resp = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=30)
+                resp = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=45)
                 if resp.status_code == 200:
                     data = resp.json()
                     candidates = data.get("candidates", [])
@@ -2183,7 +2186,7 @@ Return a single JSON object strictly matching this schema:
                 continue
 
     if not raw_content:
-        print("GEMINI API CRITICAL ERROR: No response content received from Gemini 2.5 Flash or 2.0 Flash. Falling back to catalog engine.")
+        print("GEMINI API CRITICAL ERROR: No response content received from Gemini 3.6 Flash. Falling back to catalog engine.")
         return None
 
     # Parse and clean JSON content
@@ -2350,7 +2353,7 @@ Return a single JSON object strictly matching this schema:
         "hotelRecommendations": hotels,
         "itineraryDays": itinerary_days,
         "aiNotes": parsed.get("aiNotes") or [
-            f"Live verified itinerary powered by Google Gemini 2.5 Flash for {dest_name} ({country}).",
+            f"Live verified itinerary powered by Google Gemini 3.6 Flash for {dest_name} ({country}).",
             f"Tailored for {travel_style} travel with {interests_str} experiences.",
             "Smart transit sequencing minimizes travel fatigue between consecutive activity stops.",
             "Weather-aware morning and evening outdoor timings for optimal comfort."
@@ -2365,7 +2368,7 @@ def plan_trip(req: PlanTripRequest):
     dest_info = resolve_destination(req.destination)
     start_date = datetime.strptime(req.startDate, "%Y-%m-%d") if req.startDate else datetime.utcnow()
 
-    # 1. Attempt dynamic live itinerary generation via Google Gemini (gemini-2.5-flash / gemini-2.0-flash)
+    # 1. Attempt dynamic live itinerary generation via Google Gemini (gemini-3.6-flash)
     gemini_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
     if gemini_key:
         try:
