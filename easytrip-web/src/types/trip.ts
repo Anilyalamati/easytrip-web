@@ -116,6 +116,7 @@ export interface Destination {
   reviewCount: number;
   image: string;
   bannerImage: string;
+  imageAlt?: string;
   coordinates: Coordinates;
   idealDays: string;
   avgCostPerDay: {

@@ -77,8 +77,8 @@ const customKnownDestinations = {
       'Dolphin\'s Nose Lighthouse & Ross Hill Harbor',
       'Borra Caves Karst & Araku Valley Coffee Groves'
     ],
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80',
-    bannerImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80'
+    image: 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1600&q=80'
   },
   visakhapatnam: {
     name: 'Visakhapatnam',
@@ -93,8 +93,8 @@ const customKnownDestinations = {
       'Dolphin\'s Nose Lighthouse & Ross Hill Harbor',
       'Borra Caves Karst & Araku Valley Coffee Groves'
     ],
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80',
-    bannerImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80'
+    image: 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80',
+    bannerImage: 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1600&q=80'
   },
   rajahmundry: {
     name: 'Rajahmundry (Rajamahendravaram)',

@@ -197,7 +197,7 @@ export const FeaturedDestinations: React.FC = () => {
             >
               <img
                 src={dest.image}
-                alt={dest.name}
+                alt={(dest.imageAlt || (dest.id === 'vizag' || dest.name.toLowerCase().includes('visakhapatnam') ? 'RK Beach Promenade, Visakhapatnam' : dest.name))}
                 className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/90 via-[#08090c]/25 to-transparent" />
@@ -284,7 +284,7 @@ export const FeaturedDestinations: React.FC = () => {
             <div className="relative h-64 sm:h-72 w-full overflow-hidden">
               <img
                 src={inspectedDest.image}
-                alt={inspectedDest.name}
+                alt={(inspectedDest.imageAlt || (inspectedDest.id === 'vizag' || inspectedDest.name.toLowerCase().includes('visakhapatnam') ? 'RK Beach Promenade, Visakhapatnam' : inspectedDest.name))}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#141b26] via-[#141b26]/40 to-transparent" />

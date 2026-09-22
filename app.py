@@ -113,8 +113,8 @@ CUSTOM_KNOWN_DESTINATIONS = {
             "Dolphin's Nose Lighthouse & Ross Hill Harbor",
             "Borra Caves Karst & Araku Valley Coffee Groves"
         ],
-        "image": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
-        "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg"
+        "image": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1600&q=80"
     },
     "visakhapatnam": {
         "name": "Visakhapatnam",
@@ -129,8 +129,8 @@ CUSTOM_KNOWN_DESTINATIONS = {
             "Dolphin's Nose Lighthouse & Ross Hill Harbor",
             "Borra Caves Karst & Araku Valley Coffee Groves"
         ],
-        "image": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
-        "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg"
+        "image": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80",
+        "bannerImage": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1600&q=80"
     },
     "rajahmundry": {
         "name": "Rajahmundry (Rajamahendravaram)",
@@ -319,6 +319,13 @@ KEYWORD_IMAGE_POOLS = {
 
 # In-memory cache for verified Wikipedia and landmark images
 LANDMARK_IMAGE_CACHE: Dict[str, Tuple[str, str]] = {
+    "rk beach": ("https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80", "verified"),
+    "rk beach promenade": ("https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80", "verified"),
+    "ramakrishna beach": ("https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80", "verified"),
+    "ramakrishna mission beach": ("https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80", "verified"),
+    "beach road, visakhapatnam": ("https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80", "verified"),
+    "vizag": ("https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80", "verified"),
+    "visakhapatnam": ("https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80", "verified"),
     "kailasagiri": ("https://upload.wikimedia.org/wikipedia/commons/7/7a/Kailasagiri.jpg", "wikipedia"),
     "ins kursura": ("https://upload.wikimedia.org/wikipedia/commons/f/fd/INS_Kursura_%28S20%29_underway.jpg", "wikipedia"),
     "godavari arch bridge": ("https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG", "wikipedia"),
@@ -357,7 +364,19 @@ def get_landmark_photo_with_source(place_name: str) -> Tuple[str, str]:
             return v
 
     # 2. Formulate candidate titles to query Wikipedia
-    candidates: List[str] = [clean_name]
+    candidates: List[str] = []
+
+    # Ensure "Vizag", "Visakhapatnam", and "RK Beach" prioritize searching for
+    # "Ramakrishna Mission Beach" or "Beach Road, Visakhapatnam" so it never defaults to generic mountain or Himalayan stock photos.
+    is_vizag_or_beach = any(term in cache_key for term in ["vizag", "visakhapatnam", "rk beach", "ramakrishna"])
+    if is_vizag_or_beach:
+        candidates.extend([
+            "Ramakrishna Mission Beach",
+            "Beach Road, Visakhapatnam",
+            "Visakhapatnam"
+        ])
+
+    candidates.append(clean_name)
 
     # Remove parenthetical details: e.g. "INS Kursura (S20)" -> "INS Kursura"
     no_parens = re.sub(r'\(.*?\)', '', clean_name).strip()
@@ -432,7 +451,10 @@ def get_landmark_photo_with_source(place_name: str) -> Tuple[str, str]:
             pass
 
     # 4. Fallback Mechanism: high-relevance query
-    fallback_url = f"https://images.unsplash.com/featured/?{urllib.parse.quote_plus(clean_name)}"
+    if is_vizag_or_beach:
+        fallback_url = "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80"
+    else:
+        fallback_url = f"https://images.unsplash.com/featured/?{urllib.parse.quote_plus(clean_name)}"
     result = (fallback_url, "unsplash")
     LANDMARK_IMAGE_CACHE[cache_key] = result
     return result

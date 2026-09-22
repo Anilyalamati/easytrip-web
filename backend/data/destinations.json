@@ -8,8 +8,8 @@
     "badge": "Coastal Gem",
     "rating": 4.9,
     "reviewCount": 11420,
-    "image": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
-    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
+    "image": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80",
+    "bannerImage": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1600&q=80",
     "coordinates": {
       "lat": 17.6868,
       "lng": 83.2185
@@ -35,7 +35,8 @@
       "Ropeway",
       "Hills",
       "Caves"
-    ]
+    ],
+    "imageAlt": "RK Beach Promenade, Visakhapatnam"
   },
   {
     "id": "rajahmundry",

@@ -32,7 +32,8 @@ export const HeroBanner: React.FC = () => {
       safetyStatus: 'Verified Safe • Low Risk',
       stayPick: 'Novotel Varun Beach (₹9,500/nt)',
       highlight: 'INS Kursura Submarine & RK Beach Promenade',
-      image: 'https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg'
+      image: 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=1200&q=80',
+      alt: 'RK Beach Promenade, Visakhapatnam'
     },
     Ooty: {
       name: 'Ooty (Nilgiris)',
@@ -46,7 +47,8 @@ export const HeroBanner: React.FC = () => {
       safetyStatus: 'Scenic Tourist Corridor',
       stayPick: 'Savoy - IHCL SeleQtions (₹14,500/nt)',
       highlight: 'UNESCO Toy Train & Doddabetta Tea Overlook',
-      image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=1200&q=80'
+      image: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=1200&q=80',
+      alt: 'UNESCO Toy Train & Doddabetta, Ooty'
     },
     Paris: {
       name: 'Paris',
@@ -60,7 +62,8 @@ export const HeroBanner: React.FC = () => {
       safetyStatus: 'Well-Policed Central Hubs',
       stayPick: 'CitizenM Champs-Élysées (₹18,500/nt)',
       highlight: 'Eiffel Tower Summit & Le Comptoir du Relais',
-      image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=80'
+      image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=80',
+      alt: 'Eiffel Tower Summit, Paris'
     }
   };
 
@@ -239,7 +242,7 @@ export const HeroBanner: React.FC = () => {
               <div className="lg:col-span-7 rounded-md overflow-hidden relative min-h-[300px] sm:min-h-[360px] flex flex-col justify-between p-5 border border-[#222d3d] group specular-sheen">
                 <img
                   src={currentPreview.image}
-                  alt={currentPreview.name}
+                  alt={currentPreview.alt || currentPreview.name}
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/95 via-[#08090c]/40 to-transparent" />
