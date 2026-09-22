@@ -127,12 +127,13 @@ export const HeroBanner: React.FC = () => {
           loop 
           playsInline 
           preload="auto"
-          className="w-full h-full object-cover" 
+          className="w-full h-full object-cover brightness-110 contrast-105" 
         >
           <source src="/easytrip-background.mp4" type="video/mp4" />
         </video>
-        {/* Subtle Dark Overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b0e14]/75 via-[#0b0e14]/50 to-[#0b0e14] pointer-events-none" />
+        {/* Subtle Cinematic Readability Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b0e14]/40 via-transparent to-[#0b0e14]/95 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#0b0e14]/20 pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -141,13 +142,13 @@ export const HeroBanner: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center space-y-5 mb-12 sm:mb-16">
           
           {/* Eyebrow Sharp Badge */}
-          <div className="animate-fade-in inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#141b26] border border-[#222d3d] shadow-sm text-xs font-bold text-[#f3b740]">
+          <div className="animate-fade-in inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#141b26]/90 backdrop-blur-md border border-[#222d3d] shadow-sm text-xs font-bold text-[#f3b740]">
             <span className="w-1.5 h-1.5 rounded-none bg-[#f3b740]" />
             <span className="tracking-widest uppercase text-[11px]">SMART TRAVEL COMPANION</span>
           </div>
 
           {/* Large Editorial Headline */}
-          <h1 className="animate-fade-in-up text-4xl sm:text-6xl lg:text-7xl font-black text-[#f1f5f9] tracking-tight leading-[1.08]">
+          <h1 className="animate-fade-in-up text-4xl sm:text-6xl lg:text-7xl font-black text-[#f1f5f9] tracking-tight leading-[1.08] drop-shadow-lg">
             Travel smarter. <br />
             <span className="gold-gradient-text">Travel safer.</span>
           </h1>

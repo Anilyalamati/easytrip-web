@@ -167,6 +167,21 @@ export const BackgroundMotion: React.FC = () => {
       aria-hidden="true"
       className="fixed inset-0 pointer-events-none overflow-hidden select-none z-0"
     >
+      {/* Global Ambient Travel Background Video */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-35">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover filter saturate-[1.25] brightness-90"
+        >
+          <source src="/easytrip-background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b0e14]/40 via-[#0b0e14]/70 to-[#0b0e14] pointer-events-none" />
+      </div>
+
       {/* Dynamic Ambient Aurora Glow Orbs */}
       <div className="absolute -top-32 -right-32 w-[720px] h-[720px] rounded-full bg-gradient-to-br from-[#f3b740]/25 via-[#e5a83b]/12 to-transparent blur-[120px] aurora-orb-1 transform-gpu" />
       <div className="absolute top-1/3 -left-44 w-[800px] h-[800px] rounded-full bg-gradient-to-tr from-[#10b981]/20 via-[#059669]/10 to-transparent blur-[140px] aurora-orb-2 transform-gpu" />
