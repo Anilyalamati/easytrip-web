@@ -12,7 +12,12 @@ export const TripPlannerModal: React.FC = () => {
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
   const [budget, setBudget] = useState<'budget' | 'moderate' | 'luxury'>('moderate');
   const [travelStyle, setTravelStyle] = useState('Couple');
+  const [travelersCount, setTravelersCount] = useState<number>(2);
   const [interests, setInterests] = useState<string[]>(['Culture', 'Relaxation', 'Foodie']);
+  const [preferredActivities, setPreferredActivities] = useState<string[]>([
+    'Sightseeing & Landmarks',
+    'Culinary & Local Flavors'
+  ]);
   const [transport, setTransport] = useState('flight');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
@@ -108,6 +113,12 @@ export const TripPlannerModal: React.FC = () => {
     );
   };
 
+  const toggleActivity = (activity: string) => {
+    setPreferredActivities(prev => 
+      prev.includes(activity) ? prev.filter(a => a !== activity) : [...prev, activity]
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const finalDest = destination.trim();
@@ -124,7 +135,9 @@ export const TripPlannerModal: React.FC = () => {
         budget,
         travelStyle,
         interests,
-        transport
+        transport,
+        travelersCount,
+        preferredActivities
       });
     } catch (err) {
       console.error('Plan trip error:', err);
@@ -348,7 +361,13 @@ export const TripPlannerModal: React.FC = () => {
                   <button
                     key={style}
                     type="button"
-                    onClick={() => setTravelStyle(style)}
+                    onClick={() => {
+                      setTravelStyle(style);
+                      if (style === 'Solo') setTravelersCount(1);
+                      else if (style === 'Couple') setTravelersCount(2);
+                      else if (style === 'Family') setTravelersCount(4);
+                      else if (style === 'Friends') setTravelersCount(3);
+                    }}
                     className={`py-2 px-3 rounded-sm text-xs font-semibold border transition-all ${
                       travelStyle === style
                         ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] font-bold shadow-sm'
@@ -356,6 +375,34 @@ export const TripPlannerModal: React.FC = () => {
                     }`}
                   >
                     {style}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Number of Travelers */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 text-[#f3b740]" /> Number of Travelers
+                </label>
+                <span className="text-[11px] font-bold text-[#f3b740]">
+                  {travelersCount} {travelersCount === 1 ? 'Traveler' : 'Travelers'}
+                </span>
+              </div>
+              <div className="grid grid-cols-5 gap-2">
+                {[1, 2, 3, 4, 6].map(num => (
+                  <button
+                    key={num}
+                    type="button"
+                    onClick={() => setTravelersCount(num)}
+                    className={`py-2 rounded-sm text-xs font-semibold border transition-all ${
+                      travelersCount === num
+                        ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] font-bold shadow-sm'
+                        : 'bg-[#182232] text-slate-300 border-[#222d3d] hover:border-[#f3b740]/40 hover:bg-[#1f2c3f]'
+                    }`}
+                  >
+                    {num === 6 ? '5+' : num} {num === 1 ? 'Person' : 'People'}
                   </button>
                 ))}
               </div>
@@ -413,6 +460,44 @@ export const TripPlannerModal: React.FC = () => {
                       }`}
                     >
                       {isSelected ? '✓ ' : '+ '}{tag}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Preferred Activities */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-[#f3b740]" /> Preferred Activities & Experiences
+                </label>
+                <span className="text-[10px] text-slate-400">Select all that apply</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  'Sightseeing & Landmarks',
+                  'Heritage & Sacred Temples',
+                  'Beach & Water Sports',
+                  'Trekking & Mountain Trails',
+                  'Culinary & Local Flavors',
+                  'Nightlife & Lounges',
+                  'Wellness & Spa',
+                  'Photography & Sunsets'
+                ].map(activity => {
+                  const isSelected = preferredActivities.includes(activity);
+                  return (
+                    <button
+                      key={activity}
+                      type="button"
+                      onClick={() => toggleActivity(activity)}
+                      className={`px-3 py-1.5 rounded-sm text-xs font-medium border transition-all ${
+                        isSelected
+                          ? 'bg-[#f3b740]/15 border-[#f3b740]/40 text-[#f3b740] font-semibold shadow-sm'
+                          : 'bg-[#182232] border-[#222d3d] text-slate-300 hover:border-slate-600'
+                      }`}
+                    >
+                      {isSelected ? '✓ ' : '+ '}{activity}
                     </button>
                   );
                 })}

@@ -111,6 +111,7 @@ export const SafeNavigationSection: React.FC = () => {
 
   const [activeCorridor, setActiveCorridor] = useState(corridors[0]);
   const [corridorDisplayMode, setCorridorDisplayMode] = useState<'schematic' | 'elevation'>('schematic');
+  const [selectedRouteType, setSelectedRouteType] = useState<'safest' | 'fastest' | 'scenic'>('safest');
 
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${activeCorridor.origCoords.lat},${activeCorridor.origCoords.lng}&destination=${activeCorridor.destCoords.lat},${activeCorridor.destCoords.lng}`;
 
@@ -208,6 +209,48 @@ export const SafeNavigationSection: React.FC = () => {
                 <Fuel className="w-4 h-4 text-[#f3b740] shrink-0 mt-0.5" />
                 <span>{activeCorridor.restStops}</span>
               </div>
+            </div>
+
+            {/* Safety-Aware Route Mode Selector (Feature 3) */}
+            <div className="space-y-2 pt-2 border-t border-[#222d3d]">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <Route className="w-3.5 h-3.5 text-[#f3b740]" /> Route Selection Mode:
+                </span>
+                <span className="text-[10px] text-slate-400 font-semibold">EasyTrip AI Assessment</span>
+              </div>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[
+                  { id: 'safest', label: 'Safest (Rec)', badge: '98% Safe' },
+                  { id: 'fastest', label: 'Fastest', badge: 'Save 40m' },
+                  { id: 'scenic', label: 'Scenic', badge: 'Daylight' }
+                ].map(r => (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => setSelectedRouteType(r.id as any)}
+                    className={`py-1.5 px-2 rounded-sm text-xs font-bold border transition-all text-center ${
+                      selectedRouteType === r.id
+                        ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] shadow-sm'
+                        : 'bg-[#182232] text-slate-300 border-[#222d3d] hover:border-[#f3b740]/40'
+                    }`}
+                  >
+                    <div>{r.label}</div>
+                    <div className="text-[9px] font-normal opacity-80">{r.badge}</div>
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] text-slate-300 bg-[#182232]/80 p-2.5 rounded-sm border border-[#222d3d] leading-relaxed">
+                {selectedRouteType === 'safest' && (
+                  <span>★ <strong>Recommended (Safest):</strong> 4-lane divided national expressway with continuous streetlights, 24/7 highway patrol checkposts, and verified emergency trauma plazas every 45 km.</span>
+                )}
+                {selectedRouteType === 'fastest' && (
+                  <span>⚡ <strong>Fastest Route:</strong> Direct access-controlled bypass saving 35-45 minutes; higher average speed with tollway emergency crane and ambulance standby.</span>
+                )}
+                {selectedRouteType === 'scenic' && (
+                  <span>🌄 <strong>Scenic Alternative:</strong> Picturesque regional heritage corridor; daytime transit recommended (07:00 AM - 05:30 PM) for optimal visibility.</span>
+                )}
+              </p>
             </div>
 
             {/* Actions */}

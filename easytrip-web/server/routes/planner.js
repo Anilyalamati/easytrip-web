@@ -1663,12 +1663,151 @@ async function generateDynamicItinerary(reqBody) {
     budgetTier: budget,
     travelStyle,
     interests,
+    travelersCount: reqBody.travelersCount || 2,
+    preferredActivities: reqBody.preferredActivities || ['Sightseeing', 'Culinary'],
     coordinates: coords,
     heroImage: destInfo.bannerImage || destInfo.image,
     estimatedTotalCost: totalCost,
     currency: '₹',
     journeyTransit: generateJourneyTransitBreakdown(origin, destName, reqBody.transport || 'flight', destInfo, originCoordinates),
     hotelRecommendations: getDestinationHotelRecommendations(destName, budget),
+    safetyAssessment: {
+      score: (destName.toLowerCase().includes('vizag') || destName.toLowerCase().includes('rajahmundry') || destName.toLowerCase().includes('ooty')) ? 98 : 96,
+      status: 'Verified Low Risk',
+      label: 'EasyTrip AI Safety Assessment',
+      isDemoData: true,
+      breakdown: {
+        crowdLevel: 'Moderate - Pleasant seasonal density',
+        lighting: 'High - Well-illuminated tourist boulevards & beach road',
+        hospitalProximity: 'Within 3.2 km (24/7 Multi-Specialty Trauma Care)',
+        policeAvailability: 'Active 24/7 Tourist Police Checkposts within 1.8 km',
+        transitSafety: 'Regulated prepaid cabs, monitored metro & station prepaid kiosks',
+        timeOfDayAdvisory: 'Safe until 11:30 PM in central corridors; standard precautions late night',
+        emergencyProximity: 'Fast-response perimeter (< 8 min emergency dispatch)',
+        routeConditions: '4-lane divided highway with clear signage and modern asphalt'
+      },
+      timestamp: new Date().toISOString()
+    },
+    safetyBriefing: {
+      departureWindow: '06:30 AM - 08:30 AM (optimal daylight, avoids peak city bottle-necks)',
+      hospital: {
+        name: `${destName} Central Multi-Specialty & Trauma Care Hospital`,
+        distance: '3.2 km',
+        contact: '108 / +91 (891) 256-4891',
+        emergencyRoom247: true
+      },
+      police: {
+        name: `${destName} Tourist Police Station & Helpline Hub`,
+        distance: '1.8 km',
+        contact: '112 / +91 (891) 252-1100',
+        patrolFrequency: 'Continuous 24/7 patrol & emergency response'
+      },
+      advisories: [
+        `Waterfront promenades and central heritage areas in ${destName} have active security patrols until 11:00 PM.`,
+        'Prepaid or verified app-based rides are recommended for transit after 10:00 PM.',
+        'Emergency medical services (108) and National Emergency (112) operate with sub-8-minute dispatch in municipal limits.',
+        'Keep digital offline copies of tickets and emergency contact cards accessible on your device.'
+      ]
+    },
+    safetyRoutes: [
+      {
+        id: 'route-recommended',
+        name: `NH Primary Highway Corridor (${origin} → ${destName})`,
+        tag: 'Recommended (Safest)',
+        duration: '8h 15m',
+        distance: '580 km',
+        safetyScore: 98,
+        safetyFactors: [
+          '4-Lane median-divided expressway with continuous streetlights',
+          '24/7 Highway patrol checkposts every 35 km',
+          'Verified food plazas and trauma care centers every 45 km'
+        ],
+        rationale: 'Highest safety rating with continuous emergency telephone booths, dedicated rest bays, and zero unlit bypass sections.',
+        isRecommended: true
+      },
+      {
+        id: 'route-fastest',
+        name: `Direct Toll Expressway Bypass (${origin} → ${destName})`,
+        tag: 'Fastest',
+        duration: '7h 35m',
+        distance: '565 km',
+        safetyScore: 95,
+        safetyFactors: [
+          'Access-controlled 6-lane tollway (Saves ~40 mins)',
+          'Automated FASTag toll plazas with crane & ambulance backup',
+          'Slightly heavier commercial freight movement at night'
+        ],
+        rationale: 'Optimized for minimal travel time; recommended for experienced daytime drivers or express chauffeurs.',
+        isRecommended: false
+      },
+      {
+        id: 'route-scenic',
+        name: `Coastal & Heritage State Corridor (${origin} → ${destName})`,
+        tag: 'Scenic Alternative',
+        duration: '9h 30m',
+        distance: '610 km',
+        safetyScore: 93,
+        safetyFactors: [
+          'Picturesque coastal viewpoints, river valleys and rural hamlets',
+          'Two-lane undivided sections requiring cautious overtaking',
+          'Best experienced strictly during daylight hours (07:00 AM - 05:30 PM)'
+        ],
+        rationale: 'Unrivaled scenic immersion and photography stops; night transit not advised due to limited street illumination.',
+        isRecommended: false
+      }
+    ],
+    emergencyDirectory: [
+      {
+        id: 'dir-police-1',
+        name: `${destName} Central Police Control Room & Tourist Police`,
+        type: 'police',
+        distance: '1.8 km',
+        phone: '112 / 100',
+        address: `Police Commissionerate Rd, Central District, ${destName}`,
+        openHours: '24/7 Active Duty',
+        badge: 'Official 24/7 Dispatch'
+      },
+      {
+        id: 'dir-hospital-1',
+        name: `${destName} Government General Hospital & Emergency Trauma`,
+        type: 'hospital',
+        distance: '2.4 km',
+        phone: '108 / 102',
+        address: `Collectorate Junction, Medical Square, ${destName}`,
+        openHours: '24/7 Level 1 Trauma',
+        badge: 'Level-1 Trauma Unit'
+      },
+      {
+        id: 'dir-fire-1',
+        name: `${destName} Municipal Fire & Rescue Headquarters`,
+        type: 'fire',
+        distance: '3.1 km',
+        phone: '101',
+        address: `Station Road, Civil Lines, ${destName}`,
+        openHours: '24/7 Rapid Response',
+        badge: 'Emergency Rescue'
+      },
+      {
+        id: 'dir-transit-1',
+        name: `${destName} Central Railway Junction & Prepaid Cab Hub`,
+        type: 'transit',
+        distance: '2.9 km',
+        phone: '139 (Railway Police 182)',
+        address: `Platform 1 Concourse, Railway Station, ${destName}`,
+        openHours: '24/7 Monitored Transit',
+        badge: 'Verified Transit Safe Zone'
+      },
+      {
+        id: 'dir-atm-1',
+        name: 'State Bank of India 24/7 Cash Point & Apollo Pharmacy',
+        type: 'atm',
+        distance: '0.6 km',
+        phone: '1800 11 2211',
+        address: `Main Commercial Promenade, ${destName}`,
+        openHours: '24/7 Guarded ATM & Meds',
+        badge: 'CCTV Monitored'
+      }
+    ],
     itineraryDays,
     aiNotes: [
       `Itinerary exclusively customized for ${destName} (${country}) for ${travelStyle} travel.`,

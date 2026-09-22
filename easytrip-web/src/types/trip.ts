@@ -81,6 +81,67 @@ export interface JourneyTransitBreakdown {
   travelTips: string[];
 }
 
+export interface SafetyFactorBreakdown {
+  crowdLevel: string;
+  lighting: string;
+  hospitalProximity: string;
+  policeAvailability: string;
+  transitSafety: string;
+  timeOfDayAdvisory: string;
+  emergencyProximity: string;
+  routeConditions: string;
+}
+
+export interface SafetyAssessment {
+  score: number;
+  status: string;
+  label: string;
+  isDemoData: boolean;
+  breakdown: SafetyFactorBreakdown;
+  timestamp: string;
+}
+
+export interface SafetyBriefing {
+  departureWindow: string;
+  hospital: {
+    name: string;
+    distance: string;
+    contact: string;
+    emergencyRoom247: boolean;
+  };
+  police: {
+    name: string;
+    distance: string;
+    contact: string;
+    patrolFrequency: string;
+  };
+  advisories: string[];
+}
+
+export interface SafetyAwareRouteOption {
+  id: string;
+  name: string;
+  tag: 'Recommended (Safest)' | 'Fastest' | 'Scenic Alternative';
+  duration: string;
+  distance: string;
+  safetyScore: number;
+  safetyFactors: string[];
+  rationale: string;
+  isRecommended?: boolean;
+}
+
+export interface EmergencyDirectoryItem {
+  id: string;
+  name: string;
+  type: 'police' | 'hospital' | 'fire' | 'transit' | 'atm';
+  distance: string;
+  phone: string;
+  address: string;
+  openHours: string;
+  badge?: string;
+  coordinates?: Coordinates;
+}
+
 export interface TripItinerary {
   id: string;
   destination: string;
@@ -93,6 +154,8 @@ export interface TripItinerary {
   budgetTier: 'budget' | 'moderate' | 'luxury';
   travelStyle: string;
   interests: string[];
+  travelersCount?: number;
+  preferredActivities?: string[];
   coordinates: Coordinates;
   heroImage: string;
   estimatedTotalCost: number;
@@ -102,6 +165,10 @@ export interface TripItinerary {
   preferredTransport?: string;
   journeyTransit?: JourneyTransitBreakdown;
   hotelRecommendations?: HotelRecommendation[];
+  safetyAssessment?: SafetyAssessment;
+  safetyBriefing?: SafetyBriefing;
+  safetyRoutes?: SafetyAwareRouteOption[];
+  emergencyDirectory?: EmergencyDirectoryItem[];
   savedAt?: string;
 }
 

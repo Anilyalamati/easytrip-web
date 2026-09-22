@@ -25,6 +25,7 @@ export const QuickPlannerBar: React.FC = () => {
   const [days, setDays] = useState(3);
   const [budget, setBudget] = useState<'budget' | 'moderate' | 'luxury'>('moderate');
   const [travelStyle, setTravelStyle] = useState('Couple');
+  const [travelersCount, setTravelersCount] = useState<number>(2);
   const [transport, setTransport] = useState('flight');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
@@ -98,7 +99,9 @@ export const QuickPlannerBar: React.FC = () => {
         days,
         budget,
         travelStyle,
+        travelersCount,
         interests: ['Culture', 'Relaxation', 'Foodie'],
+        preferredActivities: ['Sightseeing & Landmarks', 'Culinary & Local Flavors'],
         transport
       });
     } catch (err) {
@@ -200,8 +203,8 @@ export const QuickPlannerBar: React.FC = () => {
               ))}
             </div>
 
-            {/* Middle Grid: Duration, Budget, Transport */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2 border-t border-[#222d3d]">
+            {/* Middle Grid: Duration, Budget, Travelers, Transport */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 border-t border-[#222d3d]">
               
               {/* Duration Pills */}
               <div className="space-y-2">
@@ -221,7 +224,7 @@ export const QuickPlannerBar: React.FC = () => {
                           : 'bg-[#161e2b] text-[#cbd5e1] border-[#222d3d] hover:border-[#f3b740]/40'
                       }`}
                     >
-                      {num} Days
+                      {num}d
                     </button>
                   ))}
                 </div>
@@ -231,7 +234,7 @@ export const QuickPlannerBar: React.FC = () => {
               <div className="space-y-2">
                 <label className="block text-xs font-bold text-[#cbd5e1] flex items-center gap-1.5">
                   <DollarSign className="w-3.5 h-3.5 text-[#34d399]" />
-                  Budget Tier (INR ₹)
+                  Budget Tier (₹)
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
                   {[
@@ -255,11 +258,35 @@ export const QuickPlannerBar: React.FC = () => {
                 </div>
               </div>
 
+              {/* Travelers */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold text-[#cbd5e1] flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 text-[#f3b740]" />
+                  Travelers ({travelersCount})
+                </label>
+                <div className="grid grid-cols-4 gap-1.5">
+                  {[1, 2, 4, 6].map(num => (
+                    <button
+                      key={num}
+                      type="button"
+                      onClick={() => setTravelersCount(num)}
+                      className={`py-2 text-center rounded-sm text-xs font-bold border transition-all ${
+                        travelersCount === num
+                          ? 'bg-[#f3b740] text-[#0e131f] border-[#f3b740] shadow-[0_0_12px_rgba(243,183,64,0.3)]'
+                          : 'bg-[#161e2b] text-[#cbd5e1] border-[#222d3d] hover:border-[#f3b740]/40'
+                      }`}
+                    >
+                      {num === 6 ? '5+' : num} {num === 1 ? 'Pax' : 'Pax'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Preferred Transport */}
               <div className="space-y-2">
                 <label className="block text-xs font-bold text-[#cbd5e1] flex items-center gap-1.5">
                   <Car className="w-3.5 h-3.5 text-[#f3b740]" />
-                  Preferred Transport
+                  Transport
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
                   {[

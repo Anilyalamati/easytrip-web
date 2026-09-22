@@ -8,6 +8,9 @@ import { FeaturedDestinations } from './components/dashboard/FeaturedDestination
 import { SafeNavigationSection } from './components/dashboard/SafeNavigationSection';
 import { AiAssistantSection } from './components/dashboard/AiAssistantSection';
 import { TripStats } from './components/dashboard/TripStats';
+import { HowItWorksSection } from './components/dashboard/HowItWorksSection';
+import { ActiveJourneyBanner } from './components/dashboard/ActiveJourneyBanner';
+import { FloatingAssistant } from './components/assistant/FloatingAssistant';
 import { SafetySosWidget } from './components/dashboard/SafetySosWidget';
 import { ItineraryView } from './components/itinerary/ItineraryView';
 import { RouteMap } from './components/map/RouteMap';
@@ -39,9 +42,11 @@ export const App: React.FC = () => {
       <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         {activeView === 'dashboard' && (
           <>
+            <ActiveJourneyBanner />
             <HeroBanner />
             <QuickPlannerBar />
             <TripStats />
+            <HowItWorksSection />
             <FeaturedDestinations />
             <SafeNavigationSection />
             <AiAssistantSection />
@@ -53,6 +58,9 @@ export const App: React.FC = () => {
         {activeView === 'booking' && <BookingHub />}
         {activeView === 'map' && <RouteMap />}
       </main>
+
+      {/* Floating AI Travel Concierge (Feature 4) */}
+      <FloatingAssistant />
 
       {/* Global Modals */}
       <TripPlannerModal />

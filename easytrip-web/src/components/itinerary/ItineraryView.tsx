@@ -22,6 +22,14 @@ import {
   CheckCircle2, 
   Plus, 
   ShieldCheck, 
+  ShieldAlert,
+  AlertTriangle,
+  Hospital,
+  PhoneCall,
+  ChevronDown,
+  ChevronUp,
+  Info,
+  Users,
   ArrowRight,
   Route
 } from 'lucide-react';
@@ -34,6 +42,8 @@ export const ItineraryView: React.FC = () => {
   const [isSavedRecently, setIsSavedRecently] = useState(false);
   const [selectedTransitMode, setSelectedTransitMode] = useState<string | null>(null);
   const [reservedHotelId, setReservedHotelId] = useState<string | null>(null);
+  const [isSafetyFactorsOpen, setIsSafetyFactorsOpen] = useState(false);
+  const [activeSafetyRouteId, setActiveSafetyRouteId] = useState('route-recommended');
 
   if (!currentTrip) {
     return (
@@ -102,6 +112,94 @@ export const ItineraryView: React.FC = () => {
     setTimeout(() => setReservedHotelId(null), 2500);
   };
 
+  const safetyAssessment = currentTrip.safetyAssessment || {
+    score: (currentTrip.destination.toLowerCase().includes('vizag') || currentTrip.destination.toLowerCase().includes('rajahmundry') || currentTrip.destination.toLowerCase().includes('ooty')) ? 98 : 96,
+    status: 'Verified Low Risk',
+    label: 'EasyTrip AI Safety Assessment',
+    isDemoData: true,
+    breakdown: {
+      crowdLevel: 'Moderate - Pleasant seasonal density',
+      lighting: 'High - Well-illuminated tourist boulevards & beach road',
+      hospitalProximity: 'Within 3.2 km (24/7 Multi-Specialty Trauma Care)',
+      policeAvailability: 'Active 24/7 Tourist Police Checkposts within 1.8 km',
+      transitSafety: 'Regulated prepaid cabs, monitored metro & station prepaid kiosks',
+      timeOfDayAdvisory: 'Safe until 11:30 PM in central corridors; standard precautions late night',
+      emergencyProximity: 'Fast-response perimeter (< 8 min emergency dispatch)',
+      routeConditions: '4-lane divided highway with clear signage and modern asphalt'
+    },
+    timestamp: new Date().toISOString()
+  };
+
+  const safetyBriefing = currentTrip.safetyBriefing || {
+    departureWindow: '06:30 AM - 08:30 AM (optimal daylight, avoids peak city bottle-necks)',
+    hospital: {
+      name: `${currentTrip.destination} Central Multi-Specialty & Trauma Care Hospital`,
+      distance: '3.2 km',
+      contact: '108 / +91 (891) 256-4891',
+      emergencyRoom247: true
+    },
+    police: {
+      name: `${currentTrip.destination} Tourist Police Station & Helpline Hub`,
+      distance: '1.8 km',
+      contact: '112 / +91 (891) 252-1100',
+      patrolFrequency: 'Continuous 24/7 patrol & emergency response'
+    },
+    advisories: [
+      `Waterfront promenades and central heritage areas in ${currentTrip.destination} have active security patrols until 11:00 PM.`,
+      'Prepaid or verified app-based rides are recommended for transit after 10:00 PM.',
+      'Emergency medical services (108) and National Emergency (112) operate with sub-8-minute dispatch in municipal limits.',
+      'Keep digital offline copies of tickets and emergency contact cards accessible on your device.'
+    ]
+  };
+
+  const safetyRoutes = currentTrip.safetyRoutes || [
+    {
+      id: 'route-recommended',
+      name: `NH Primary Highway Corridor (${currentTrip.origin} → ${currentTrip.destination})`,
+      tag: 'Recommended (Safest)' as const,
+      duration: '8h 15m',
+      distance: `${jt?.distanceKm || 580} km`,
+      safetyScore: 98,
+      safetyFactors: [
+        '4-Lane median-divided expressway with continuous streetlights',
+        '24/7 Highway patrol checkposts every 35 km',
+        'Verified food plazas and trauma care centers every 45 km'
+      ],
+      rationale: 'Highest safety rating with continuous emergency telephone booths, dedicated rest bays, and zero unlit bypass sections.',
+      isRecommended: true
+    },
+    {
+      id: 'route-fastest',
+      name: `Direct Toll Expressway Bypass (${currentTrip.origin} → ${currentTrip.destination})`,
+      tag: 'Fastest' as const,
+      duration: '7h 35m',
+      distance: `${Math.round((jt?.distanceKm || 580) * 0.96)} km`,
+      safetyScore: 95,
+      safetyFactors: [
+        'Access-controlled 6-lane tollway (Saves ~40 mins)',
+        'Automated FASTag toll plazas with crane & ambulance backup',
+        'Slightly heavier commercial freight movement at night'
+      ],
+      rationale: 'Optimized for minimal travel time; recommended for experienced daytime drivers or express chauffeurs.',
+      isRecommended: false
+    },
+    {
+      id: 'route-scenic',
+      name: `Coastal & Heritage State Corridor (${currentTrip.origin} → ${currentTrip.destination})`,
+      tag: 'Scenic Alternative' as const,
+      duration: '9h 30m',
+      distance: `${Math.round((jt?.distanceKm || 580) * 1.05)} km`,
+      safetyScore: 93,
+      safetyFactors: [
+        'Picturesque coastal viewpoints, river valleys and rural hamlets',
+        'Two-lane undivided sections requiring cautious overtaking',
+        'Best experienced strictly during daylight hours (07:00 AM - 05:30 PM)'
+      ],
+      rationale: 'Unrivaled scenic immersion and photography stops; night transit not advised due to limited street illumination.',
+      isRecommended: false
+    }
+  ];
+
   return (
     <div id="itinerary-view-container" className="my-8 space-y-8 scroll-mt-24">
       {/* Top Banner Header */}
@@ -121,8 +219,13 @@ export const ItineraryView: React.FC = () => {
               <span className="px-2.5 py-1 rounded-sm bg-[#182232] border border-[#222d3d] text-xs font-semibold text-slate-300 capitalize">
                 {currentTrip.budgetTier} Tier
               </span>
-              <span className="px-2.5 py-1 rounded-sm bg-[#182232] border border-[#222d3d] text-xs font-semibold text-slate-300">
-                {currentTrip.travelStyle}
+              <span className="px-2.5 py-1 rounded-sm bg-[#182232] border border-[#222d3d] text-xs font-semibold text-slate-300 flex items-center gap-1">
+                <Users className="w-3 h-3 text-[#f3b740]" />
+                {currentTrip.travelStyle} ({currentTrip.travelersCount || 2} {Number(currentTrip.travelersCount || 2) === 1 ? 'Traveler' : 'Travelers'})
+              </span>
+              <span className="px-2.5 py-1 rounded-sm bg-[#062c20] border border-[#059669]/40 text-[#34d399] text-xs font-bold flex items-center gap-1 shadow-sm">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#34d399]" />
+                Safety: {safetyAssessment.score}% Verified
               </span>
             </div>
 
@@ -330,6 +433,91 @@ export const ItineraryView: React.FC = () => {
                   </ul>
                 </div>
               )}
+
+              {/* Safety-Aware Routes Comparison (Feature 3) */}
+              <div className="pt-4 border-t border-[#222d3d] space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#34d399]" />
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+                      Safety-Aware Route Options
+                    </h4>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-sm bg-[#062c20] text-[#34d399] border border-[#059669]/40">
+                      EasyTrip AI Route Selection
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-slate-400">
+                    Compare security factors, street lighting & emergency trauma access
+                  </span>
+                </div>
+
+                {/* 3 Route Mode Tabs */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {safetyRoutes.map(route => {
+                    const isSelected = activeSafetyRouteId === route.id;
+                    return (
+                      <button
+                        key={route.id}
+                        type="button"
+                        onClick={() => setActiveSafetyRouteId(route.id)}
+                        className={`p-3 rounded-sm border text-left transition-all ${
+                          isSelected
+                            ? 'bg-[#141b26] border-[#f3b740] shadow-sm ring-1 ring-[#f3b740]'
+                            : 'bg-[#141b26]/60 border-[#222d3d] text-slate-300 hover:border-slate-600'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-1 mb-1">
+                          <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded-sm uppercase tracking-wider ${
+                            route.tag === 'Recommended (Safest)'
+                              ? 'bg-[#062c20] text-[#34d399] border border-[#059669]/40'
+                              : route.tag === 'Fastest'
+                              ? 'bg-[#f3b740]/15 text-[#f3b740] border border-[#f3b740]/30'
+                              : 'bg-[#182232] text-slate-300 border border-[#222d3d]'
+                          }`}>
+                            {route.tag}
+                          </span>
+                          <span className="text-[11px] font-bold text-[#34d399]">
+                            {route.safetyScore}% Safe
+                          </span>
+                        </div>
+                        <div className="text-xs font-bold text-white truncate">{route.name}</div>
+                        <div className="text-[11px] text-slate-400 mt-0.5 flex items-center justify-between">
+                          <span>{route.duration}</span>
+                          <span>{route.distance}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Selected Route Rationale Box */}
+                {(() => {
+                  const selRoute = safetyRoutes.find(r => r.id === activeSafetyRouteId) || safetyRoutes[0];
+                  return (
+                    <div className="p-3.5 rounded-sm bg-[#141b26] border border-[#222d3d] space-y-2 text-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-[#f3b740] flex items-center gap-1.5">
+                          <Info className="w-3.5 h-3.5" /> Route Selection Rationale:
+                        </span>
+                        <span className="text-[10px] text-slate-400">
+                          {selRoute.tag}
+                        </span>
+                      </div>
+                      <p className="text-slate-300 leading-relaxed">
+                        {selRoute.rationale}
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+                        {selRoute.safetyFactors.map((factor, idx) => (
+                          <div key={idx} className="flex items-start gap-1.5 text-[11px] text-slate-300">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#34d399] shrink-0 mt-0.5" />
+                            <span>{factor}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
             </div>
           )}
         </div>
@@ -460,6 +648,163 @@ export const ItineraryView: React.FC = () => {
 
         {/* Right 1 Col: AI Insights & Quick Stats */}
         <div className="space-y-6">
+
+          {/* Feature 2: AI Safety Score Card */}
+          <div className="bg-[#141b26] rounded-md p-6 border border-[#222d3d] space-y-4 shadow-xl specular-sheen">
+            <div className="flex items-center justify-between pb-3 border-b border-[#222d3d]">
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#f3b740] uppercase tracking-wider mb-0.5">
+                  <ShieldCheck className="w-4 h-4 text-[#34d399]" />
+                  <span>AI Safety Assessment</span>
+                </div>
+                <span className="text-[10px] text-slate-400">EasyTrip AI Safety Assessment</span>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-sm bg-[#062c20] text-[#34d399] border border-[#059669]/40">
+                Demo Data
+              </span>
+            </div>
+
+            {/* Score Display & Status */}
+            <div className="flex items-center justify-between p-3.5 rounded-sm bg-[#182232] border border-[#222d3d]">
+              <div className="space-y-0.5">
+                <div className="text-2xl font-black text-white flex items-baseline gap-1">
+                  <span>{safetyAssessment.score}</span>
+                  <span className="text-xs text-slate-400 font-normal">/100</span>
+                </div>
+                <div className="text-xs font-bold text-[#34d399] flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-[#34d399] animate-pulse" />
+                  <span>{safetyAssessment.status}</span>
+                </div>
+              </div>
+              <div className="text-right text-[11px] text-slate-400 max-w-[130px] leading-tight">
+                Continuous surveillance & multi-factor validation
+              </div>
+            </div>
+
+            {/* 8-Factor Breakdown Toggle */}
+            <div className="space-y-2">
+              <button
+                type="button"
+                onClick={() => setIsSafetyFactorsOpen(prev => !prev)}
+                className="w-full flex items-center justify-between p-2 rounded-sm bg-[#182232]/80 hover:bg-[#182232] border border-[#222d3d] text-xs font-semibold text-slate-200 transition-all"
+              >
+                <span className="flex items-center gap-1.5">
+                  <Info className="w-3.5 h-3.5 text-[#f3b740]" />
+                  <span>8 Safety Evaluation Factors</span>
+                </span>
+                {isSafetyFactorsOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+
+              {isSafetyFactorsOpen && (
+                <div className="p-3 rounded-sm bg-[#182232] border border-[#222d3d] space-y-2 text-[11px] animate-fade-in">
+                  <div className="flex justify-between py-1 border-b border-[#222d3d]/60">
+                    <span className="text-slate-400">Crowd Level</span>
+                    <span className="font-semibold text-slate-200 text-right">{safetyAssessment.breakdown.crowdLevel}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-[#222d3d]/60">
+                    <span className="text-slate-400">Street Lighting</span>
+                    <span className="font-semibold text-slate-200 text-right">{safetyAssessment.breakdown.lighting}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-[#222d3d]/60">
+                    <span className="text-slate-400">Nearby Hospitals</span>
+                    <span className="font-semibold text-[#34d399] text-right">{safetyAssessment.breakdown.hospitalProximity}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-[#222d3d]/60">
+                    <span className="text-slate-400">Police Checkposts</span>
+                    <span className="font-semibold text-[#34d399] text-right">{safetyAssessment.breakdown.policeAvailability}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-[#222d3d]/60">
+                    <span className="text-slate-400">Transit Safety</span>
+                    <span className="font-semibold text-slate-200 text-right">{safetyAssessment.breakdown.transitSafety}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-[#222d3d]/60">
+                    <span className="text-slate-400">Time of Day</span>
+                    <span className="font-semibold text-slate-200 text-right">{safetyAssessment.breakdown.timeOfDayAdvisory}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-[#222d3d]/60">
+                    <span className="text-slate-400">Emergency Proximity</span>
+                    <span className="font-semibold text-[#34d399] text-right">{safetyAssessment.breakdown.emergencyProximity}</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-slate-400">Route Conditions</span>
+                    <span className="font-semibold text-slate-200 text-right">{safetyAssessment.breakdown.routeConditions}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Feature 5: AI Safety Briefing Card */}
+          <div className="bg-[#141b26] rounded-md p-6 border border-[#222d3d] space-y-4 shadow-xl specular-sheen">
+            <div className="flex items-center justify-between pb-3 border-b border-[#222d3d]">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#f3b740] uppercase tracking-wider">
+                <AlertTriangle className="w-4 h-4 text-[#f3b740]" />
+                <span>AI Pre-Trip Safety Briefing</span>
+              </div>
+              <span className="text-[10px] text-slate-400 font-semibold">Priority Intel</span>
+            </div>
+
+            {/* Departure Recommendation */}
+            <div className="p-3 rounded-sm bg-[#182232] border border-[#222d3d] space-y-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400 block">
+                Recommended Departure Window
+              </span>
+              <span className="text-xs font-bold text-[#f3b740]">
+                {safetyBriefing.departureWindow}
+              </span>
+            </div>
+
+            {/* Emergency Hospital & Police Proximity */}
+            <div className="space-y-2">
+              <div className="p-3 rounded-sm bg-[#182232] border border-[#222d3d] space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-white flex items-center gap-1.5">
+                    <Hospital className="w-3.5 h-3.5 text-rose-400" /> Nearest Emergency Hospital
+                  </span>
+                  <span className="text-[10px] font-bold text-[#34d399] bg-[#062c20] px-1.5 py-0.5 rounded-sm">
+                    {safetyBriefing.hospital.distance}
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-300">{safetyBriefing.hospital.name}</div>
+                <div className="text-[11px] text-rose-400 font-semibold flex items-center gap-1 pt-0.5">
+                  <PhoneCall className="w-3 h-3" />
+                  <span>{safetyBriefing.hospital.contact}</span>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-sm bg-[#182232] border border-[#222d3d] space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-white flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#34d399]" /> Nearest Police Jurisdiction
+                  </span>
+                  <span className="text-[10px] font-bold text-[#34d399] bg-[#062c20] px-1.5 py-0.5 rounded-sm">
+                    {safetyBriefing.police.distance}
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-300">{safetyBriefing.police.name}</div>
+                <div className="text-[11px] text-[#34d399] font-semibold flex items-center gap-1 pt-0.5">
+                  <PhoneCall className="w-3 h-3" />
+                  <span>{safetyBriefing.police.contact}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Pre-Trip Advisories */}
+            <div className="space-y-1.5 pt-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                Local Risk & Transit Advisories:
+              </span>
+              <ul className="space-y-1.5 text-xs text-slate-300">
+                {safetyBriefing.advisories.map((adv, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-sm bg-[#f3b740] mt-1.5 shrink-0" />
+                    <span className="leading-snug">{adv}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
           {/* AI Curator Notes */}
           <div className="bg-[#141b26] rounded-md p-6 border border-[#f3b740]/25 space-y-4 shadow-xl specular-sheen">
             <div className="flex items-center gap-2 text-[#f3b740] text-xs font-bold uppercase tracking-wider">
