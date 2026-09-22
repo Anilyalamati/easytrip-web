@@ -1,5 +1,6 @@
 import React from 'react';
 import { Compass, ShieldCheck, MapPin, Zap } from 'lucide-react';
+import { ScrollReveal } from '../common/ScrollReveal';
 
 export const TripStats: React.FC = () => {
   const stats = [
@@ -35,7 +36,7 @@ export const TripStats: React.FC = () => {
         {stats.map((s, idx) => {
           const Icon = s.icon;
           return (
-            <div key={idx} className="flex flex-col space-y-2">
+            <ScrollReveal key={idx} index={idx} staggerMs={120} className="flex flex-col space-y-2">
               <div className="w-12 h-12 rounded-sm bg-[#182232] border border-[#222d3d] flex items-center justify-center text-[#f3b740] mb-1 shadow-sm">
                 <Icon className="w-6 h-6" />
               </div>
@@ -48,7 +49,7 @@ export const TripStats: React.FC = () => {
               <p className="text-xs text-[#94a3b8] leading-relaxed">
                 {s.desc}
               </p>
-            </div>
+            </ScrollReveal>
           );
         })}
       </div>

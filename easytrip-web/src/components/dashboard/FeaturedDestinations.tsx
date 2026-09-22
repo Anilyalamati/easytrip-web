@@ -19,6 +19,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { Destination } from '../../types/trip';
+import { ScrollReveal } from '../common/ScrollReveal';
 
 export const FeaturedDestinations: React.FC = () => {
   const { destinations, openPlannerWithDestination } = useTrip();
@@ -185,93 +186,99 @@ export const FeaturedDestinations: React.FC = () => {
         }`}
         style={{ scrollBehavior: isMouseDown ? 'auto' : 'smooth' }}
       >
-        {filtered.map((dest: Destination) => (
-          <div
+        {filtered.map((dest: Destination, idx: number) => (
+          <ScrollReveal
             key={dest.id}
-            className="group surface-card rounded-md overflow-hidden border border-[#222d3d] hover:border-[#f3b740]/50 transition-all duration-300 flex flex-col justify-between interactive-card min-w-[290px] sm:min-w-[340px] max-w-[340px] shrink-0 bg-[#141b26]"
+            index={idx}
+            staggerMs={90}
+            className="min-w-[290px] sm:min-w-[340px] max-w-[340px] shrink-0 flex flex-col"
           >
-            {/* Top Image Container with Zoom & Blur Mask */}
-            <div 
-              className="relative h-56 w-full overflow-hidden cursor-pointer"
-              onClick={() => setInspectedDest(dest)}
+            <div
+              className="group surface-card rounded-md overflow-hidden border border-[#222d3d] hover:border-[#f3b740]/50 transition-all duration-300 flex flex-col justify-between interactive-card w-full h-full bg-[#141b26]"
             >
-              <img
-                src={dest.image}
-                alt={(dest.imageAlt || (dest.id === 'vizag' || dest.name.toLowerCase().includes('visakhapatnam') ? 'RK Beach Promenade, Visakhapatnam' : dest.name))}
-                className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/90 via-[#08090c]/25 to-transparent" />
-              
-              {/* Badge */}
-              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-sm bg-[#0b0e14]/90 backdrop-blur-md text-[10px] font-extrabold text-[#f3b740] shadow-sm uppercase tracking-wider border border-[#222d3d]">
-                {dest.badge}
-              </span>
+              {/* Top Image Container with Zoom & Blur Mask */}
+              <div 
+                className="relative h-56 w-full overflow-hidden cursor-pointer"
+                onClick={() => setInspectedDest(dest)}
+              >
+                <img
+                  src={dest.image}
+                  alt={(dest.imageAlt || (dest.id === 'vizag' || dest.name.toLowerCase().includes('visakhapatnam') ? 'RK Beach Promenade, Visakhapatnam' : dest.name))}
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/90 via-[#08090c]/25 to-transparent" />
+                
+                {/* Badge */}
+                <span className="absolute top-3 left-3 px-2 py-0.5 rounded-sm bg-[#0b0e14]/90 backdrop-blur-md text-[10px] font-extrabold text-[#f3b740] shadow-sm uppercase tracking-wider border border-[#222d3d]">
+                  {dest.badge}
+                </span>
 
-              {/* Rating */}
-              <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-sm bg-[#0b0e14]/90 backdrop-blur-md text-xs font-extrabold text-[#f1f5f9] shadow-sm border border-[#222d3d]">
-                <Star className="w-3 h-3 text-[#f3b740] fill-[#f3b740]" />
-                <span>{dest.rating}</span>
+                {/* Rating */}
+                <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-sm bg-[#0b0e14]/90 backdrop-blur-md text-xs font-extrabold text-[#f1f5f9] shadow-sm border border-[#222d3d]">
+                  <Star className="w-3 h-3 text-[#f3b740] fill-[#f3b740]" />
+                  <span>{dest.rating}</span>
+                </div>
+
+                {/* Destination & Country at Bottom of Image */}
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <h3 className="text-xl font-black tracking-tight flex items-center gap-1.5 text-[#f1f5f9]">
+                    <MapPin className="w-4 h-4 text-[#34d399]" />
+                    {dest.name}
+                  </h3>
+                  <p className="text-xs text-[#94a3b8] font-medium">{dest.country}</p>
+                </div>
               </div>
 
-              {/* Destination & Country at Bottom of Image */}
-              <div className="absolute bottom-3 left-3 right-3 text-white">
-                <h3 className="text-xl font-black tracking-tight flex items-center gap-1.5 text-[#f1f5f9]">
-                  <MapPin className="w-4 h-4 text-[#34d399]" />
-                  {dest.name}
-                </h3>
-                <p className="text-xs text-[#94a3b8] font-medium">{dest.country}</p>
-              </div>
-            </div>
+              {/* Details Content */}
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <p className="text-xs text-[#94a3b8] line-clamp-2 leading-relaxed">
+                  {dest.tagline}
+                </p>
 
-            {/* Details Content */}
-            <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <p className="text-xs text-[#94a3b8] line-clamp-2 leading-relaxed">
-                {dest.tagline}
-              </p>
+                {/* Highlights tags */}
+                <div className="flex flex-wrap gap-1.5">
+                  {dest.highlights.slice(0, 3).map((hl: string) => (
+                    <span
+                      key={hl}
+                      className="text-[10px] font-semibold px-2 py-0.5 rounded-sm bg-[#182232] text-[#cbd5e1] border border-[#222d3d]"
+                    >
+                      {hl}
+                    </span>
+                  ))}
+                </div>
 
-              {/* Highlights tags */}
-              <div className="flex flex-wrap gap-1.5">
-                {dest.highlights.slice(0, 3).map((hl: string) => (
-                  <span
-                    key={hl}
-                    className="text-[10px] font-semibold px-2 py-0.5 rounded-sm bg-[#182232] text-[#cbd5e1] border border-[#222d3d]"
+                {/* Stats Row */}
+                <div className="pt-3 border-t border-[#222d3d] flex items-center justify-between text-xs text-[#94a3b8]">
+                  <div className="flex items-center gap-1 font-semibold text-[#cbd5e1]">
+                    <Calendar className="w-3.5 h-3.5 text-[#f3b740]" />
+                    <span>{dest.idealDays}</span>
+                  </div>
+                  {/* Forest Emerald Price Chip */}
+                  <div className="flex items-center gap-0.5 font-bold px-2 py-0.5 rounded-sm bg-[#062c20] text-[#34d399] border border-[#059669]/40">
+                    <IndianRupee className="w-3.5 h-3.5" />
+                    <span>₹{dest.avgCostPerDay.moderate.toLocaleString('en-IN')}/day</span>
+                  </div>
+                </div>
+
+                {/* Dual Action Buttons */}
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => setInspectedDest(dest)}
+                    className="py-2.5 rounded-sm bg-[#182232] hover:bg-[#222d3d] text-[#cbd5e1] font-bold text-xs tracking-normal transition-all text-center active:scale-95 border border-[#222d3d]"
                   >
-                    {hl}
-                  </span>
-                ))}
-              </div>
-
-              {/* Stats Row */}
-              <div className="pt-3 border-t border-[#222d3d] flex items-center justify-between text-xs text-[#94a3b8]">
-                <div className="flex items-center gap-1 font-semibold text-[#cbd5e1]">
-                  <Calendar className="w-3.5 h-3.5 text-[#f3b740]" />
-                  <span>{dest.idealDays}</span>
+                    Quick Inspect
+                  </button>
+                  <button
+                    onClick={() => openPlannerWithDestination(dest.name)}
+                    className="py-2.5 rounded-sm bg-[#f3b740] hover:bg-[#e5a83b] text-[#0e131f] font-bold text-xs tracking-normal transition-all flex items-center justify-center gap-1 shadow-[0_0_12px_rgba(243,183,64,0.25)] active:scale-95"
+                  >
+                    <span>Plan Trip</span>
+                    <ArrowRight className="w-3 h-3 text-[#0e131f]" />
+                  </button>
                 </div>
-                {/* Forest Emerald Price Chip */}
-                <div className="flex items-center gap-0.5 font-bold px-2 py-0.5 rounded-sm bg-[#062c20] text-[#34d399] border border-[#059669]/40">
-                  <IndianRupee className="w-3.5 h-3.5" />
-                  <span>₹{dest.avgCostPerDay.moderate.toLocaleString('en-IN')}/day</span>
-                </div>
-              </div>
-
-              {/* Dual Action Buttons */}
-              <div className="grid grid-cols-2 gap-2 pt-1">
-                <button
-                  onClick={() => setInspectedDest(dest)}
-                  className="py-2.5 rounded-sm bg-[#182232] hover:bg-[#222d3d] text-[#cbd5e1] font-bold text-xs tracking-normal transition-all text-center active:scale-95 border border-[#222d3d]"
-                >
-                  Quick Inspect
-                </button>
-                <button
-                  onClick={() => openPlannerWithDestination(dest.name)}
-                  className="py-2.5 rounded-sm bg-[#f3b740] hover:bg-[#e5a83b] text-[#0e131f] font-bold text-xs tracking-normal transition-all flex items-center justify-center gap-1 shadow-[0_0_12px_rgba(243,183,64,0.25)] active:scale-95"
-                >
-                  <span>Plan Trip</span>
-                  <ArrowRight className="w-3 h-3 text-[#0e131f]" />
-                </button>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         ))}
       </div>
 

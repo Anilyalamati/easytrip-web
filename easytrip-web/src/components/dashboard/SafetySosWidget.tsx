@@ -13,6 +13,7 @@ import {
   XCircle, 
   RefreshCw 
 } from 'lucide-react';
+import { ScrollReveal } from '../common/ScrollReveal';
 
 export const SafetySosWidget: React.FC = () => {
   const { setIsSosOpen, currentTrip } = useTrip();
@@ -257,23 +258,27 @@ export const SafetySosWidget: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {contacts.map((c, idx) => (
-              <div
+              <ScrollReveal
                 key={idx}
-                className="p-4 rounded-md bg-[#182232] border border-[#222d3d] shadow-sm flex flex-col justify-between space-y-3"
+                index={idx}
+                staggerMs={110}
+                className="flex flex-col h-full"
               >
-                <div>
-                  <div className="text-xs font-bold text-[#f1f5f9]">{c.title}</div>
-                  <div className="text-[11px] text-[#94a3b8] mt-0.5">{c.desc}</div>
-                </div>
+                <div className="p-4 rounded-md bg-[#182232] border border-[#222d3d] shadow-sm flex flex-col justify-between space-y-3 h-full">
+                  <div>
+                    <div className="text-xs font-bold text-[#f1f5f9]">{c.title}</div>
+                    <div className="text-[11px] text-[#94a3b8] mt-0.5">{c.desc}</div>
+                  </div>
 
-                <a
-                  href={`tel:${c.number.split(' ')[0]}`}
-                  className="flex items-center justify-between px-3 py-2 rounded-sm bg-[#141b26] hover:bg-[#222d3d] border border-[#222d3d] text-[#f1f5f9] hover:text-[#f3b740] text-xs font-bold transition-all"
-                >
-                  <span>{c.number}</span>
-                  <PhoneCall className="w-3.5 h-3.5 text-[#f3b740]" />
-                </a>
-              </div>
+                  <a
+                    href={`tel:${c.number.split(' ')[0]}`}
+                    className="flex items-center justify-between px-3 py-2 rounded-sm bg-[#141b26] hover:bg-[#222d3d] border border-[#222d3d] text-[#f1f5f9] hover:text-[#f3b740] text-xs font-bold transition-all"
+                  >
+                    <span>{c.number}</span>
+                    <PhoneCall className="w-3.5 h-3.5 text-[#f3b740]" />
+                  </a>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

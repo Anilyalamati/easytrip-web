@@ -26,6 +26,7 @@ import {
   Route
 } from 'lucide-react';
 import { TransitOption, HotelRecommendation } from '../../types/trip';
+import { ScrollReveal } from '../common/ScrollReveal';
 
 export const ItineraryView: React.FC = () => {
   const { currentTrip, saveCurrentTrip, savedTrips, setActiveView, setIsPlannerOpen, addToCart, cart } = useTrip();
@@ -371,68 +372,75 @@ export const ItineraryView: React.FC = () => {
             {currentTrip.hotelRecommendations.map((hotel, idx) => {
               const inCart = cart.some(i => i.title === hotel.name) || reservedHotelId === hotel.name;
               return (
-                <div
+                <ScrollReveal
                   key={idx}
-                  className="rounded-md bg-[#182232] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all flex flex-col justify-between overflow-hidden group shadow-md specular-sheen"
+                  index={idx}
+                  staggerMs={110}
+                  className="h-full flex flex-col"
                 >
-                  <div>
-                    <div className="relative h-44 w-full overflow-hidden">
-                      <img
-                        src={hotel.image}
-                        alt={hotel.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-sm bg-[#0b0e14]/85 text-[10px] font-bold text-[#f3b740] border border-[#f3b740]/30 uppercase">
-                        {hotel.badge}
-                      </span>
-                      <div className="absolute top-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-sm bg-[#0b0e14]/85 text-xs font-bold text-white">
-                        <Star className="w-3 h-3 text-[#f3b740] fill-[#f3b740]" />
-                        <span>{hotel.rating}</span>
-                      </div>
-                    </div>
-
-                    <div className="p-4 space-y-2">
-                      <h4 className="text-base font-bold text-white group-hover:text-[#f3b740] transition-colors">
-                        {hotel.name}
-                      </h4>
-                      <p className="text-xs text-slate-400 flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-[#f3b740] shrink-0" />
-                        {hotel.location}
-                      </p>
-
-                      <div className="flex flex-wrap gap-1 pt-1.5">
-                        {hotel.amenities.map(a => (
-                          <span key={a} className="text-[9px] px-2 py-0.5 rounded-sm bg-[#141b26] text-slate-300 border border-[#222d3d]">
-                            {a}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 pt-3 border-t border-[#222d3d] flex items-center justify-between mt-2 bg-[#141b26]/50">
+                  <div
+                    className="rounded-md bg-[#182232] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all flex flex-col justify-between overflow-hidden group shadow-md specular-sheen h-full"
+                  >
                     <div>
-                      <span className="text-[9px] uppercase font-bold text-slate-400 block">Nightly Rate</span>
-                      <div className="text-base font-extrabold text-[#34d399] flex items-center">
-                        <IndianRupee className="w-3.5 h-3.5 text-[#34d399]" />
-                        <span>{hotel.pricePerNight.toLocaleString('en-IN')}</span>
-                        <span className="text-[10px] text-slate-400 font-normal ml-1">/ night</span>
+                      <div className="relative h-44 w-full overflow-hidden">
+                        <img
+                          src={hotel.image}
+                          alt={hotel.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#182232] via-transparent to-transparent" />
+                        <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-sm bg-[#0b0e14]/85 backdrop-blur-md text-[10px] font-bold text-[#f3b740] border border-[#222d3d] uppercase tracking-wider">
+                          {hotel.badge || `${hotel.tier} stay`}
+                        </span>
+                        <div className="absolute top-2.5 right-2.5 flex items-center gap-1 px-1.5 py-0.5 rounded-sm bg-[#0b0e14]/85 backdrop-blur-md text-xs font-bold text-white border border-[#222d3d]">
+                          <Star className="w-3 h-3 text-[#f3b740] fill-[#f3b740]" />
+                          <span>{hotel.rating}</span>
+                        </div>
+                      </div>
+
+                      <div className="p-4 space-y-2">
+                        <h4 className="text-base font-bold text-white group-hover:text-[#f3b740] transition-colors">
+                          {hotel.name}
+                        </h4>
+                        <p className="text-xs text-slate-400 flex items-center gap-1">
+                          <MapPin className="w-3 h-3 text-[#f3b740] shrink-0" />
+                          {hotel.location}
+                        </p>
+
+                        <div className="flex flex-wrap gap-1 pt-1.5">
+                          {hotel.amenities.map(a => (
+                            <span key={a} className="text-[9px] px-2 py-0.5 rounded-sm bg-[#141b26] text-slate-300 border border-[#222d3d]">
+                              {a}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => handleBookHotel(hotel)}
-                      className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition-all flex items-center gap-1 ${
-                        inCart
-                          ? 'bg-[#062c20] text-[#34d399] border border-[#059669]/40'
-                          : 'gold-gradient-bg text-[#0e131f] hover:brightness-110 shadow-sm'
-                      }`}
-                    >
-                      {inCart ? <Check className="w-3.5 h-3.5 text-[#34d399]" /> : <Plus className="w-3.5 h-3.5" />}
-                      <span>{inCart ? 'Reserved' : 'Reserve'}</span>
-                    </button>
+                    <div className="p-4 pt-3 border-t border-[#222d3d] flex items-center justify-between mt-2 bg-[#141b26]/50">
+                      <div>
+                        <span className="text-[9px] uppercase font-bold text-slate-400 block">Nightly Rate</span>
+                        <div className="text-base font-extrabold text-[#34d399] flex items-center">
+                          <IndianRupee className="w-3.5 h-3.5 text-[#34d399]" />
+                          <span>{hotel.pricePerNight.toLocaleString('en-IN')}</span>
+                          <span className="text-[10px] text-slate-400 font-normal ml-1">/ night</span>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => handleBookHotel(hotel)}
+                        className={`px-3.5 py-1.5 rounded-sm text-xs font-bold transition-all flex items-center gap-1 ${
+                          inCart
+                            ? 'bg-[#062c20] text-[#34d399] border border-[#059669]/40'
+                            : 'gold-gradient-bg text-[#0e131f] hover:brightness-110 shadow-sm'
+                        }`}
+                      >
+                        {inCart ? <Check className="w-3.5 h-3.5 text-[#34d399]" /> : <Plus className="w-3.5 h-3.5" />}
+                        <span>{inCart ? 'Reserved' : 'Reserve'}</span>
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
@@ -443,8 +451,10 @@ export const ItineraryView: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left 2 Cols: Days Itinerary */}
         <div className="lg:col-span-2 space-y-6">
-          {filteredDays.map(day => (
-            <DayCard key={day.dayNumber} day={day} />
+          {filteredDays.map((day, idx) => (
+            <ScrollReveal key={day.dayNumber} index={idx} staggerMs={120}>
+              <DayCard day={day} />
+            </ScrollReveal>
           ))}
         </div>
 
