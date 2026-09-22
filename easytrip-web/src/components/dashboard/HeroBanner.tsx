@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTrip } from '../../context/TripContext';
 import { 
   Sparkles, 
@@ -103,19 +103,35 @@ export const HeroBanner: React.FC = () => {
     setGlare({ x: 50, y: 50, opacity: 0 });
   };
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {
+        // Safe catch for strict browser autoplay permissions
+      });
+    }
+  }, []);
+
   return (
     <section className="relative pt-6 sm:pt-10 pb-16 overflow-hidden">
       {/* Background Video */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <video 
-          src="/easytrip-background.mp4" 
+          ref={videoRef}
+          src="/easytrip-background.mp4"
           autoPlay 
           muted 
           loop 
           playsInline 
+          preload="auto"
           className="w-full h-full object-cover" 
-        />
-        {/* Dark Gradient Overlay for readability */}
+        >
+          <source src="/easytrip-background.mp4" type="video/mp4" />
+        </video>
+        {/* Subtle Dark Overlay for readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0b0e14]/75 via-[#0b0e14]/50 to-[#0b0e14] pointer-events-none" />
       </div>
 
