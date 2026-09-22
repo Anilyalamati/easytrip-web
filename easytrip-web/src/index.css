@@ -172,6 +172,144 @@
   animation: routeDraw 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* ==========================================================================
+   Specular Liquid-Glass Sheen Sweep
+   ========================================================================== */
+.specular-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.specular-sheen::after {
+  content: '';
+  position: absolute;
+  top: -80%;
+  left: -80%;
+  width: 260%;
+  height: 260%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(255, 255, 255, 0.04) 47%,
+    rgba(243, 183, 64, 0.16) 50%,
+    rgba(251, 191, 36, 0.10) 53%,
+    rgba(255, 255, 255, 0.05) 56%,
+    transparent 62%,
+    transparent 100%
+  );
+  transform: translateX(-120%) rotate(0deg);
+  pointer-events: none;
+  z-index: 20;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  opacity: 0;
+}
+
+.specular-sheen:hover::after {
+  opacity: 1;
+  transform: translateX(120%) rotate(0deg);
+}
+
+/* Ambient periodic liquid-glass sheen for hero summary card & primary highlights */
+.specular-sheen-pulse::after {
+  content: '';
+  position: absolute;
+  top: -80%;
+  left: -80%;
+  width: 260%;
+  height: 260%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(255, 255, 255, 0.05) 46%,
+    rgba(243, 183, 64, 0.22) 50%,
+    rgba(251, 191, 36, 0.14) 54%,
+    rgba(255, 255, 255, 0.05) 58%,
+    transparent 64%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+  animation: specularLiquidSweep 8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes specularLiquidSweep {
+  0%, 65% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  88% {
+    transform: translateX(120%);
+    opacity: 0.85;
+  }
+  92%, 100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Self-Drawing SVG Curve & Area Fill Wipe (Amber Gold #d97706, #fbbf24)
+   ========================================================================== */
+.elevation-curve-draw {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: elevationCurveDraw 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes elevationCurveDraw {
+  0% {
+    stroke-dashoffset: 1400;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.elevation-area-wipe {
+  clip-path: polygon(0 0, 0% 0, 0% 100%, 0 100%);
+  animation: elevationAreaWipe 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes elevationAreaWipe {
+  0% {
+    clip-path: polygon(0 0, 0% 0, 0% 100%, 0 100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+  }
+}
+
+.elevation-dot-pop {
+  transform-origin: center;
+  transform: scale(0);
+  animation: elevationDotPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes elevationDotPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* Price & Currency Badges: Forest Emerald / Jade Green */
 .price-badge {
   background: #062c20;

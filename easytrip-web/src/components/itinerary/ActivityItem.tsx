@@ -20,7 +20,7 @@ export const ActivityItem: React.FC<{ slot: ActivitySlot; period: string }> = ({
   };
 
   return (
-    <div className="relative flex flex-col sm:flex-row gap-4 p-4 rounded-md bg-[#141b26] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all duration-300 group">
+    <div className="relative flex flex-col sm:flex-row gap-4 p-4 rounded-md bg-[#141b26] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all duration-300 group specular-sheen">
       {/* Timeline Node Dot */}
       <span className="absolute -left-6 sm:-left-8 top-5 w-3.5 h-3.5 rounded-full bg-[#f3b740] ring-4 ring-[#141b26] border-2 border-[#f3b740] shadow-[0_0_10px_rgba(243,183,64,0.5)] z-10" />
 

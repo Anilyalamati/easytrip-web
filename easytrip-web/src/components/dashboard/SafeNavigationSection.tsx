@@ -11,7 +11,8 @@ import {
   Compass, 
   Fuel, 
   Hospital, 
-  PhoneCall 
+  PhoneCall,
+  Mountain
 } from 'lucide-react';
 
 export const SafeNavigationSection: React.FC = () => {
@@ -30,7 +31,15 @@ export const SafeNavigationSection: React.FC = () => {
       patrolCoverage: '24/7 Highway Patrol Active',
       restStops: '14 verified food plazas & EV chargers',
       destCoords: { lat: 17.6868, lng: 83.2185 },
-      origCoords: { lat: 17.3850, lng: 78.4867 }
+      origCoords: { lat: 17.3850, lng: 78.4867 },
+      elevCurve: 'M 40 45 C 100 45, 160 62, 220 64 C 280 66, 320 30, 360 68',
+      elevArea: 'M 40 45 C 100 45, 160 62, 220 64 C 280 66, 320 30, 360 68 L 360 74 L 40 74 Z',
+      elevPoints: [
+        { label: 'Hyd', alt: '540m', x: 40, y: 45 },
+        { label: 'Mid Basin', alt: '18m', x: 220, y: 64 },
+        { label: 'Ridge', alt: '360m', x: 320, y: 30 },
+        { label: 'Vizag Coast', alt: '8m', x: 360, y: 68 }
+      ]
     },
     {
       id: 'ooty',
@@ -44,7 +53,15 @@ export const SafeNavigationSection: React.FC = () => {
       patrolCoverage: 'Tamil Nadu Hill Patrol & Forest Checkposts',
       restStops: 'Misty tea viewpoint rest bays',
       destCoords: { lat: 11.4102, lng: 76.6950 },
-      origCoords: { lat: 12.9716, lng: 77.5946 }
+      origCoords: { lat: 12.9716, lng: 77.5946 },
+      elevCurve: 'M 40 60 C 110 58, 180 50, 240 38 C 290 22, 330 16, 360 14',
+      elevArea: 'M 40 60 C 110 58, 180 50, 240 38 C 290 22, 330 16, 360 14 L 360 74 L 40 74 Z',
+      elevPoints: [
+        { label: 'BLR', alt: '920m', x: 40, y: 60 },
+        { label: 'Foothill', alt: '1020m', x: 180, y: 50 },
+        { label: 'Hairpins', alt: '1650m', x: 290, y: 22 },
+        { label: 'Ooty Summit', alt: '2240m', x: 360, y: 14 }
+      ]
     },
     {
       id: 'manali',
@@ -58,7 +75,15 @@ export const SafeNavigationSection: React.FC = () => {
       patrolCoverage: 'Border Roads Organisation & Traffic Police',
       restStops: 'Himalayan dhabas & snow chains support',
       destCoords: { lat: 32.2432, lng: 77.1892 },
-      origCoords: { lat: 28.6139, lng: 77.2090 }
+      origCoords: { lat: 28.6139, lng: 77.2090 },
+      elevCurve: 'M 40 68 C 110 65, 190 56, 250 40 C 295 26, 335 18, 360 15',
+      elevArea: 'M 40 68 C 110 65, 190 56, 250 40 C 295 26, 335 18, 360 15 L 360 74 L 40 74 Z',
+      elevPoints: [
+        { label: 'DEL', alt: '216m', x: 40, y: 68 },
+        { label: 'Foothills', alt: '350m', x: 190, y: 56 },
+        { label: 'Valley', alt: '1250m', x: 295, y: 26 },
+        { label: 'Manali Resort', alt: '2050m', x: 360, y: 15 }
+      ]
     },
     {
       id: 'paris',
@@ -72,11 +97,20 @@ export const SafeNavigationSection: React.FC = () => {
       patrolCoverage: 'French Gendarmerie & Station Security',
       restStops: 'Aire de service motorways',
       destCoords: { lat: 48.8566, lng: 2.3522 },
-      origCoords: { lat: 51.5074, lng: -0.1278 }
+      origCoords: { lat: 51.5074, lng: -0.1278 },
+      elevCurve: 'M 40 64 C 110 70, 190 70, 250 52 C 290 46, 330 58, 360 62',
+      elevArea: 'M 40 64 C 110 70, 190 70, 250 52 C 290 46, 330 58, 360 62 L 360 74 L 40 74 Z',
+      elevPoints: [
+        { label: 'LON', alt: '15m', x: 40, y: 64 },
+        { label: 'Channel', alt: '0m', x: 190, y: 70 },
+        { label: 'Picardy', alt: '140m', x: 290, y: 46 },
+        { label: 'Paris Core', alt: '35m', x: 360, y: 62 }
+      ]
     }
   ];
 
   const [activeCorridor, setActiveCorridor] = useState(corridors[0]);
+  const [corridorDisplayMode, setCorridorDisplayMode] = useState<'schematic' | 'elevation'>('schematic');
 
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${activeCorridor.origCoords.lat},${activeCorridor.origCoords.lng}&destination=${activeCorridor.destCoords.lat},${activeCorridor.destCoords.lng}`;
 
@@ -97,7 +131,7 @@ export const SafeNavigationSection: React.FC = () => {
       </div>
 
       {/* Main Navigation Card Container */}
-      <div className="surface-elevated rounded-md p-6 sm:p-8 border border-[#222d3d] shadow-2xl max-w-5xl mx-auto space-y-6 bg-[#141b26]">
+      <div className="surface-elevated rounded-md p-6 sm:p-8 border border-[#222d3d] shadow-2xl max-w-5xl mx-auto space-y-6 bg-[#141b26] specular-sheen">
         
         {/* Top Corridor Selector Tabs */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#222d3d]">
@@ -199,76 +233,179 @@ export const SafeNavigationSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right 6 Cols: Graphical Corridor Route Diagram */}
-          <div className="lg:col-span-6 bg-[#182232] rounded-md p-5 border border-[#222d3d] space-y-4">
+          {/* Right 6 Cols: Graphical Corridor Route Diagram & Elevation Profile */}
+          <div className="lg:col-span-6 bg-[#182232] rounded-md p-5 border border-[#222d3d] space-y-4 specular-sheen">
             
-            {/* Diagram Header */}
-            <div className="flex items-center justify-between text-xs font-bold text-[#f1f5f9]">
-              <span className="flex items-center gap-1.5">
-                <Route className="w-4 h-4 text-[#f3b740]" />
-                Live Animated Corridor Schematic
-              </span>
+            {/* Diagram Header & Mode Switcher */}
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-[#f1f5f9]">
+              <div className="flex items-center gap-1 bg-[#121924] p-1 rounded-sm border border-[#222d3d]">
+                <button
+                  onClick={() => setCorridorDisplayMode('schematic')}
+                  className={`px-2.5 py-1 rounded-sm text-[11px] font-bold flex items-center gap-1 transition-all ${
+                    corridorDisplayMode === 'schematic'
+                      ? 'bg-[#182232] text-[#f3b740] border border-[#f3b740]/40 shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Route className="w-3 h-3 text-[#f3b740]" />
+                  <span>Route Schematic</span>
+                </button>
+                <button
+                  onClick={() => setCorridorDisplayMode('elevation')}
+                  className={`px-2.5 py-1 rounded-sm text-[11px] font-bold flex items-center gap-1 transition-all ${
+                    corridorDisplayMode === 'elevation'
+                      ? 'bg-[#182232] text-[#f3b740] border border-[#f3b740]/40 shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Mountain className="w-3 h-3 text-[#f3b740]" />
+                  <span>Elevation Wipe</span>
+                </button>
+              </div>
+
               <span className="text-[10px] font-bold text-[#34d399] bg-[#062c20] px-2 py-0.5 rounded-sm border border-[#059669]/40">
-                OSRM Routing Synced
+                {corridorDisplayMode === 'elevation' ? 'Amber Gold Telemetry' : 'OSRM Routing Synced'}
               </span>
             </div>
 
             {/* Interactive Animated SVG Corridor Canvas */}
             <div className="relative h-28 w-full bg-[#0b0e14] rounded-sm border border-[#222d3d] p-2 overflow-hidden flex items-center justify-center">
-              <svg 
-                key={activeCorridor.id}
-                viewBox="0 0 400 80" 
-                className="w-full h-full"
-              >
-                <defs>
-                  <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#f7d56e" />
-                    <stop offset="50%" stopColor="#f3b740" />
-                    <stop offset="100%" stopColor="#10b981" />
-                  </linearGradient>
-                </defs>
+              {corridorDisplayMode === 'schematic' ? (
+                <svg 
+                  key={activeCorridor.id + '-schematic'}
+                  viewBox="0 0 400 80" 
+                  className="w-full h-full"
+                >
+                  <defs>
+                    <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#f7d56e" />
+                      <stop offset="50%" stopColor="#f3b740" />
+                      <stop offset="100%" stopColor="#10b981" />
+                    </linearGradient>
+                  </defs>
 
-                {/* Subtle Background Guide Track */}
-                <path
-                  d="M 40 40 Q 120 15, 200 40 T 360 40"
-                  fill="none"
-                  stroke="#222d3d"
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                />
+                  {/* Subtle Background Guide Track */}
+                  <path
+                    d="M 40 40 Q 120 15, 200 40 T 360 40"
+                    fill="none"
+                    stroke="#222d3d"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                  />
 
-                {/* Animated Glowing Active Polyline */}
-                <path
-                  d="M 40 40 Q 120 15, 200 40 T 360 40"
-                  fill="none"
-                  stroke="url(#routeGradient)"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  className="svg-route-draw"
-                />
+                  {/* Animated Glowing Active Polyline */}
+                  <path
+                    d="M 40 40 Q 120 15, 200 40 T 360 40"
+                    fill="none"
+                    stroke="url(#routeGradient)"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    className="svg-route-draw"
+                  />
 
-                {/* Origin Pin with Pulse */}
-                <circle cx="40" cy="40" r="7" fill="#f3b740" className="animate-pulse" />
-                <circle cx="40" cy="40" r="3" fill="#0e131f" />
-                <text x="35" y="65" fontSize="10" fontWeight="bold" fill="#f1f5f9">
-                  {activeCorridor.origin.split(' ')[0]}
-                </text>
+                  {/* Origin Pin with Pulse */}
+                  <circle cx="40" cy="40" r="7" fill="#f3b740" className="animate-pulse" />
+                  <circle cx="40" cy="40" r="3" fill="#0e131f" />
+                  <text x="35" y="65" fontSize="10" fontWeight="bold" fill="#f1f5f9">
+                    {activeCorridor.origin.split(' ')[0]}
+                  </text>
 
-                {/* Midway Checkpoint */}
-                <circle cx="200" cy="40" r="5" fill="#e5a83b" />
-                <circle cx="200" cy="40" r="2" fill="#0e131f" />
-                <text x="180" y="24" fontSize="9" fontWeight="600" fill="#94a3b8">
-                  Rest Plaza
-                </text>
+                  {/* Midway Checkpoint */}
+                  <circle cx="200" cy="40" r="5" fill="#e5a83b" />
+                  <circle cx="200" cy="40" r="2" fill="#0e131f" />
+                  <text x="180" y="24" fontSize="9" fontWeight="600" fill="#94a3b8">
+                    Rest Plaza
+                  </text>
 
-                {/* Destination Pin with Spring Radar */}
-                <circle cx="360" cy="40" r="7" fill="#10b981" className="animate-ping" opacity="0.4" />
-                <circle cx="360" cy="40" r="7" fill="#10b981" />
-                <circle cx="360" cy="40" r="3" fill="#ffffff" />
-                <text x="330" y="65" fontSize="10" fontWeight="bold" fill="#f1f5f9">
-                  {activeCorridor.destination.split(' ')[0]}
-                </text>
-              </svg>
+                  {/* Destination Pin with Spring Radar */}
+                  <circle cx="360" cy="40" r="7" fill="#10b981" className="animate-ping" opacity="0.4" />
+                  <circle cx="360" cy="40" r="7" fill="#10b981" />
+                  <circle cx="360" cy="40" r="3" fill="#ffffff" />
+                  <text x="330" y="65" fontSize="10" fontWeight="bold" fill="#f1f5f9">
+                    {activeCorridor.destination.split(' ')[0]}
+                  </text>
+                </svg>
+              ) : (
+                <svg 
+                  key={activeCorridor.id + '-elevation'}
+                  viewBox="0 0 400 80" 
+                  className="w-full h-full"
+                >
+                  <defs>
+                    {/* Amber Gold Stroke Gradient (#d97706, #f3b740, #fbbf24) */}
+                    <linearGradient id="corridorElevGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#d97706" />
+                      <stop offset="50%" stopColor="#f3b740" />
+                      <stop offset="100%" stopColor="#fbbf24" />
+                    </linearGradient>
+
+                    {/* Amber Gold Area Fill Wipe Gradient */}
+                    <linearGradient id="corridorAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.25" />
+                      <stop offset="60%" stopColor="#d97706" stopOpacity="0.08" />
+                      <stop offset="100%" stopColor="#0b0e14" stopOpacity="0.0" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Horizontal Guide Grid Lines */}
+                  <line x1="30" y1="25" x2="370" y2="25" stroke="#222d3d" strokeDasharray="2 3" strokeWidth="1" />
+                  <line x1="30" y1="50" x2="370" y2="50" stroke="#222d3d" strokeDasharray="2 3" strokeWidth="1" />
+                  <line x1="30" y1="74" x2="370" y2="74" stroke="#222d3d" strokeWidth="1" />
+
+                  {/* Area Fill Wipe Underneath Curve */}
+                  <path
+                    d={activeCorridor.elevArea}
+                    fill="url(#corridorAreaGrad)"
+                    className="elevation-area-wipe"
+                  />
+
+                  {/* Self-Drawing Dynamic SVG Curve */}
+                  <path
+                    d={activeCorridor.elevCurve}
+                    fill="none"
+                    stroke="url(#corridorElevGrad)"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    className="elevation-curve-draw"
+                  />
+
+                  {/* Waypoint Altitude Nodes */}
+                  {activeCorridor.elevPoints.map((pt, i) => (
+                    <g key={i}>
+                      <circle
+                        cx={pt.x}
+                        cy={pt.y}
+                        r="4.5"
+                        fill="#fbbf24"
+                        stroke="#0e131f"
+                        strokeWidth="2"
+                        className="elevation-dot-pop"
+                        style={{ animationDelay: `${i * 180}ms` }}
+                      />
+                      <text
+                        x={pt.x}
+                        y={pt.y - 7}
+                        fontSize="8.5"
+                        fontWeight="bold"
+                        textAnchor="middle"
+                        fill="#fbbf24"
+                      >
+                        {pt.alt}
+                      </text>
+                      <text
+                        x={pt.x}
+                        y="72"
+                        fontSize="7.5"
+                        fontWeight="600"
+                        textAnchor="middle"
+                        fill="#94a3b8"
+                      >
+                        {pt.label}
+                      </text>
+                    </g>
+                  ))}
+                </svg>
+              )}
             </div>
 
             {/* Visual Waypoint Track with Spring Nodes */}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTrip } from '../../context/TripContext';
 import { DayCard } from './DayCard';
+import { ElevationForecastSection } from './ElevationForecastSection';
 import { 
   Sparkles, 
   MapPin, 
@@ -103,7 +104,7 @@ export const ItineraryView: React.FC = () => {
   return (
     <div id="itinerary-view-container" className="my-8 space-y-8 scroll-mt-24">
       {/* Top Banner Header */}
-      <div className="relative rounded-md overflow-hidden bg-[#141b26] border border-[#222d3d] shadow-2xl">
+      <div className="relative rounded-md overflow-hidden bg-[#141b26] border border-[#222d3d] shadow-2xl specular-sheen">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-25 scale-105"
           style={{ backgroundImage: `url(${currentTrip.heroImage})` }}
@@ -217,7 +218,7 @@ export const ItineraryView: React.FC = () => {
 
       {/* Journey & Transit Breakdown Section */}
       {jt && (
-        <div className="bg-[#141b26] rounded-md p-6 sm:p-8 border border-[#222d3d] space-y-6 shadow-xl">
+        <div className="bg-[#141b26] rounded-md p-6 sm:p-8 border border-[#222d3d] space-y-6 shadow-xl specular-sheen">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#222d3d] gap-4">
             <div>
               <div className="flex items-center gap-2 text-[#f3b740] text-xs font-bold uppercase tracking-wider mb-1">
@@ -260,7 +261,7 @@ export const ItineraryView: React.FC = () => {
 
           {/* Active Option Detail Card */}
           {activeTransitOption && (
-            <div className="p-5 sm:p-6 rounded-md bg-[#182232] border border-[#222d3d] space-y-4">
+            <div className="p-5 sm:p-6 rounded-md bg-[#182232] border border-[#222d3d] space-y-4 specular-sheen">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2">
@@ -333,9 +334,17 @@ export const ItineraryView: React.FC = () => {
         </div>
       )}
 
+      {/* Dynamic Route Elevation & Climate Forecast Section with Self-Drawing Curve & Area Fill Wipe */}
+      <ElevationForecastSection
+        destination={currentTrip.destination}
+        origin={currentTrip.origin}
+        distanceKm={jt?.distanceKm || 580}
+        tempBase={currentTrip.itineraryDays[0]?.weather?.temp || 28}
+      />
+
       {/* Recommended Stays Section */}
       {currentTrip.hotelRecommendations && currentTrip.hotelRecommendations.length > 0 && (
-        <div className="bg-[#141b26] rounded-md p-6 sm:p-8 border border-[#222d3d] space-y-6 shadow-xl">
+        <div className="bg-[#141b26] rounded-md p-6 sm:p-8 border border-[#222d3d] space-y-6 shadow-xl specular-sheen">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#222d3d] gap-2">
             <div>
               <div className="flex items-center gap-2 text-[#f3b740] text-xs font-bold uppercase tracking-wider mb-1">
@@ -364,7 +373,7 @@ export const ItineraryView: React.FC = () => {
               return (
                 <div
                   key={idx}
-                  className="rounded-md bg-[#182232] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all flex flex-col justify-between overflow-hidden group shadow-md"
+                  className="rounded-md bg-[#182232] border border-[#222d3d] hover:border-[#f3b740]/40 transition-all flex flex-col justify-between overflow-hidden group shadow-md specular-sheen"
                 >
                   <div>
                     <div className="relative h-44 w-full overflow-hidden">
@@ -442,7 +451,7 @@ export const ItineraryView: React.FC = () => {
         {/* Right 1 Col: AI Insights & Quick Stats */}
         <div className="space-y-6">
           {/* AI Curator Notes */}
-          <div className="bg-[#141b26] rounded-md p-6 border border-[#f3b740]/25 space-y-4 shadow-xl">
+          <div className="bg-[#141b26] rounded-md p-6 border border-[#f3b740]/25 space-y-4 shadow-xl specular-sheen">
             <div className="flex items-center gap-2 text-[#f3b740] text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-4 h-4" />
               <span>EasyTrip AI Design Notes</span>
@@ -458,7 +467,7 @@ export const ItineraryView: React.FC = () => {
           </div>
 
           {/* Budget & Cost Estimator Card */}
-          <div className="bg-[#141b26] rounded-md p-6 border border-[#222d3d] space-y-4 shadow-xl">
+          <div className="bg-[#141b26] rounded-md p-6 border border-[#222d3d] space-y-4 shadow-xl specular-sheen">
             <div className="flex items-center justify-between">
               <h4 className="text-sm font-bold text-white uppercase tracking-wider">
                 Budget Breakdown

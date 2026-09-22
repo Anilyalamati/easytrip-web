@@ -170,7 +170,7 @@ export const HeroBanner: React.FC = () => {
           onMouseLeave={handleMouseLeave}
         >
           <div 
-            className="surface-elevated rounded-md p-4 sm:p-7 border border-[#222d3d] shadow-2xl relative overflow-hidden transition-transform duration-300 ease-out"
+            className="surface-elevated rounded-md p-4 sm:p-7 border border-[#222d3d] shadow-2xl relative overflow-hidden transition-transform duration-300 ease-out specular-sheen"
             style={{
               transform: `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
               transformStyle: 'preserve-3d',
@@ -221,7 +221,7 @@ export const HeroBanner: React.FC = () => {
             <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch relative z-10">
               
               {/* Left 7 Cols: Image & Itinerary Preview */}
-              <div className="lg:col-span-7 rounded-md overflow-hidden relative min-h-[300px] sm:min-h-[360px] flex flex-col justify-between p-5 border border-[#222d3d] group">
+              <div className="lg:col-span-7 rounded-md overflow-hidden relative min-h-[300px] sm:min-h-[360px] flex flex-col justify-between p-5 border border-[#222d3d] group specular-sheen">
                 <img
                   src={currentPreview.image}
                   alt={currentPreview.name}
@@ -269,7 +269,7 @@ export const HeroBanner: React.FC = () => {
               <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
                 
                 {/* Route & Transit Card */}
-                <div className="p-4 rounded-md bg-[#141b26] border border-[#222d3d] space-y-2 hover:border-[#f3b740]/40 transition-colors">
+                <div className="p-4 rounded-md bg-[#141b26] border border-[#222d3d] space-y-2 hover:border-[#f3b740]/40 transition-colors specular-sheen">
                   <div className="flex items-center justify-between text-xs text-[#94a3b8] font-semibold">
                     <span className="flex items-center gap-1">
                       <Route className="w-3.5 h-3.5 text-[#f3b740]" />
@@ -288,7 +288,7 @@ export const HeroBanner: React.FC = () => {
 
                 {/* Header / Hero Accent Card: Warm Sunlit Gold gradient card with bold dark contrast text */}
                 <div 
-                  className="p-4 rounded-md space-y-2 shadow-lg relative overflow-hidden"
+                  className="p-4 rounded-md space-y-2 shadow-lg relative overflow-hidden specular-sheen specular-sheen-pulse"
                   style={{ background: 'linear-gradient(135deg, #f7d56e, #e8a635)' }}
                 >
                   <div className="flex items-center justify-between">
@@ -306,7 +306,7 @@ export const HeroBanner: React.FC = () => {
                 </div>
 
                 {/* Recommended Stay Preview */}
-                <div className="p-4 rounded-md bg-[#141b26] border border-[#222d3d] space-y-1.5 shadow-sm">
+                <div className="p-4 rounded-md bg-[#141b26] border border-[#222d3d] space-y-1.5 shadow-sm specular-sheen">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] uppercase font-bold text-[#f3b740] block">
                       Curated Verified Stay

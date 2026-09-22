@@ -19,7 +19,7 @@ export const DayCard: React.FC<{ day: DayPlan }> = ({ day }) => {
   };
 
   return (
-    <div className="glass-card rounded-md p-6 sm:p-8 border border-[#222d3d] mb-8 space-y-6 bg-[#141b26]">
+    <div className="glass-card rounded-md p-6 sm:p-8 border border-[#222d3d] mb-8 space-y-6 bg-[#141b26] specular-sheen">
       {/* Day Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#222d3d] gap-4">
         <div className="flex items-center gap-3.5">
@@ -106,7 +106,7 @@ export const DayCard: React.FC<{ day: DayPlan }> = ({ day }) => {
             {day.diningRecommendations.map((dining, idx) => (
               <div
                 key={idx}
-                className="p-3.5 rounded-sm bg-[#182232] border border-[#222d3d] hover:border-[#f3b740]/40 transition-colors flex flex-col justify-between"
+                className="p-3.5 rounded-sm bg-[#182232] border border-[#222d3d] hover:border-[#f3b740]/40 transition-colors flex flex-col justify-between specular-sheen"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
