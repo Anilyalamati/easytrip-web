@@ -1923,7 +1923,7 @@ def generate_itinerary_with_gemini(
     start_date: datetime
 ) -> Optional[dict]:
     """
-    Connects to the Google Gemini API using model gemini-1.5-flash (fallback: gemini-1.5-pro)
+    Connects to the Google Gemini API using model gemini-2.5-flash (fallback: gemini-2.0-flash)
     to dynamically generate a live, authentic, structured travel itinerary.
     """
     gemini_api_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
@@ -2121,7 +2121,7 @@ Return a single JSON object strictly matching this schema:
 """
 
     raw_content = None
-    models_to_try = ["gemini-1.5-flash", "gemini-1.5-pro"]
+    models_to_try = ["gemini-2.5-flash", "gemini-2.0-flash"]
 
     # 1. Try Google Generative AI SDK
     if genai:
@@ -2183,7 +2183,7 @@ Return a single JSON object strictly matching this schema:
                 continue
 
     if not raw_content:
-        print("GEMINI API CRITICAL ERROR: No response content received from Gemini 1.5 Flash or Pro. Falling back to catalog engine.")
+        print("GEMINI API CRITICAL ERROR: No response content received from Gemini 2.5 Flash or 2.0 Flash. Falling back to catalog engine.")
         return None
 
     # Parse and clean JSON content
@@ -2350,7 +2350,7 @@ Return a single JSON object strictly matching this schema:
         "hotelRecommendations": hotels,
         "itineraryDays": itinerary_days,
         "aiNotes": parsed.get("aiNotes") or [
-            f"Live verified itinerary powered by Google Gemini 1.5 Flash for {dest_name} ({country}).",
+            f"Live verified itinerary powered by Google Gemini 2.5 Flash for {dest_name} ({country}).",
             f"Tailored for {travel_style} travel with {interests_str} experiences.",
             "Smart transit sequencing minimizes travel fatigue between consecutive activity stops.",
             "Weather-aware morning and evening outdoor timings for optimal comfort."
@@ -2365,7 +2365,7 @@ def plan_trip(req: PlanTripRequest):
     dest_info = resolve_destination(req.destination)
     start_date = datetime.strptime(req.startDate, "%Y-%m-%d") if req.startDate else datetime.utcnow()
 
-    # 1. Attempt dynamic live itinerary generation via Google Gemini (gemini-1.5-flash / gemini-1.5-pro)
+    # 1. Attempt dynamic live itinerary generation via Google Gemini (gemini-2.5-flash / gemini-2.0-flash)
     gemini_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
     if gemini_key:
         try:

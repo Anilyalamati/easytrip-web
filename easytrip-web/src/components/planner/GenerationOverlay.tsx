@@ -18,7 +18,7 @@ const STAGES = [
   {
     id: 2,
     label: 'Contacting Google Gemini Intelligence & mapping verified landmarks...',
-    desc: 'Connecting to Google Gemini 1.5 Flash neural engine and querying authentic local sights.',
+    desc: 'Connecting to Google Gemini 2.5 Flash neural engine and querying authentic local sights.',
     icon: Cpu,
     startMs: 1200,
     endMs: 2500
@@ -107,7 +107,7 @@ export const GenerationOverlay: React.FC<GenerationOverlayProps> = ({ destinatio
         {/* Header & Destination Eyebrow */}
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-[#182232] border border-[#f3b740]/30 text-[#f3b740] text-[11px] font-bold uppercase tracking-wider mb-2">
           <Cpu className="w-3 h-3 text-[#f3b740]" />
-          <span>Google Gemini 1.5 Flash Intelligence</span>
+          <span>Google Gemini 2.5 Flash Intelligence</span>
         </div>
 
         <h3 className="text-2xl sm:text-3xl font-black text-white mb-2 tracking-tight">
