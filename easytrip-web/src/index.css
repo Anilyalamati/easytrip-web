@@ -353,4 +353,78 @@
   background: #f3b740;
 }
 
+/* ==========================================================================
+   Ambient Background Motion System (GPU Hardware-Accelerated)
+   ========================================================================== */
+@keyframes auroraFloat1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(50px, -60px, 0) scale(1.12);
+  }
+  66% {
+    transform: translate3d(-40px, 50px, 0) scale(0.92);
+  }
+}
+
+@keyframes auroraFloat2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(-60px, 45px, 0) scale(1.15);
+  }
+  66% {
+    transform: translate3d(70px, -50px, 0) scale(0.9);
+  }
+}
+
+@keyframes auroraFloat3 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+  50% {
+    transform: translate3d(35px, 60px, 0) scale(1.18);
+  }
+}
+
+@keyframes horizonBeamSweep {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(105vh);
+    opacity: 0;
+  }
+}
+
+.aurora-orb-1 {
+  animation: auroraFloat1 24s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+.aurora-orb-2 {
+  animation: auroraFloat2 30s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+.aurora-orb-3 {
+  animation: auroraFloat3 36s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+.horizon-beam-sweep {
+  animation: horizonBeamSweep 16s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: transform, opacity;
+}
+
+
 

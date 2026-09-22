@@ -17,12 +17,16 @@ import { CheckoutModal } from './components/booking/CheckoutModal';
 import { SavedTripsModal } from './components/history/SavedTripsModal';
 import { EmergencyModal } from './components/sos/EmergencyModal';
 import { GenerationOverlay } from './components/planner/GenerationOverlay';
+import { BackgroundMotion } from './components/common/BackgroundMotion';
 
 export const App: React.FC = () => {
   const { activeView, isGenerating, generatingDestination } = useTrip();
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0b0e14] text-[#f1f5f9] font-sans selection:bg-[#f3b740]/30 selection:text-[#f7d56e]">
+    <div className="relative min-h-screen flex flex-col bg-[#0b0e14] text-[#f1f5f9] font-sans selection:bg-[#f3b740]/30 selection:text-[#f7d56e] overflow-x-hidden">
+      {/* Cinematic Ambient Background Motion System */}
+      <BackgroundMotion />
+
       {/* Global Immersive Multi-Stage Loading Overlay */}
       {isGenerating && <GenerationOverlay destination={generatingDestination} />}
 
