@@ -207,10 +207,10 @@ export const Navbar: React.FC = () => {
           {/* Primary Plan Trip CTA */}
           <button
             onClick={() => setIsPlannerOpen(true)}
-            className="btn-primary hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-md font-bold text-xs tracking-normal shadow-[0_2px_12px_rgba(243,183,64,0.35)]"
+            className="btn-primary hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-md font-bold text-xs tracking-normal shadow-[0_2px_12px_rgba(243,183,64,0.35)] active:scale-[0.98] transition-all duration-200 cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#0e131f]" />
-            <span>Plan My Trip</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#0e131f] group-hover:rotate-12 transition-transform duration-300" />
+            <span>Design My Trip</span>
           </button>
 
           {/* Mobile Hamburger Toggle */}

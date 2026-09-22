@@ -162,10 +162,10 @@ export const HeroBanner: React.FC = () => {
           <div className="animate-fade-in-up pt-2 flex flex-wrap items-center justify-center gap-3.5">
             <button
               onClick={() => setIsPlannerOpen(true)}
-              className="btn-primary px-6 py-3 rounded-md font-bold text-sm tracking-normal flex items-center gap-2 group shadow-[0_2px_12px_rgba(243,183,64,0.35)]"
+              className="btn-primary px-6 py-3 rounded-md font-bold text-sm tracking-normal flex items-center gap-2 group shadow-[0_2px_12px_rgba(243,183,64,0.35)] active:scale-[0.98] transition-all duration-200 cursor-pointer"
             >
-              <Sparkles className="w-4 h-4 text-[#0e131f]" />
-              <span>Plan My Trip</span>
+              <Sparkles className="w-4 h-4 text-[#0e131f] group-hover:rotate-12 transition-transform duration-300" />
+              <span>Design My Trip</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
             </button>
 

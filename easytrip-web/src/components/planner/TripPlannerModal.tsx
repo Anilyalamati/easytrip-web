@@ -36,7 +36,52 @@ export const TripPlannerModal: React.FC = () => {
     }
   }, [prefillDays]);
 
-  if (!isPlannerOpen) return null;
+  const [isMounted, setIsMounted] = useState(isPlannerOpen);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    let animFrame: number;
+    let timer: NodeJS.Timeout;
+
+    if (isPlannerOpen) {
+      setIsMounted(true);
+      animFrame = requestAnimationFrame(() => {
+        timer = setTimeout(() => {
+          setIsVisible(true);
+        }, 16);
+      });
+    } else if (isMounted) {
+      setIsVisible(false);
+      timer = setTimeout(() => {
+        setIsMounted(false);
+      }, 280);
+    }
+
+    return () => {
+      cancelAnimationFrame(animFrame);
+      clearTimeout(timer);
+    };
+  }, [isPlannerOpen]);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      setIsPlannerOpen(false);
+      setIsMounted(false);
+    }, 280);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isVisible) {
+        handleClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isVisible]);
+
+  if (!isMounted) return null;
 
   const detectLocation = () => {
     if (!navigator.geolocation) {
@@ -152,8 +197,27 @@ export const TripPlannerModal: React.FC = () => {
     <>
       {isSubmitting && <GenerationOverlay destination={destination} />}
 
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#08090c]/85 backdrop-blur-md overflow-y-auto animate-fade-in">
-        <div className="relative w-full max-w-2xl bg-[#141b26] border border-[#222d3d] rounded-md p-6 sm:p-8 shadow-2xl my-8 animate-marker-pop">
+      <div 
+        onClick={handleClose}
+        className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#08090c]/85 backdrop-blur-md overflow-y-auto transition-opacity duration-300 ease-out ${
+          isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        style={{ willChange: 'opacity' }}
+      >
+        <div 
+          onClick={e => e.stopPropagation()}
+          className="relative w-full max-w-2xl bg-[#141b26] border border-[#222d3d] rounded-md p-6 sm:p-8 shadow-2xl my-8 transform"
+          style={{ 
+            transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            transitionDuration: isVisible ? '380ms' : '260ms',
+            transitionProperty: 'opacity, transform',
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible 
+              ? 'translate3d(0, 0, 0) scale(1)' 
+              : 'translate3d(0, 14px, 0) scale(0.97)',
+            willChange: 'transform, opacity'
+          }}
+        >
           
           {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-[#222d3d]">
@@ -172,8 +236,10 @@ export const TripPlannerModal: React.FC = () => {
             </div>
 
             <button
-              onClick={() => setIsPlannerOpen(false)}
-              className="p-2 rounded-sm text-slate-400 hover:text-white hover:bg-[#182232] transition-all"
+              type="button"
+              onClick={handleClose}
+              className="p-2 rounded-sm text-slate-400 hover:text-white hover:bg-[#182232] transition-all duration-200 active:scale-95 cursor-pointer"
+              title="Close Trip Planner"
             >
               <X className="w-5 h-5" />
             </button>
