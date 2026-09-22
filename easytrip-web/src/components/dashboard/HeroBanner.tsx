@@ -104,21 +104,20 @@ export const HeroBanner: React.FC = () => {
   };
 
   return (
-    <section className="relative pt-6 sm:pt-10 pb-16 overflow-hidden">
+    <section className="relative pt-6 sm:pt-10 pb-16 overflow-hidden isolate rounded-xl my-2 border border-[#222d3d]/50">
       {/* Background Video */}
-      <div className="absolute inset-0 -z-20 bg-[#0b0e14]">
+      <div className="absolute inset-0 -z-10 bg-[#0b0e14] overflow-hidden">
         <video 
           src="/easytrip-background.mp4" 
           autoPlay 
           muted 
           loop 
           playsInline 
-          className="w-full h-full object-cover opacity-80" 
+          className="w-full h-full object-cover opacity-85" 
         />
+        {/* Dark Gradient Overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b0e14]/75 via-[#0b0e14]/50 to-[#0b0e14] pointer-events-none" />
       </div>
-      
-      {/* Dark Gradient Overlay for readability */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b0e14]/80 via-[#0b0e14]/60 to-[#0b0e14] pointer-events-none" />
 
       {/* Subtle Warm Gold Background Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-gradient-to-b from-[#f3b740]/10 via-[#182232]/20 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />

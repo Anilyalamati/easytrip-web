@@ -31,10 +31,12 @@ export const App: React.FC = () => {
       {isGenerating && <GenerationOverlay destination={generatingDestination} />}
 
       {/* Navigation */}
-      <Navbar />
+      <div className="relative z-30">
+        <Navbar />
+      </div>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         {activeView === 'dashboard' && (
           <>
             <HeroBanner />
