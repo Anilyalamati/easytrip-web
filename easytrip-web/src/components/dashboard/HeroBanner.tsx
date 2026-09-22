@@ -102,10 +102,25 @@ export const HeroBanner: React.FC = () => {
 
   return (
     <section className="relative pt-6 sm:pt-10 pb-16 overflow-hidden">
+      {/* Background Video */}
+      <div className="absolute inset-0 -z-20 bg-[#0b0e14]">
+        <video 
+          src="/easytrip-background.mp4" 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          className="w-full h-full object-cover opacity-80" 
+        />
+      </div>
+      
+      {/* Dark Gradient Overlay for readability */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b0e14]/80 via-[#0b0e14]/60 to-[#0b0e14] pointer-events-none" />
+
       {/* Subtle Warm Gold Background Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-gradient-to-b from-[#f3b740]/10 via-[#182232]/20 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Editorial Hero Intro Header */}
         <div className="max-w-3xl mx-auto text-center space-y-5 mb-12 sm:mb-16">
