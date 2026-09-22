@@ -2122,7 +2122,12 @@ Return a single JSON object strictly matching this schema:
 """
 
     raw_content = None
-    models_to_try = ["gemini-3.6-flash"]
+    models_to_try = [
+        "gemini-2.5-flash",
+        "gemini-2.5-pro",
+        "gemini-2.0-flash",
+        "gemini-3.6-flash"
+    ]
 
     # 1. Try new google-genai SDK (Client-based)
     if genai and genai_types:
@@ -2186,7 +2191,7 @@ Return a single JSON object strictly matching this schema:
                 continue
 
     if not raw_content:
-        print("GEMINI API CRITICAL ERROR: No response content received from Gemini 3.6 Flash. Falling back to catalog engine.")
+        print("GEMINI API CRITICAL ERROR: No response content received from candidate models. Falling back to catalog engine.")
         return None
 
     # Parse and clean JSON content
