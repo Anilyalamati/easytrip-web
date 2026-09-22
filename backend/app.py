@@ -113,8 +113,8 @@ CUSTOM_KNOWN_DESTINATIONS = {
             "Dolphin's Nose Lighthouse & Ross Hill Harbor",
             "Borra Caves Karst & Araku Valley Coffee Groves"
         ],
-        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80",
-        "bannerImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
+        "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg"
     },
     "visakhapatnam": {
         "name": "Visakhapatnam",
@@ -129,8 +129,8 @@ CUSTOM_KNOWN_DESTINATIONS = {
             "Dolphin's Nose Lighthouse & Ross Hill Harbor",
             "Borra Caves Karst & Araku Valley Coffee Groves"
         ],
-        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80",
-        "bannerImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
+        "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg"
     },
     "rajahmundry": {
         "name": "Rajahmundry (Rajamahendravaram)",
@@ -145,8 +145,8 @@ CUSTOM_KNOWN_DESTINATIONS = {
             "ISKCON Temple Gautami Ghat Riverfront",
             "Papikondalu Godavari River Gorge Luxury Cruise"
         ],
-        "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
-        "bannerImage": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG",
+        "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG"
     },
     "rajamahendravaram": {
         "name": "Rajamahendravaram",
@@ -161,8 +161,8 @@ CUSTOM_KNOWN_DESTINATIONS = {
             "ISKCON Temple Gautami Ghat Riverfront",
             "Papikondalu Godavari River Gorge Luxury Cruise"
         ],
-        "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
-        "bannerImage": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG",
+        "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG"
     },
     "hyderabad": {
         "name": "Hyderabad",

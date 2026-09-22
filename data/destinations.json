@@ -8,19 +8,34 @@
     "badge": "Coastal Gem",
     "rating": 4.9,
     "reviewCount": 11420,
-    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80",
-    "bannerImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 17.6868, "lng": 83.2185 },
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg",
+    "coordinates": {
+      "lat": 17.6868,
+      "lng": 83.2185
+    },
     "idealDays": "3 - 5 Days",
     "avgCostPerDay": {
       "budget": 1800,
       "moderate": 4500,
       "luxury": 14000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Oct - Mar",
-    "highlights": ["INS Kursura Submarine Museum", "Rushikonda Beach", "Kailasagiri Ropeway", "Simhachalam Temple", "Borra Caves & Araku"],
-    "tags": ["Submarine", "Beaches", "Ropeway", "Hills", "Caves"]
+    "highlights": [
+      "INS Kursura Submarine Museum",
+      "Rushikonda Beach",
+      "Kailasagiri Ropeway",
+      "Simhachalam Temple",
+      "Borra Caves & Araku"
+    ],
+    "tags": [
+      "Submarine",
+      "Beaches",
+      "Ropeway",
+      "Hills",
+      "Caves"
+    ]
   },
   {
     "id": "rajahmundry",
@@ -31,19 +46,34 @@
     "badge": "Cultural Heart",
     "rating": 4.8,
     "reviewCount": 8940,
-    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
-    "bannerImage": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 17.0005, "lng": 81.8040 },
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG",
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/9/94/Archbridgegodavari.JPG",
+    "coordinates": {
+      "lat": 17.0005,
+      "lng": 81.804
+    },
     "idealDays": "2 - 4 Days",
     "avgCostPerDay": {
       "budget": 1600,
       "moderate": 3800,
       "luxury": 11000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Oct - Mar",
-    "highlights": ["Pushkar Ghat", "Havelock Bridge", "Sir Arthur Cotton Barrage", "Kadiyam Nurseries", "Papikondalu Cruise"],
-    "tags": ["Godavari", "Bridges", "River Cruise", "Nurseries", "Temples"]
+    "highlights": [
+      "Pushkar Ghat",
+      "Havelock Bridge",
+      "Sir Arthur Cotton Barrage",
+      "Kadiyam Nurseries",
+      "Papikondalu Cruise"
+    ],
+    "tags": [
+      "Godavari",
+      "Bridges",
+      "River Cruise",
+      "Nurseries",
+      "Temples"
+    ]
   },
   {
     "id": "ooty",
@@ -56,17 +86,32 @@
     "reviewCount": 10240,
     "image": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 11.4102, "lng": 76.6950 },
+    "coordinates": {
+      "lat": 11.4102,
+      "lng": 76.695
+    },
     "idealDays": "3 - 5 Days",
     "avgCostPerDay": {
       "budget": 2000,
       "moderate": 4800,
       "luxury": 15000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Year Round",
-    "highlights": ["Nilgiri Mountain Railway Toy Train", "Ooty Botanical Gardens", "Doddabetta Peak", "Pykara Waterfalls & Lake", "Avalanche Lake & Tea Estates"],
-    "tags": ["Toy Train", "Tea Gardens", "Waterfalls", "Botanical", "Lakes"]
+    "highlights": [
+      "Nilgiri Mountain Railway Toy Train",
+      "Ooty Botanical Gardens",
+      "Doddabetta Peak",
+      "Pykara Waterfalls & Lake",
+      "Avalanche Lake & Tea Estates"
+    ],
+    "tags": [
+      "Toy Train",
+      "Tea Gardens",
+      "Waterfalls",
+      "Botanical",
+      "Lakes"
+    ]
   },
   {
     "id": "goa",
@@ -79,17 +124,32 @@
     "reviewCount": 12840,
     "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 15.2993, "lng": 74.1240 },
+    "coordinates": {
+      "lat": 15.2993,
+      "lng": 74.124
+    },
     "idealDays": "3 - 5 Days",
     "avgCostPerDay": {
       "budget": 2400,
       "moderate": 5500,
       "luxury": 18000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Nov - Mar",
-    "highlights": ["Palolem Beach", "Fort Aguada", "Fontainhas Latin Quarter", "Dudhsagar Falls", "Anjuna Flea Market"],
-    "tags": ["Beaches", "Nightlife", "Heritage", "Seafood", "Sunsets"]
+    "highlights": [
+      "Palolem Beach",
+      "Fort Aguada",
+      "Fontainhas Latin Quarter",
+      "Dudhsagar Falls",
+      "Anjuna Flea Market"
+    ],
+    "tags": [
+      "Beaches",
+      "Nightlife",
+      "Heritage",
+      "Seafood",
+      "Sunsets"
+    ]
   },
   {
     "id": "jaipur",
@@ -102,17 +162,32 @@
     "reviewCount": 9450,
     "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1603204077673-f11c750b3297?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 26.9124, "lng": 75.7873 },
+    "coordinates": {
+      "lat": 26.9124,
+      "lng": 75.7873
+    },
     "idealDays": "2 - 4 Days",
     "avgCostPerDay": {
       "budget": 2000,
       "moderate": 5000,
       "luxury": 16000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Oct - Mar",
-    "highlights": ["Amber Palace", "Hawa Mahal", "City Palace", "Nahargarh Fort", "Johari Bazaar"],
-    "tags": ["Palaces", "Forts", "Textiles", "Architecture", "Jewelry"]
+    "highlights": [
+      "Amber Palace",
+      "Hawa Mahal",
+      "City Palace",
+      "Nahargarh Fort",
+      "Johari Bazaar"
+    ],
+    "tags": [
+      "Palaces",
+      "Forts",
+      "Textiles",
+      "Architecture",
+      "Jewelry"
+    ]
   },
   {
     "id": "manali",
@@ -125,17 +200,32 @@
     "reviewCount": 8120,
     "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1579619564365-0442e27ab9e2?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 32.2396, "lng": 77.1887 },
+    "coordinates": {
+      "lat": 32.2396,
+      "lng": 77.1887
+    },
     "idealDays": "3 - 5 Days",
     "avgCostPerDay": {
       "budget": 2000,
       "moderate": 4800,
       "luxury": 14000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Year Round",
-    "highlights": ["Solang Valley", "Rohtang Pass", "Old Manali Cafes", "Hadimba Temple", "Jogini Waterfalls"],
-    "tags": ["Mountains", "Snow", "Trekking", "Cafes", "Rafting"]
+    "highlights": [
+      "Solang Valley",
+      "Rohtang Pass",
+      "Old Manali Cafes",
+      "Hadimba Temple",
+      "Jogini Waterfalls"
+    ],
+    "tags": [
+      "Mountains",
+      "Snow",
+      "Trekking",
+      "Cafes",
+      "Rafting"
+    ]
   },
   {
     "id": "mumbai",
@@ -148,17 +238,32 @@
     "reviewCount": 15600,
     "image": "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 19.0760, "lng": 72.8777 },
+    "coordinates": {
+      "lat": 19.076,
+      "lng": 72.8777
+    },
     "idealDays": "2 - 4 Days",
     "avgCostPerDay": {
       "budget": 2800,
       "moderate": 7500,
       "luxury": 22000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Nov - Feb",
-    "highlights": ["Gateway of India", "Marine Drive", "Colaba Causeway", "Elephanta Caves", "Bandra Art District"],
-    "tags": ["Skyline", "Ocean Drive", "Nightlife", "Street Food", "Art"]
+    "highlights": [
+      "Gateway of India",
+      "Marine Drive",
+      "Colaba Causeway",
+      "Elephanta Caves",
+      "Bandra Art District"
+    ],
+    "tags": [
+      "Skyline",
+      "Ocean Drive",
+      "Nightlife",
+      "Street Food",
+      "Art"
+    ]
   },
   {
     "id": "varanasi",
@@ -171,17 +276,32 @@
     "reviewCount": 7300,
     "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 25.3176, "lng": 82.9739 },
+    "coordinates": {
+      "lat": 25.3176,
+      "lng": 82.9739
+    },
     "idealDays": "2 - 3 Days",
     "avgCostPerDay": {
       "budget": 1600,
       "moderate": 3800,
       "luxury": 12000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Oct - Mar",
-    "highlights": ["Dashashwamedh Ghat", "Ganga Sunrise Boat Tour", "Assi Ghat", "Sarnath", "Kashi Vishwanath"],
-    "tags": ["Ghats", "Spiritual", "Culture", "Silk", "Sunrise"]
+    "highlights": [
+      "Dashashwamedh Ghat",
+      "Ganga Sunrise Boat Tour",
+      "Assi Ghat",
+      "Sarnath",
+      "Kashi Vishwanath"
+    ],
+    "tags": [
+      "Ghats",
+      "Spiritual",
+      "Culture",
+      "Silk",
+      "Sunrise"
+    ]
   },
   {
     "id": "paris",
@@ -194,17 +314,32 @@
     "reviewCount": 24200,
     "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 48.8566, "lng": 2.3522 },
+    "coordinates": {
+      "lat": 48.8566,
+      "lng": 2.3522
+    },
     "idealDays": "4 - 7 Days",
     "avgCostPerDay": {
       "budget": 7500,
       "moderate": 18000,
       "luxury": 45000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Apr - Oct",
-    "highlights": ["Eiffel Tower", "Louvre Museum", "Montmartre", "Seine River Cruise", "Palace of Versailles"],
-    "tags": ["Art", "Dining", "Architecture", "Romance", "Fashion"]
+    "highlights": [
+      "Eiffel Tower",
+      "Louvre Museum",
+      "Montmartre",
+      "Seine River Cruise",
+      "Palace of Versailles"
+    ],
+    "tags": [
+      "Art",
+      "Dining",
+      "Architecture",
+      "Romance",
+      "Fashion"
+    ]
   },
   {
     "id": "tokyo",
@@ -217,17 +352,32 @@
     "reviewCount": 19800,
     "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": 35.6762, "lng": 139.6503 },
+    "coordinates": {
+      "lat": 35.6762,
+      "lng": 139.6503
+    },
     "idealDays": "5 - 8 Days",
     "avgCostPerDay": {
       "budget": 6500,
       "moderate": 16000,
       "luxury": 42000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Mar - May, Sep - Nov",
-    "highlights": ["Shibuya Crossing", "Senso-ji Temple", "Shinjuku Gyoen", "Akihabara", "TeamLab Planets"],
-    "tags": ["Tech", "Sushi", "Temples", "Anime", "Gardens"]
+    "highlights": [
+      "Shibuya Crossing",
+      "Senso-ji Temple",
+      "Shinjuku Gyoen",
+      "Akihabara",
+      "TeamLab Planets"
+    ],
+    "tags": [
+      "Tech",
+      "Sushi",
+      "Temples",
+      "Anime",
+      "Gardens"
+    ]
   },
   {
     "id": "bali",
@@ -240,16 +390,31 @@
     "reviewCount": 21300,
     "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80",
     "bannerImage": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1600&q=80",
-    "coordinates": { "lat": -8.4095, "lng": 115.1889 },
+    "coordinates": {
+      "lat": -8.4095,
+      "lng": 115.1889
+    },
     "idealDays": "4 - 7 Days",
     "avgCostPerDay": {
       "budget": 3000,
       "moderate": 7500,
       "luxury": 22000
     },
-    "currency": "₹",
+    "currency": "\u20b9",
     "bestSeason": "Apr - Oct",
-    "highlights": ["Ubud Monkey Forest", "Tegallalang Terraces", "Uluwatu Temple Cliff", "Seminyak Beach", "Nusa Penida"],
-    "tags": ["Villas", "Surfing", "Yoga", "Sunsets", "Temples"]
+    "highlights": [
+      "Ubud Monkey Forest",
+      "Tegallalang Terraces",
+      "Uluwatu Temple Cliff",
+      "Seminyak Beach",
+      "Nusa Penida"
+    ],
+    "tags": [
+      "Villas",
+      "Surfing",
+      "Yoga",
+      "Sunsets",
+      "Temples"
+    ]
   }
 ]

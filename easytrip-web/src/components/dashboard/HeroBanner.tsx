@@ -32,7 +32,7 @@ export const HeroBanner: React.FC = () => {
       safetyStatus: 'Verified Safe • Low Risk',
       stayPick: 'Novotel Varun Beach (₹9,500/nt)',
       highlight: 'INS Kursura Submarine & RK Beach Promenade',
-      image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80'
+      image: 'https://upload.wikimedia.org/wikipedia/commons/2/20/RK_Beach.jpg'
     },
     Ooty: {
       name: 'Ooty (Nilgiris)',
